@@ -10,13 +10,37 @@ const router = createRouter({
       meta: {
         layout: 'shop'
       },
-      component: HomeView
+      component: () => import('../views/Shop/HomeView.vue')
+    },
+    {
+      path: '/login',
+      name: 'login',
+      meta: {
+        layout: 'shop'
+      },
+      component: () => import('../views/Shop/HomeView.vue')
+    },
+    {
+      path: '/signup',
+      name: 'signup',
+      meta: {
+        layout: 'shop'
+      },
+      component: () => import('../views/Shop/HomeView.vue')
+    },
+    {
+      path: '/cart',
+      name: 'cart',
+      meta: {
+        layout: 'shop'
+      },
+      component: () => import('../views/Shop/HomeView.vue')
     },
     {
       path: '/about',
       name: 'about',
       meta: {
-        layout: 'shop'
+        layout: 'admin'
       },
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route

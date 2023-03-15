@@ -5,6 +5,7 @@ import Footer from './Footer.vue';
 export default {
   components: {
     Header,
+    Footer,
   }
 }
 </script>
@@ -12,7 +13,7 @@ export default {
 <template>
     <div>
         <Header />
-        
+
         <slot />
 
         <Footer />
