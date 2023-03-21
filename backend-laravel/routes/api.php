@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Api\HomeController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -34,4 +34,11 @@ Route::group(['prefix' => '/admin', 'prefix' => 'auth'], function () {
     Route::post('/refresh', [App\Http\Controllers\Admin\AuthController::class, 'refresh']);
     Route::get('/user-profile', [App\Http\Controllers\Admin\AuthController::class, 'userProfile']);
     Route::post('/change-pass', [App\Http\Controllers\Admin\AuthController::class, 'changePassWord']);
+});
+
+Route::controller(homeController::class)->group(function () {
+    Route::get('/products', 'index')->name('products');
+    Route::get('/product/{slug}', 'product')->name('product');
+    Route::post('/carts', 'cart')->name('cart');
+    // Route::post('/orders', 'store');
 });

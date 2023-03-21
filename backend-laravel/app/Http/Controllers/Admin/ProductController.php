@@ -2,35 +2,40 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Http\Resources\Admin\ProductResource;
-use App\Http\Resources\Admin\ProductWithRelationResource;
-use App\Repositories\Product\ProductRepository;
-use App\Repositories\ProductImage\ProductImageRepository;
-use App\Models\Product;
+use App\Repositories\ProductI;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use App\Http\Controllers\Controller;
 use Illuminate\Database\QueryException;
 use App\Http\Requests\Admin\ProductRequest;
+use App\Http\Resources\Admin\ProductResource;
+use App\Repositories\Product\ProductRepository;
+use App\Repositories\ProductInfor\ProductInforRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Str;
-use DB;
+use App\Http\Resources\Admin\ProductWithRelationResource;
 
 class ProductController extends Controller
 {
+    public $product;
+    public $productDetail;
+
     public function __construct(
         ProductRepository $productRepo,
-        ProductImageRepository $productImageRepo,
-    ){
+        ProductInforRepository $productDetail,
+    ) {
+        $this->middleware('auth:api');
         $this->product = $productRepo;
-        $this->imgProduct = $productImageRepo;
+        $this->productDetail = $productDetail;
     }
 
     public function index(Request $request)
     {
         $config = [
             "page" => $request->page ?? null,
-            "page_size" => $request->page_size ?? null,
+            "page_size" => $request->page_size,
             "order_by" => $request->order_by ?? "id",
             "mode" => $request->mode ?? "ASC",
             "search" => $request->search ?? null,
@@ -40,7 +45,7 @@ class ProductController extends Controller
             $products = $this->product->getWithConfig($config);
 
             return ProductResource::collection($products);
-        } catch (QueryException $exception){
+        } catch (QueryException $exception) {
 
             return response()->json([
                 "mess" => $exception->getMessage(),
@@ -54,61 +59,53 @@ class ProductController extends Controller
             DB::beginTransaction();
 
             $data = [
-                    "name" => $request->name,
-                    "description" => $request->description,
-                    "detail" => $request->detail,
-                    "price" => $request->price,
-                    "note" => $request->note,
-                    "category_id" => $request->category_id,
-                    "sale" => $request->sale,
-                    "time_limit" => $request->time_limit,
-                    "view" => 0,
-                ];
+                "name" => $request->name,
+                "description" => $request->description,
+                "price" => $request->price,
+                "category_id" => $request->category_id,
+                "sale" => $request->sale,
+                'content' => $request->content,
+                'sale' => $request->sale,
+                'status' => $request->status,
+                'quantity' => $request->quantity,
+                'time_sale' => \Carbon\Carbon::createFromFormat('d-m-Y', $request->time_sale)->format('Y-m-d H:i:s'),
+                'user_id' => JWTAuth::parseToken()->authenticate()->id,
+            ];
 
-            if ($file = $request->file('image')){
-                $fileName = $file->getClientOriginalName();
-                $fileExt = $file->getClientOriginalExtension();
-                $fileName = Str::slug(pathinfo($fileName, PATHINFO_FILENAME)) . '-' . Carbon::now()->timestamp . '.' . $fileExt;
-                $data['image'] = $fileName;
-                $file->move('images/products' , $fileName);
-            }
-
-            $images1 = array();
-
-            if ($files = $request->file('files')){
-                foreach($files as $value) {
+            $images = array();
+            if ($files = $request->file('images')) {
+                foreach ($files as $key => $value) {
                     $fileName = $value->getClientOriginalName();
                     $fileExt = $value->getClientOriginalExtension();
                     $fileName = Str::slug(pathinfo($fileName, PATHINFO_FILENAME)) . '-' . Carbon::now()->timestamp;
-                    array_push($images1, [
-                        'image' => $fileName. '.' . $fileExt, 
+                    array_push($images, [
+                        'id' => $key,
+                        'image' => 'images/products/' . $fileName . '.' . $fileExt,
                         'title' => $fileName,
                     ]);
-                    $value->move('images/products' , $fileName. '.' . $fileExt);
+                    $value->move('images/products', $fileName . '.' . $fileExt);
                 }
             }
+            $data['images'] = json_encode($images, true);
 
-            $product = $this->product->create($data);
+            $productDetail = array();
+            foreach ($request->infor["name"] as $key => $name) {
+                $productDetail[$key] = array(
+                    "name" => $name,
+                    "detail" => $request->infor["detail"][$key],
+                );
+            }
 
-            $product->tags()->attach($request->tags);
+            $product = $this->product->createProduct($data, $productDetail, $request->tags);
 
-            // $product->images()->associate($images1);
- 
-            // $product->images()->attach($images1);
-            $product1 = $this->imgProduct->product()->associate($images); 
-            
-            // $product->attach($request->tags);
-            $product->with(["tags","images"])->get();
-            
             DB::commit();
-            dd($product1);
-            dd($product);
+            // $product->with(["tags", "images"])->get();
 
             return response()->json([
                 'message' => "create success",
                 'data' => new ProductWithRelationResource($product),
             ], 200);
-        } catch (QueryException $exception){
+        } catch (QueryException $exception) {
             DB::rollBack();
             return response()->json([
                 "mess" => $exception->getMessage(),

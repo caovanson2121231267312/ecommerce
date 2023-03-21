@@ -31,9 +31,9 @@ abstract class BaseRepository implements BaseRepositoryInterface
     {
         return $this->model
             ->orderBy($config['order_by'], $config['mode'])
-            ->when($config['search'], function($q) use($config) {
-                return $q->where($config['search'], "like", "%" . $config['key'] . "%" );
-            })->paginate($config['page_size']);
+            ->when($config['search'], function ($q) use ($config) {
+                return $q->where($config['search'], "like", "%" . $config['key'] . "%");
+            })->paginate($config['page_size'] ?? config('setting.default_page_size'));
     }
 
     public function getAllWithPaginate(int $paginateNumber, $orderBy = 'id', $order = 'asc')

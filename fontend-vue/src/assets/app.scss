@@ -3,6 +3,148 @@ $custom-control-indicator-size:  0;
 // @import 'bootstrap';
 @import 'bootstrap/scss/bootstrap.scss';
 @import './font-awesome/css/all.min.css';
+@import './variable.scss';
 // @import 'bootstrap-vue/src/index.scss';
 // @import 'bootstrap-vue';
 // @import 'node_modules/bootstrap-vue/src/index.scss';
+
+.product__price--percent {
+    background: url(/src/assets/images/icons/logo.svg) 50% no-repeat;
+    height: 31px;
+    left: -5px;
+    position: absolute;
+    top: 2px;
+    width: 80px;
+}
+
+.product__price--percent-detail {
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    margin: 5px 0 0;
+    text-align: center;
+    width: 100%;
+}
+
+.sticker-left {
+    right: -18px;
+    text-align: left;
+}
+
+.sticker {
+    position: absolute;
+    top: -26px;
+    display: flex;
+    flex-direction: column;
+}
+
+.sticker span {
+    display: block;
+}
+
+.product-price {
+    color: #d70018;
+    display: inline-block;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 10px!important;
+}
+
+.c-while {
+    color: white!important;
+}
+
+.btn-cart {
+    font-weight: 600;
+    text-transform: uppercase;
+    height: 60px;
+    background-color: $main-color;
+    cursor: pointer;
+    border-color: #dc3545;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+    text-decoration: none;
+    transition: .3s;
+    -webkit-transition: .3s;
+    -moz-transition: .3s;
+    -ms-transition: .3s;
+    -o-transition: .3s;
+}
+
+.btn-cart:hover {
+    color: #fff!important;
+    background-color: $main-color-hover!important;
+}
+
+.btn-cart-add-more {
+    font-weight: 600;
+    text-transform: uppercase;
+    height: 60px;
+    cursor: pointer;
+    border: 1px solid #dc3545;
+    color: #dc3545;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+    text-decoration: none;
+    transition: .3s;
+    -webkit-transition: .3s;
+    -moz-transition: .3s;
+    -ms-transition: .3s;
+    -o-transition: .3s;
+}
+
+.btn-cart-add-more:hover {
+    background-color: $main-color;
+    color: #fff;
+}
+
+.box-card {
+    box-shadow: 0 1px 2px 0 rgba(60,64,67,.1), 0 2px 6px 2px rgba(60,64,67,.15);
+}
+
+.color-default {
+    color: $main-color;
+}
+
+.bg-default {
+    background: $main-color;
+}
+
+.title {
+    color: #363636;
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 1.125;
+}
+.brand-banner .title a {
+    color: #444;
+    font-size: 22px;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
+.brand-banner .brand-banner__content {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.brand-banner .brand-banner__content .brand-banner__item:not(:nth-of-type(4n)) {
+    margin-right: 15px;
+}
+.brand-banner .brand-banner__content .brand-banner__item {
+    border-radius: 10px;
+    box-shadow: 0 1px 2px 0 rgba(60,64,67,.1), 0 2px 6px 2px rgba(60,64,67,.15);
+    display: inline-block;
+    margin-bottom: 15px;
+    overflow: hidden;
+    width: calc(25% - 11.25px);
+}
+.brand-banner .brand-banner__content .brand-banner__item .brand-banner__img {
+    border-radius: 10px;
+    float: left;
+}

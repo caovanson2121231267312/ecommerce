@@ -5,11 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
+
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
-    use HasFactory, Sluggable, SoftDeletes;
+    use HasFactory, Sluggable, SluggableScopeHelpers, SoftDeletes;
 
     protected $fillable = [
         'name',
@@ -18,11 +20,15 @@ class Product extends Model
         'images',
         'description',
         'view',
-        'detail',
+        'content',
         'note',
         'category_id',
+        'user_id',
         'sale',
-        'time_limit',
+        'like',
+        'status',
+        'quantity',
+        'time_sale',
     ];
 
     public function sluggable(): array
@@ -45,6 +51,12 @@ class Product extends Model
     {
         return $this->hasMany(ImagesProduct::class, "images_products");
     }
+
+    public function details()
+    {
+        return $this->hasMany(ProductInfor::class);
+    }
+
 
     public function tags()
     {

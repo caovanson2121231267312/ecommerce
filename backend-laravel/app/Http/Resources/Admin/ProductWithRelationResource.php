@@ -22,14 +22,13 @@ class ProductWithRelationResource extends JsonResource
             'slug' => $this->slug,
             'price' => $this->price,
             'category_id' => $this->category_id,
-            'image' => $this->image ? asset('images/products/' .$this->image) : null,
+            'images' => $this->images,
             'description' => $this->description,
-            'detail' => $this->detail,
-            'note' => $this->note,
+            'content' => $this->content,
             'created_at' => $this->created_at ? $this->created_at->format('H:i:s d/m/Y') : null,
             'updated_at' => $this->updated_at ? $this->updated_at->format('H:i:s d/m/Y') : null,
             'tags' => TagResource::collection($this->tags),
-            // 'images' => null,
+            'product_detail' => ProductDetailResource::collection($this->details),
         ];
     }
 }

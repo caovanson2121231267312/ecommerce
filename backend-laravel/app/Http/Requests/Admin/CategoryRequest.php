@@ -30,8 +30,7 @@ class CategoryRequest extends ApiRequest
                 Rule::unique('categories', 'name')->ignore($this->category)
             ],
             'parent_id' => 'required',
-            'description' => 'required',
-            'image' => 'required|image'
+            'description' => 'required|min:2',
         ];
     }
 }

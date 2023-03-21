@@ -7,7 +7,7 @@ import Vuex from 'vuex';
 
 import ShopLayout from '@/components/Layout/Shop/ShopLayout.vue'
 import AdminLayout from '@/components/Layout/Admin/AdminLayout.vue'
-// import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+
 import './assets/app.scss'
 
 const app = createApp(App)
@@ -18,8 +18,7 @@ app.use(store)
 
 app.component('shop-layout', ShopLayout)
 app.component('admin-layout', AdminLayout)
-// app.use(BootstrapVue)
-// app.use(IconsPlugin)
 
 app.mount('#app')
+
 import "bootstrap/dist/js/bootstrap.js";

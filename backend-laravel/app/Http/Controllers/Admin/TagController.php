@@ -6,36 +6,37 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Resources\Admin\TagResource;
 use App\Repositories\Tag\TagRepository;
-use App\Models\Tag;
 use Illuminate\Database\QueryException;
 use App\Http\Requests\Admin\TagRequest;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Str;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class TagController extends Controller
 {
+    public $tag;
+
     public function __construct(TagRepository $tagRepo)
     {
+        $this->middleware('auth:api');
         $this->tag = $tagRepo;
     }
 
     public function index(Request $request)
     {
         $data = [
-            "page" => $request->page ?? null,
-            "page_size" => $request->page_size ?? null,
+            "page" => $request->page,
+            "page_size" => $request->page_size,
             "order_by" => $request->order_by ?? "id",
             "mode" => $request->mode ?? "ASC",
             "search" => $request->search ?? null,
             "key" => $request->key ?? null,
         ];
+
         try {
             $tags = $this->tag->getWithConfig($data);
 
             return TagResource::collection($tags);
-        } catch (QueryException $exception){
+        } catch (QueryException $exception) {
 
             return response()->json([
                 "mess" => $exception->getMessage(),
@@ -46,8 +47,8 @@ class TagController extends Controller
     public function store(TagRequest $request)
     {
         $data = [
-                "name" => $request->name,
-            ];
+            "name" => $request->name,
+        ];
 
         $tag = $this->tag->create($data);
 

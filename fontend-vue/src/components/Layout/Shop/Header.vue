@@ -1,14 +1,8 @@
-<script setup>
-    import {
-        RouterLink
-    } from 'vue-router'
-</script>
-
 <template>
     <nav class="navbar navbar-light navbar-expand-lg pe-5 ps-5" style="background-color: #e3f2fd;">
         <div class="container-fluid">
             <RouterLink class="navbar-brand" to="/">
-                <span class="fw-bold">VueJs</span> 
+                <span class="fw-bold">VueJs</span>
                 <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="25" height="25" />
             </RouterLink>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
@@ -58,8 +52,9 @@
                     <div>
                         <RouterLink class="btn btn-primary ms-2 rounded-1 position-relative" to="/cart">
                             <i class="fas fa-cart-plus"></i>
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill border border-light bg-danger">
-                                5+
+                            <span
+                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill border border-light bg-danger">
+                                {{ cart.length }} <span v-if="cart.length > 0">+</span>
                                 <span class="visually-hidden">cart</span>
                             </span>
                         </RouterLink>
@@ -75,3 +70,19 @@
         </div>
     </nav>
 </template>
+
+<script setup>
+import {
+    RouterLink
+} from 'vue-router'
+</script>
+
+<script>
+export default {
+    computed: {
+        cart() {
+            return this.$store.getters.cart
+        },
+    },
+}
+</script>

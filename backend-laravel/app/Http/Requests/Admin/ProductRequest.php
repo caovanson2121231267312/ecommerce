@@ -30,8 +30,16 @@ class ProductRequest extends ApiRequest
                 Rule::unique('products', 'name')->ignore($this->product)
             ],
             'category_id' => 'required',
-            'description' => 'required',
-            'image' => 'required|image',
+            'description' => 'required|min:2',
+            'images' => 'required',
+            "price" => 'required|min:4',
+            "sale" => 'required',
+            'content' => 'required|min:2',
+            'sale' => 'required',
+            'status' => 'required',
+            'quantity' => 'required',
+            'time_sale' => 'required',
+            'infor' => 'required',
         ];
     }
 }

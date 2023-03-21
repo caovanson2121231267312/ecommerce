@@ -1,8 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import NotFound from '../views/Error/404.vue';
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(),
+  // history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
@@ -34,7 +36,7 @@ const router = createRouter({
       meta: {
         layout: 'shop'
       },
-      component: () => import('../views/Shop/HomeView.vue')
+      component: () => import('../views/Shop/CartView.vue')
     },
     {
       path: '/about',
@@ -42,12 +44,35 @@ const router = createRouter({
       meta: {
         layout: 'admin'
       },
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
       component: () => import('../views/AboutView.vue')
+    },
+    {
+      path: '/:slug',
+      name: 'product',
+      // props: true,
+      meta: {
+        layout: 'shop'
+      },
+      component: () => import('../views/Shop/ProductView.vue')
+    },
+    { 
+      path: "/:catchAll(.*)",
+      name: 'NotFound',
+      meta: {
+        layout: 'shop'
+      },
+      component: NotFound
     }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.length === 0) {
+    next('/not-found')
+  } else {
+    next()
+  }
+})
+
 
 export default router

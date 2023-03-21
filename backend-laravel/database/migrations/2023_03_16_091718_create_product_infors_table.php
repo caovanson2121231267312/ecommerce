@@ -17,7 +17,7 @@ return new class extends Migration
         Schema::create('product_infors', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable()->index();
-            $table->json('detail')->default(DB::raw("('{}')"));
+            $table->string('detail')->default(DB::raw("('{}')"));
 
             $table->bigInteger('product_id')->unsigned()->index();
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');

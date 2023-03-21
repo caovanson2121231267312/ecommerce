@@ -14,23 +14,13 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
         return Category::class;
     }
 
-    public function category($config)
+    public function getCategories($config)
     {
-        $categories = $this->model
+        return $this->model
             ->orderBy($config['order_by'], $config['mode'])
-            ->when($config['search'], function($q) use($config) {
-                return $q->where($config['search'], "like", "%" . $config['key'] . "%" );
+            ->when($config['search'], function ($q) use ($config) {
+                return $q->where($config['search'], "like", "%" . $config['key'] . "%");
             })
-            ->paginate($config['page_size']);
-
-        return $categories;
+            ->paginate($config['page_size'] ?? config('setting.default_page_size'));
     }
-
-    public function getAlbumWithSong($id){ }
-
-    //Delete all song of album by album id
-    public function deleteSongOfAlbum($id){ }
-
-    //Get all album and song belong to this album
-    public function getAllAlbumWithSong(){}
 }

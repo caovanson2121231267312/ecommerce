@@ -2,28 +2,28 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Database\QueryException;
+use App\Http\Requests\Admin\CategoryRequest;
 use App\Http\Resources\Admin\CategoryResource;
 use App\Repositories\Category\CategoryRepository;
-use App\Models\Category;
-use Illuminate\Database\QueryException;
-use App\Http\Requests\admin\CategoryRequest;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Str;
-use DB;
 
 class CategoryController extends Controller
 {
+    public $category;
+
     public function __construct(CategoryRepository $categoryRepo)
     {
+        $this->middleware('auth:api');
         $this->category = $categoryRepo;
     }
 
     public function index(Request $request)
     {
-        $config = [
+        $data = [
             "page" => $request->page ?? null,
             "page_size" => $request->page_size ?? null,
             "order_by" => $request->order_by ?? "id",
@@ -32,11 +32,10 @@ class CategoryController extends Controller
             "key" => $request->key ?? null,
         ];
         try {
-            $categories = $this->category->category($config);
+            $categories = $this->category->getCategories($data);
 
             return CategoryResource::collection($categories);
-
-        } catch (QueryException $exception){
+        } catch (QueryException $exception) {
 
             return response()->json([
                 "mess" => $exception->getMessage(),
@@ -47,18 +46,18 @@ class CategoryController extends Controller
     public function store(CategoryRequest $request)
     {
         $data = [
-                "name" => $request->name,
-                "parent_id" => $request->parent_id,
-                "description" => $request->description,
-            ];
+            "name" => $request->name,
+            "parent_id" => $request->parent_id,
+            "description" => $request->description,
+        ];
 
-        if ($file = $request->file('image')){
-            $fileName = $file->getClientOriginalName();
-            $fileExt = $file->getClientOriginalExtension();
-            $fileName = Str::slug(pathinfo($fileName, PATHINFO_FILENAME)) . '-' . Carbon::now()->timestamp . '.' . $fileExt;
-            $data['image'] = $fileName;
-            $file->move('images/categories' , $fileName);
-        }
+        // if ($file = $request->file('image')){
+        //     $fileName = $file->getClientOriginalName();
+        //     $fileExt = $file->getClientOriginalExtension();
+        //     $fileName = Str::slug(pathinfo($fileName, PATHINFO_FILENAME)) . '-' . Carbon::now()->timestamp . '.' . $fileExt;
+        //     $data['image'] = $fileName;
+        //     $file->move('images/categories' , $fileName);
+        // }
 
         $category = $this->category->create($data);
 
@@ -79,7 +78,7 @@ class CategoryController extends Controller
         } catch (ModelNotFoundException $exception) {
 
             return response()->json([
-                'message' => __('have_error_mdoel_not_found'),
+                'message' => __('have_error_model_not_found'),
             ], 500);
         }
     }
@@ -93,14 +92,6 @@ class CategoryController extends Controller
                 "parent_id" => $request->parent_id,
                 "description" => $request->description,
             ];
-
-            if ($file = $request->file('image')){
-                $fileName = $file->getClientOriginalName();
-                $fileExt = $file->getClientOriginalExtension();
-                $fileName = Str::slug(pathinfo($fileName, PATHINFO_FILENAME)) . '-' . Carbon::now()->timestamp . '.' . $fileExt;
-                $data['image'] = $fileName;
-                $file->move('images/categories' , $fileName);
-            }
 
             $category = $this->category->update($id, $data);
 

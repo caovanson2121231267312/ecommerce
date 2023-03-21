@@ -14,7 +14,6 @@ class CategoryResource extends JsonResource
             'name' => $this->name,
             'parent_id' => $this->parent_id,
             'slug' => $this->slug,
-            'image' => $this->image ? asset('images/categories/' .$this->image) : null,
             'description' => $this->description,
             'created_at' => $this->created_at ? $this->created_at->format('H:i:s d/m/Y') : null,
             'updated_at' => $this->updated_at ? $this->updated_at->format('H:i:s d/m/Y') : null,

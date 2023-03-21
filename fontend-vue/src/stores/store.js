@@ -8,7 +8,11 @@ const store = createStore({
   state: {
     userList: [],
     products: [],
-    cart: [],
+    product: {},
+    cart: JSON.parse(localStorage.getItem('cart')) || [],
+    tasks: [],
+    newTask: '',
+    isLoading: true,
   },
   mutations,
   actions,
