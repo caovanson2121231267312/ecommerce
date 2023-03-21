@@ -27,13 +27,13 @@
                                 </h4>
                                 <p>
                                     <span class="product-price">
-                                        {{ formatCurrency(saleProduct(product.price, product.sale)) }} vnđ
+                                        {{ formatCurrency(saleProduct(product.price, product.sale)) }} VNĐ
                                     </span>
                                     <span class="ms-3 text-muted text-decoration-line-through">
-                                        {{ formatCurrency(saleProduct(product.price, product.sale)) }} vnđ
+                                        {{ formatCurrency(saleProduct(product.price, product.sale)) }} VNĐ
                                     </span>
                                 </p>
-                                <p>
+                                <p class="margin-10">
                                     <button class="btn" @click="minus(product.id)"> - </button>
                                     <input :value="product.count" type="text" disabled />
                                     <button class="btn" @click="plus(product.id)"> + </button>
@@ -49,7 +49,7 @@
                 <div class="card-body">
                     <div>
                         <h5 class="h6 fw-bold">
-                            Tổng tiền: <span class="product-price float-end">1</span>
+                            Tổng tiền: <span class="product-price float-end">{{ formatCurrency(countMoney) }}</span>
                         </h5>
                     </div>
                     <div class="w-100">
@@ -90,10 +90,18 @@ export default {
     computed: {
         items() {
             return mergeProductInCart(this.carts, this.products);
-        }
+        },
+        countMoney() {
+            let count = 0;
+            console.log(this.items)
+            this.items.forEach(function (value) {
+                console.log(value);
+                count += saleProduct(value.price, value.sale) * value.count
+            });
+            return count
+        },
     },
     mounted() {
-        console.log(this.items)
     },
     methods: {
         plus(id) {

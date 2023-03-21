@@ -7,16 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Category extends Model
+class Brand extends Model
 {
     use HasFactory, Sluggable, SoftDeletes;
 
     protected $fillable = [
         'name',
         'slug',
-        'parent_id',
-        'image',
-        'description'
     ];
 
     public function sluggable(): array
@@ -30,13 +27,13 @@ class Category extends Model
         ];
     }
 
-    public function parent()
+    public function products()
     {
-        return $this->belongsTo(Category::class, 'parent_id');
+        return $this->hasMany(Product::class);
     }
 
-    public function brands()
+    public function categories()
     {
-        return $this->belongsToMany(Brand::class, 'brand_category');
+        return $this->belongsToMany(Category::class, 'brand_category');
     }
 }

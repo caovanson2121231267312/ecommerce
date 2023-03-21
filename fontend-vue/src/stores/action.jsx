@@ -1,34 +1,6 @@
 import products from './products/ListProducts'
 
 const actions = {
-    // addToCart(context, payload) {
-    //     context.commit('addToCart', payload)
-    // },
-    // removeFromCart(context, payload) {
-    //     context.commit('removeFromCart', payload)
-    // },
-    activate() {
-        useStore.dispatch('INCREMENT')
-    },
-    getTask({ commit }, task) {
-        console.log(task)
-        commit('getTask', task)
-    },
-    addTask({ commit }) {
-        commit('addTask')
-    },
-    editTask({ commit }, task) {
-        commit('editTask', task)
-    },
-    removeTask({ commit }, task) {
-        commit('removeTask', task)
-    },
-    completeTask({ commit }, task) {
-        commit('completeTask', task)
-    },
-    clearTask({ commit }) {
-        commit('clearTask')
-    },
     async getProducts({ commit }) {
         const data = await products.get('api/products')
         commit('getProducts', data.data)

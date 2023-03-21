@@ -28,12 +28,19 @@ return new class extends Migration
             $table->integer('price')->default(0);
             $table->float('sale')->default(0);
             $table->date('time_sale')->nullable();
+            $table->text('note')->nullable();
+            $table->boolean('hot')->default(0);
+            $table->text('payload')->nullable();
 
             $table->bigInteger('user_id')->unsigned()->index();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->bigInteger('category_id')->unsigned()->index();
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+
+            $table->bigInteger('brand_id')->unsigned()->index();
+            $table->foreign('brand_id')->references('id')->on('brands')->onDelete('cascade');
+
             $table->softDeletes();
             $table->timestamps();
         });

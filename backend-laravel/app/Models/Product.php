@@ -25,6 +25,9 @@ class Product extends Model
         'category_id',
         'user_id',
         'sale',
+        'note',
+        'hot',
+        'payload',
         'like',
         'status',
         'quantity',
@@ -47,6 +50,11 @@ class Product extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class);
+    }
+
     public function images()
     {
         return $this->hasMany(ImagesProduct::class, "images_products");
@@ -56,7 +64,6 @@ class Product extends Model
     {
         return $this->hasMany(ProductInfor::class);
     }
-
 
     public function tags()
     {

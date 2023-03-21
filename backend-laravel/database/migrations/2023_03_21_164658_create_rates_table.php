@@ -13,14 +13,19 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tag_product', function (Blueprint $table) {
+        Schema::create('rates', function (Blueprint $table) {
             $table->id();
+            $table->integer('rate')->default(5);
+            $table->longText('content')->nullable();
+            $table->boolean('check')->default(1);
 
             $table->bigInteger('product_id')->unsigned()->index();
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
 
-            $table->bigInteger('tag_id')->unsigned()->index();
-            $table->foreign('tag_id')->references('id')->on('tags')->onDelete('cascade');
+            $table->bigInteger('user_id')->unsigned()->index();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+
+            $table->timestamps();
         });
     }
 
@@ -31,6 +36,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tag_product');
+        Schema::dropIfExists('rates');
     }
 };

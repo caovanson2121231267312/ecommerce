@@ -1,39 +1,6 @@
 import { createToast } from 'mosha-vue-toastify'
 
 const mutations = {
-    // addToCart(state, payload) {
-    //     const product = state.products.find((product) => product.id === payload.id)
-    //     state.cart = [...state.cart, product]
-    // },
-    // removeFromCart(state, payload) {
-    //     state.cart = state.cart.filter((product) => product.id !== payload.id)
-    // },
-    getTask(state, task) {
-        state.newTask = task
-    },
-    addTask(state) {
-        state.tasks.push({
-            body: state.newTask,
-            completed: false
-        })
-        console.log(state)
-    },
-    editTask(state, task) {
-        var tasks = state.tasks
-        tasks.splice(tasks.indexOf(task), 1)
-        state.tasks = tasks
-        state.newTask = task.body
-    },
-    removeTask(state, task) {
-        var tasks = state.tasks
-        tasks.splice(tasks.indexOf(task), 1)
-    },
-    completeTask(state, task) {
-        task.completed = !task.completed
-    },
-    clearTask(state) {
-        state.newTask = ''
-    },
     getProducts(state, payload) {
         state.products = payload
     },
