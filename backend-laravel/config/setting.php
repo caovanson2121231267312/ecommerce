@@ -3,5 +3,5 @@
 use Illuminate\Support\Facades\Facade;
 
 return [
-    "default_page_size" => 10 ,
+    "default_page_size" => 10,
 ];

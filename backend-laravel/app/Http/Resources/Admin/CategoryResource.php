@@ -13,6 +13,8 @@ class CategoryResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'parent_id' => $this->parent_id,
+            'brands' => $this->brands_count,
+            'products' => $this->products_count,
             'slug' => $this->slug,
             'description' => $this->description,
             'created_at' => $this->created_at ? $this->created_at->format('H:i:s d/m/Y') : null,

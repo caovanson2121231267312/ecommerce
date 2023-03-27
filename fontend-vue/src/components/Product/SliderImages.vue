@@ -8,16 +8,16 @@
             disableOnInteraction: false,
         }" class="mySwiper2 rounded-1 swiper-image">
 
-        <swiper-slide v-for="(image, index) in images_data" v-bind:key="index">
-            <img :src="domain + image.image" :alt="name" />
+        <swiper-slide class="h-337" v-for="(image, index) in images_data" v-bind:key="index">
+            <img class="img-fluid h-100" :src="domain + image.image" :alt="name" />
         </swiper-slide>
 
     </swiper>
 
     <swiper @swiper="setThumbsSwiper" :loop="true" :spaceBetween="10" :slidesPerView="4" :freeMode="true"
         :watchSlidesProgress="true" :modules="modules" class="mySwiper">
-        <swiper-slide v-for="(image, index) in images_data" v-bind:key="index">
-            <img :src="domain + image.image" :alt="name" />
+        <swiper-slide class="h-63" v-for="(image, index) in images_data" v-bind:key="index">
+            <img class="img-fluid h-100" :src="domain + image.image" :alt="name" />
         </swiper-slide>
     </swiper>
 </template>
@@ -69,6 +69,20 @@ export default {
 </script>
   
 <style lang="scss">
+.h-63 {
+    height: 63px !important;
+}
+
+.h-337 {
+    padding: 10px;
+
+    img {
+        height: 100%;
+        width: 100%;
+        object-fit: contain;
+    }
+}
+
 .swiper-image:hover .swiper-button-next,
 .swiper-image:hover .swiper-button-prev {
     display: flex;
@@ -116,7 +130,6 @@ export default {
 }
 
 .mySwiper2 {
-    height: 80%;
     width: 100%;
 }
 
@@ -131,16 +144,15 @@ export default {
     height: 100%;
     opacity: 0.7;
     padding: 3px;
+
+    img {
+        height: 100%;
+        width: 100%;
+        object-fit: contain;
+    }
 }
 
 .mySwiper .swiper-slide-thumb-active {
     opacity: 1;
-}
-
-.swiper-slide img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
 }
 </style>

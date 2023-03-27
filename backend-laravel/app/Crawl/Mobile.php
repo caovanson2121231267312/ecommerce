@@ -12,11 +12,10 @@ class Mobile
 
     public function html()
     {
-
         $crawler = (new Client())->request('GET', $this->domain);
-        $crawler->filter('nav .root #dien-thoai-di-dong')->each(
+        $crawler->filter('nav ul.root li span')->each(
             function (Crawler $node) {
-                $name = $node->filter('a')->text();
+                $name = $node->filter('span')->html();
                 try {
                     $category = Category::create([
                         "name" => $name,
@@ -25,75 +24,28 @@ class Mobile
                     ]);
 
                     echo "Tạo thành công " . $name . "\n";
-                    try {
-                        $node->filter('.sub-container .format_3 li')->each(
-                            function (Crawler $node) use ($category) {
-                                try {
-                                    $name = $node->filter('a')->text();
-                                    $slug = $node->filter('a')->attr('href');
-
-                                    $c = Category::create([
-                                        "name" => $name,
-                                        "parent_id" => $category->id,
-                                        "description" => $name
-                                    ]);
-
-                                    echo "Tạo thành công " . $name . "\n";
-                                } catch (\Throwable $th) {
-                                    echo "category đã có" . "\n";
-                                    echo $th;
-                                }
-                            }
-                        );
-                    } catch (\Throwable $th) {
-                        // echo $th;
-                    }
                 } catch (\Throwable $th) {
                     echo "category đã có" . "\n";
                     // echo $th;
                 }
             }
         );
-        dd(123);
+    }
 
-        echo "start" . "\n";
-        $url = "https://hoanghamobile.com/laptop?p=25#page_25";
-        $client = new Client();
-
-        $crawler = $client->request('GET', $url);
-
-        $crawler->filter('.list-product .item')->each(
+    public function brand()
+    {
+        $crawler = (new Client())->request('GET', $this->domain);
+        $crawler->filter('nav .root #dien-thoai-di-dong .sub-container .format_3 li')->each(
             function (Crawler $node) {
-                $slug = $node->filter('.img a')->attr("href");
-
-                $crawlerBlogs = (new Client())->request('GET', 'https://hoanghamobile.com' . $slug);
-
-                echo $slug . "\n";
-
-                // $crawlerBlogs->filter('html')->each(
-                //     function (Crawler $node) {
-
-                //         $name = $node->filter('.content h1')->text();
-                //         $description = $node->filterXPath('//meta[@name="description"]')->attr('content');
-                //         $content = $node->filter('.content')->html();
-                //         echo $name . "\n";
-                //         try {
-                //             Article::create([
-                //                 "name" => $name,
-                //                 "description" => $description,
-                //                 "content" => $content,
-                //                 "user_id" => 1,
-                //                 "category_id" => 1,
-                //                 "image" => "bootstrap.png"
-                //             ]);
-
-                //             echo "Tạo thành công " . $name . "\n";
-                //         } catch (\Throwable $th) {
-                //             echo "Article đã có" . "\n";
-                //         }
-                //         echo "\n";
-                //     }
-                // );
+                $name = $node->filter('a')->text();
+                try {
+                    \App\Models\Brand::create([
+                        "name" => $name,
+                    ]);
+                    echo "Tạo thành công " . $name . "\n";
+                } catch (\Throwable $th) {
+                    echo "brand đã có" . "\n";
+                }
             }
         );
     }

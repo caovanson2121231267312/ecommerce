@@ -1,8 +1,25 @@
 import { createToast } from 'mosha-vue-toastify'
 
 const mutations = {
+    alert(state, payload) {
+        state.alert = payload
+    },
+    login(state, payload) {
+        state.auth = payload
+        localStorage.setItem('auth', JSON.stringify(state.auth))
+    },
+    logout(state) {
+        state.auth = null
+        localStorage.removeItem('auth')
+    },
+    signup(state, payload) {
+        state.signup = payload.user
+    },
     getProducts(state, payload) {
         state.products = payload
+    },
+    getCategories(state, payload) {
+        state.categories = payload
     },
     productDetail(state, payload) {
         state.product = payload

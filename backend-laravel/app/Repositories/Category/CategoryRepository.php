@@ -16,10 +16,10 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
 
     public function getCategories($config)
     {
-        return $this->model
+        return $this->model->withCount(['brands', 'products'])
             ->orderBy($config['order_by'], $config['mode'])
             ->when($config['search'], function ($q) use ($config) {
-                return $q->where($config['search'], "like", "%" . $config['key'] . "%");
+                return $q->where($config['search'], "like", "%{$config['key']}%");
             })
             ->paginate($config['page_size'] ?? config('setting.default_page_size'));
     }

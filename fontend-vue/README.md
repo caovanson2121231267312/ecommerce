@@ -38,3 +38,4 @@ npm install vue bootstrap bootstrap-vue
 npm install --save-dev sass
 npm install vue-meta --save
 npm install vuex --save
+npm install vuetify --save

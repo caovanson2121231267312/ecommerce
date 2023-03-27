@@ -3,18 +3,19 @@
         <div class="limiter">
             <div class="container-login100" style="background-image: url(/src/assets/images/banners/bg-01.webp);">
                 <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
-                    <form class="login100-form validate-form">
+                    <form class="login100-form validate-form" @submit.prevent="login">
                         <span class="login100-form-title p-b-49">
                             Login
                         </span>
                         <div class="wrap-input100 validate-input m-b-23" data-validate="Username is reauired">
-                            <span class="label-input100">Username</span>
-                            <input class="input100" type="text" name="username" placeholder="Type your username">
+                            <span class="label-input100">Your email</span>
+                            <input class="input100" v-model="email" type="text" name="email" placeholder="Type your email">
                             <span class="focus-input100" data-symbol="&#xf206;"></span>
                         </div>
                         <div class="wrap-input100 validate-input" data-validate="Password is required">
                             <span class="label-input100">Password</span>
-                            <input class="input100" type="password" name="pass" placeholder="Type your password">
+                            <input class="input100" v-model="password" type="password" name="pass"
+                                placeholder="Type your password">
                             <span class="focus-input100" data-symbol="&#xf190;"></span>
                         </div>
                         <div class="text-right p-t-8 p-b-31">
@@ -25,7 +26,7 @@
                         <div class="container-login100-form-btn">
                             <div class="wrap-login100-form-btn">
                                 <div class="login100-form-bgbtn"></div>
-                                <button class="login100-form-btn">
+                                <button class="login100-form-btn" type="submit">
                                     Login
                                 </button>
                             </div>
@@ -63,7 +64,8 @@
                 </div>
             </div>
         </div>
-        <div id="dropDownSelect1"></div>
+        <div id="dropDownSelect1">
+        </div>
     </section>
 </template>
 
@@ -71,12 +73,44 @@
 import {
     RouterLink
 } from 'vue-router'
+import api from '../../stores/axios'
+import { alert, notify } from "../../config"
 
 export default {
     data() {
         return {
-            "spanTag": null
+            email: '',
+            password: '',
         }
+    },
+    computed: {
+        auth() {
+            return this.$store.getters.auth
+        },
+        user() {
+            return this.$store.getters.signup
+        }
+    },
+    methods: {
+        async login() {
+            let UserForm = await new FormData()
+            await UserForm.append('email', this.email)
+            await UserForm.append('password', this.password)
+            try {
+                const data = await api.post('api/auth/login', UserForm, {
+                    'Content-Type': 'application/json',
+                })
+                await this.$store.dispatch('login', data)
+                await this.$router.push('/admin');
+                await alert('success', 'top-center', 'Đăng nhập thàng công.');
+            } catch (e) {
+                try {
+                    notify('danger', 'top-center', JSON.stringify(e));
+                } catch (ex) {
+                    alert('danger', 'top-center', 'Tài khoản hoặc mật khẩu không đúng');
+                }
+            }
+        },
     }
 }
 </script>

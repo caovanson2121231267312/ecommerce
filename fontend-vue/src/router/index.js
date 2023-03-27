@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
 import NotFound from '../views/Error/404.vue'
+import { alert, notify } from '../config'
 
 const router = createRouter({
     history: createWebHistory(),
@@ -10,7 +10,8 @@ const router = createRouter({
             path: '/',
             name: 'home',
             meta: {
-                layout: 'shop'
+                layout: 'shop',
+                auth: false
             },
             component: () => import('../views/Shop/HomeView.vue')
         },
@@ -18,7 +19,8 @@ const router = createRouter({
             path: '/login',
             name: 'login',
             meta: {
-                layout: 'none'
+                layout: 'none',
+                auth: false
             },
             component: () => import('../views/Shop/LoginView.vue')
         },
@@ -26,7 +28,8 @@ const router = createRouter({
             path: '/signup',
             name: 'signup',
             meta: {
-                layout: 'none'
+                layout: 'none',
+                auth: false
             },
             component: () => import('../views/Shop/RegisterView.vue')
         },
@@ -34,24 +37,36 @@ const router = createRouter({
             path: '/cart',
             name: 'cart',
             meta: {
-                layout: 'shop'
+                layout: 'shop',
+                auth: false
             },
             component: () => import('../views/Shop/CartView.vue')
         },
         {
-            path: '/about',
-            name: 'about',
+            path: '/admin',
+            name: 'admin',
             meta: {
-                layout: 'admin'
+                layout: 'admin',
+                auth: true
             },
             component: () => import('../views/AboutView.vue')
+        },
+        {
+            path: '/admin/categories',
+            name: 'admin.categories',
+            meta: {
+                layout: 'admin',
+                auth: true
+            },
+            component: () => import('../views/Admin/Category/Index.vue')
         },
         {
             path: '/:slug',
             name: 'product',
             // props: true,
             meta: {
-                layout: 'shop'
+                layout: 'shop',
+                auth: false
             },
             component: () => import('../views/Shop/ProductView.vue')
         },
@@ -59,11 +74,25 @@ const router = createRouter({
             path: '/:catchAll(.*)',
             name: 'NotFound',
             meta: {
-                layout: 'shop'
+                layout: 'shop',
+                auth: false
             },
             component: NotFound
         }
     ]
+})
+
+router.beforeEach((to, from, next) => {
+    if (to.matched.some((record) => record.meta.auth)) {
+        if (localStorage.getItem('auth')) {
+            next()
+        } else {
+            alert('warning', '', 'Bạn cần đăng nhập để truy cập vào trang này')
+            next('/')
+        }
+    } else {
+        next()
+    }
 })
 
 router.beforeEach((to, from, next) => {

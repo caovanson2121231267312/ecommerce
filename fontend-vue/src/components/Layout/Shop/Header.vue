@@ -3,7 +3,7 @@
         <div class="container-fluid">
             <RouterLink class="navbar-brand" to="/">
                 <span class="fw-bold">VueJs</span>
-                <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="25" height="25" />
+                <!-- <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="25" height="25" /> -->
             </RouterLink>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
                 aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
@@ -17,8 +17,8 @@
                         </RouterLink>
                     </li>
                     <li class="nav-item">
-                        <RouterLink class="nav-link" to="/about">
-                            About
+                        <RouterLink class="nav-link" to="/admin">
+                            Aadmin
                         </RouterLink>
                     </li>
                     <li class="nav-item">

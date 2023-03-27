@@ -15,7 +15,8 @@ class Authenticate extends BaseMiddleware
         } catch (\Exception $e) {
             return response()->json([
                 'status' => '401',
-                'message' => 'Unauthorized, please login to continue...'
+                'message' => 'Unauthorized, please login to continue...',
+                'error' => $e->getMessage(),
             ], 401);
         }
 

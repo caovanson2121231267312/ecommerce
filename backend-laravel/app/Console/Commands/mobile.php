@@ -29,5 +29,6 @@ class mobile extends Command
     {
         $bot = new \App\Crawl\Mobile();
         $bot->html();
+        $bot->brand();
     }
 }

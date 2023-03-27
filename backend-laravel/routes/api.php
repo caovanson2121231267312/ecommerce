@@ -38,6 +38,7 @@ Route::group(['prefix' => '/admin', 'prefix' => 'auth'], function () {
 
 Route::controller(homeController::class)->group(function () {
     Route::get('/products', 'index')->name('products');
+    Route::get('/categories', 'categories')->name('categories');
     Route::get('/product/{slug}', 'product')->name('product');
     Route::post('/carts', 'cart')->name('cart');
     // Route::post('/orders', 'store');

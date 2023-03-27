@@ -33,9 +33,9 @@ export default {
 <template>
     <div class="card">
         <div class="card-body">
-            <div>
+            <div class="image">
                 <RouterLink class="w-full" aria-current="page" :to="product.slug">
-                    <img class="img-fluid" :src="firstImage" />
+                    <img class="img-fluid h-100 w-100 object-fit-cover" :src="firstImage" />
                 </RouterLink>
             </div>
             <h4 class="h6 mt-2">
@@ -63,6 +63,14 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+.object-fit-cover {
+    object-fit: scale-down;
+}
+
+.image {
+    height: 145px;
+}
+
 .card {
     --bs-card-spacer-y: 0.6rem;
     --bs-card-spacer-x: 0.6rem;

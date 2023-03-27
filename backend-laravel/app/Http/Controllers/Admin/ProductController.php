@@ -70,6 +70,7 @@ class ProductController extends Controller
                 'quantity' => $request->quantity,
                 'time_sale' => \Carbon\Carbon::createFromFormat('d-m-Y', $request->time_sale)->format('Y-m-d H:i:s'),
                 'user_id' => JWTAuth::parseToken()->authenticate()->id,
+                'brand_id' => $request->brand_id,
             ];
 
             $images = array();

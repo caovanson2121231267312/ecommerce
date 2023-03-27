@@ -1,3 +1,5 @@
+import { createToast } from 'mosha-vue-toastify'
+
 export const domain = 'http://127.0.0.1:8000/'
 
 export const formatCurrency = (value) => {
@@ -46,4 +48,38 @@ export const firstImage = (images) => {
     } else {
         return null
     }
+}
+
+export const alert = (type = 'success', position = 'top-center', message) => {
+    createToast(message, {
+        type: type,
+        transition: 'zoom',
+        showIcon: 'true',
+        hideProgressBar: 'false',
+        position: position
+    })
+}
+
+export const notify = (type, position, value) => {
+    const data = Object.values(JSON.parse(value))
+    data.forEach((messages) => {
+        messages.forEach((message) => {
+            alert(type, position, message)
+        })
+    })
+}
+
+export const convertPage = (originalObj) => {
+    const page = {
+        ...originalObj,
+        meta: {
+            ...originalObj,
+            links: originalObj.links
+                .filter((link) => !isNaN(link.label))
+                .map((link) => ({
+                    ...link
+                }))
+        }
+    }
+    return page.meta
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Product;
 use App\Repositories\Product\ProductRepository;
 use Exception;
@@ -43,6 +44,13 @@ class HomeController extends Controller
                 "code" => 500
             ], 500);
         }
+    }
+
+    public function categories()
+    {
+        $data = Category::with(['brands'])->get();
+        
+        return response()->json($data);
     }
 
     public function cart(Request $request)

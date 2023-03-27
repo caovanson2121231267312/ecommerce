@@ -1,7 +1,7 @@
 $custom-control-indicator-size:  0;
 
 // @import 'bootstrap';
-@import 'bootstrap/scss/bootstrap.scss';
+// @import 'bootstrap/scss/bootstrap.scss';
 @import './font-awesome/css/all.min.css';
 @import './variable.scss';
 
@@ -664,6 +664,9 @@ label {
     color: #222222;
 }
 
+.text-info {
+    color: #4794e7!important;
+}
 // $base-color: #036;
 // @for $i from 1 through 3 {
 //     ul:nth-child(3n + #{$i}) {

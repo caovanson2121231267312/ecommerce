@@ -4,14 +4,14 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
-class category extends Command
+class product extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'shop:category';
+    protected $signature = 'shop:product';
 
     /**
      * The console command description.
@@ -27,7 +27,7 @@ class category extends Command
      */
     public function handle()
     {
-        $bot = new \App\Crawl\Category();
+        $bot = new \App\Crawl\Product();
         $bot->html();
     }
 }

@@ -24,6 +24,7 @@ class Product extends Model
         'note',
         'category_id',
         'user_id',
+        'brand_id',
         'sale',
         'note',
         'hot',

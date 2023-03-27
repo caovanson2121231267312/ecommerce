@@ -1,14 +1,17 @@
 import { createApp } from 'vue'
-
 import App from './App.vue'
 import router from './router'
 import store from './stores/store'
 import Vuex from 'vuex'
+import { vue3Debounce } from 'vue-debounce'
 
 import ShopLayout from '@/components/Layout/Shop/ShopLayout.vue'
 import AdminLayout from '@/components/Layout/Admin/AdminLayout.vue'
 import NoneLayout from '@/components/Layout/Others/NoneLayout.vue'
 
+import '@/assets/admin/css/bootstrap.css'
+import '@/assets/admin/css/index.css'
+import '@/assets/admin/css/base.css'
 import './assets/app.scss'
 
 const app = createApp(App)
@@ -16,11 +19,14 @@ const app = createApp(App)
 app.use(router)
 app.use(Vuex)
 app.use(store)
+app.use(vue3Debounce)
 
 app.component('shop-layout', ShopLayout)
 app.component('none-layout', NoneLayout)
 app.component('admin-layout', AdminLayout)
 
-app.mount('#app')
+app.directive('debounce', vue3Debounce({ lock: true })).mount('#app')
 
-import 'bootstrap/dist/js/bootstrap.js'
+// import 'bootstrap/dist/js/bootstrap.js'
+import '@/assets/admin/js/index.js'
+import '@/assets/admin/js/app.js'
