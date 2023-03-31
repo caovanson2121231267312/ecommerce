@@ -2,9 +2,11 @@
 
 namespace App\Crawl;
 
-use Goutte\Client;
-use App\Models\Category;
 use Exception;
+use Goutte\Client;
+use App\Models\Rate;
+use App\Models\Category;
+use App\Models\ProductInfor;
 use Symfony\Component\DomCrawler\Crawler;
 
 class Product
@@ -24,121 +26,117 @@ class Product
                 $crawler = (new Client())->request('GET', "https://hoanghamobile.com" . $slug);
                 $crawler->filter('html')->each(
                     function (Crawler $node) {
-                        $name = $node->filter('.product-details .top-product h1')->text();
-                        echo $name . "\n";
-                        $price = intval(str_replace([",", "₫"], "", $node->filter('.price.current-product-price strong')->text()));
                         try {
-                            $price_sale = intval(str_replace([",", "₫"], "", $node->filter('.price.current-product-price strike')->text()));
-                            $sale = round(100 - ($price / $price_sale) * 100, 2);
-                        } catch (Exception $e) {
-                            $sale = 0;
-                        }
-                        echo $sale . "\n";
-                        try {
-                            $productName = $node->filter('ol.breadcrumb li:nth-child(5) span')->text();
+                            $name = $node->filter('.product-details .top-product h1')->text();
+                            echo $name . "\n";
+                            $price = intval(str_replace([",", "₫"], "", $node->filter('.price.current-product-price strong')->text()));
+                            try {
+                                $price_sale = intval(str_replace([",", "₫"], "", $node->filter('.price.current-product-price strike')->text()));
+                                $sale = round(100 - ($price / $price_sale) * 100, 2);
+                            } catch (Exception $e) {
+                                $sale = 0;
+                            }
+                            echo $sale . "\n";
+                            try {
+                                $productName = $node->filter('ol.breadcrumb li:nth-child(5) span')->text();
 
-                            $category_name = $node->filter('ol.breadcrumb li:nth-child(2) span')->text();
-                            $category = Category::firstOrCreate([
-                                'name' => $category_name,
-                                'parent_id' => 0,
-                                'description' => $category_name,
-                            ]);
+                                $category_name = $node->filter('ol.breadcrumb li:nth-child(2) span')->text();
+                                $category = Category::firstOrCreate([
+                                    'name' => $category_name,
+                                    'parent_id' => 0,
+                                    'description' => $category_name,
+                                ]);
 
-                            $brand_name = $node->filter('ol.breadcrumb li:nth-child(3) span')->text();
-                            $brand = \App\Models\Brand::firstOrCreate([
-                                'name' => $brand_name,
-                            ]);
+                                $brand_name = $node->filter('ol.breadcrumb li:nth-child(3) span')->text();
+                                $brand = \App\Models\Brand::firstOrCreate([
+                                    'name' => $brand_name,
+                                ]);
 
-                            $category->brands()->syncWithoutDetaching([$brand->id]);
+                                $category->brands()->syncWithoutDetaching([$brand->id]);
 
-                            $productTag = $node->filter('ol.breadcrumb li:nth-child(4) span')->text();
-                            $tag = \App\Models\Tag::firstOrCreate([
-                                'name' => $productTag,
-                            ]);
+                                $productTag = $node->filter('ol.breadcrumb li:nth-child(4) span')->text();
+                                $tag = \App\Models\Tag::firstOrCreate([
+                                    'name' => $productTag,
+                                ]);
 
-                            // echo "Category: $category\n";
-                            // echo "Brand: $brand\n";
-                            // echo "Product Tag: $tag\n";
-                            // echo "Product Name: $productName\n";
+                                $images = array();
+                                $i = 0;
+                                $node->filter('.product-image .viewer a')->each(
+                                    function (Crawler $node) use (&$i, $productName, &$images) {
+                                        // $url = $node->filter('img')->text();
+                                        $image_url = $node->filter('a')->attr('href');
+                                        // echo $image_url . "\n";
+                                        $image_name = basename($image_url);
+                                        $image_data = file_get_contents($image_url);
+                                        file_put_contents('public/images/products/' . $image_name, $image_data);
+                                        array_push($images, [
+                                            'id' => $i,
+                                            'image' => 'images/products/' . $image_name,
+                                            'title' => $productName,
+                                        ]);
+                                        $i++;
+                                    }
+                                );
+                                $i = 0;
 
-                            $images = array();
-                            $i = 0;
-                            $node->filter('.product-image .viewer a')->each(
-                                function (Crawler $node) use (&$i, $productName, &$images) {
-                                    // $url = $node->filter('img')->text();
-                                    $image_url = $node->filter('a')->attr('href');
-                                    echo $image_url . "\n";
-                                    $image_name = basename($image_url);
-                                    $image_data = file_get_contents($image_url);
-                                    file_put_contents('public/images/products/' . $image_name, $image_data);
-                                    array_push($images, [
-                                        'id' => $i,
-                                        'image' => 'images/products/' . $image_name,
-                                        'title' => $productName,
-                                    ]);
-                                    $i++;
+                                // dump($images);
+                                $arr['images'] = json_encode($images, true);
+
+                                $data = [
+                                    "name" => $node->filter('.product-details .top-product')->text(),
+                                    "description" => $node->filter('meta[name="description"]')->attr('content'),
+                                    "price" => $price,
+                                    "category_id" => $category->id,
+                                    "sale" => $sale,
+                                    'content' => $node->filter('#productContent')->html(),
+                                    'sale' => $sale,
+                                    'status' => 1,
+                                    'quantity' => rand(10, 10000),
+                                    'time_sale' => \Carbon\Carbon::createFromFormat('d-m-Y', '09-12-2023')->format('Y-m-d H:i:s'),
+                                    'user_id' => 1,
+                                    'brand_id' => $brand->id,
+                                ];
+                                $data = array_merge($data, $arr);
+
+                                $product = \App\Models\Product::create($data);
+                                $product->tags()->attach($tag->id);
+
+                                try {
+                                    $node->filter('.product-right .product-specs ol li')->each(
+                                        function (Crawler $node) use ($product) {
+                                            ProductInfor::create([
+                                                'name' =>  $node->filter('strong')->text(),
+                                                'detail' => $node->filter('span')->text(),
+                                                'product_id' => $product->id,
+                                            ]);
+                                        }
+                                    );
+                                } catch (Exception $e) {
+                                    echo $e . "\n";
                                 }
-                            );
-                            $i = 0;
 
-                            // dump($images);
-                            $arr['images'] = json_encode($images, true);
+                                $gt = rand(1, 5);
 
-                            $data = [
-                                "name" => $node->filter('.product-details .top-product')->text(),
-                                "description" => $node->filter('meta[name="description"]')->attr('content'),
-                                "price" => $price,
-                                "category_id" => $category->id,
-                                "sale" => $sale,
-                                'content' => $node->filter('#productContent')->html(),
-                                'sale' => $sale,
-                                'status' => 1,
-                                'quantity' => rand(10, 10000),
-                                'time_sale' => \Carbon\Carbon::createFromFormat('d-m-Y', '09-12-2023')->format('Y-m-d H:i:s'),
-                                'user_id' => 1,
-                                'brand_id' => $brand->id,
-                            ];
-                            $data = array_merge($data, $arr);
-
-                            $product = \App\Models\Product::create($data);
+                                for ($i = 0; $i <= $gt; $i++) {
+                                    Rate::create([
+                                        'rate' => rand(1, 5),
+                                        'content' => 'DEV CaoSon',
+                                        'check' => 1,
+                                        'user_id' => 1,
+                                        'product_id' => $product->id,
+                                    ]);
+                                }
+                            } catch (Exception $e) {
+                                echo "Bỏ qua node này" . "\n\n";
+                                echo $e . "\n";
+                            }
+                            echo "\n";
                         } catch (Exception $e) {
                             echo "Bỏ qua node này" . "\n\n";
                             echo $e . "\n";
                         }
-                        echo "\n";
-                        // try {
-                        //     $category = Category::create([
-                        //         "name" => $name,
-                        //         "parent_id" => 0,
-                        //         "description" => $name
-                        //     ]);
-
-                        //     echo "Tạo thành công " . $name . "\n";
-                        // } catch (\Throwable $th) {
-                        //     echo "category đã có" . "\n";
-                        //     // echo $th;
-                        // }
-
                     }
                 );
-            }
-        );
-    }
-
-    public function brand()
-    {
-        $crawler = (new Client())->request('GET', $this->domain);
-        $crawler->filter('nav .root #dien-thoai-di-dong .sub-container .format_3 li')->each(
-            function (Crawler $node) {
-                $name = $node->filter('a')->text();
-                try {
-                    \App\Models\Brand::create([
-                        "name" => $name,
-                    ]);
-                    echo "Tạo thành công " . $name . "\n";
-                } catch (\Throwable $th) {
-                    echo "brand đã có" . "\n";
-                }
             }
         );
     }

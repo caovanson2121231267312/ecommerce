@@ -25,10 +25,19 @@ class ProductWithRelationResource extends JsonResource
             'images' => $this->images,
             'description' => $this->description,
             'content' => $this->content,
+            'sale' => $this->sale,
+            'time_sale' => $this->time_sale,
+            'quantity' => $this->quantity,
+            'rates_count' => $this->rates_count,
+            'status' => $this->status,
+            'avg_rate' => round($this->avg_rate, 1),
             'created_at' => $this->created_at ? $this->created_at->format('H:i:s d/m/Y') : null,
             'updated_at' => $this->updated_at ? $this->updated_at->format('H:i:s d/m/Y') : null,
             'tags' => TagResource::collection($this->tags),
             'product_detail' => ProductDetailResource::collection($this->details),
+            'category' => new CategoryResource($this->category),
+            'brand' => new BrandResource($this->brand),
+            'user' => $this->user,
         ];
     }
 }

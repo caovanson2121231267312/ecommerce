@@ -38,11 +38,11 @@ export default {
                     <img class="img-fluid h-100 w-100 object-fit-cover" :src="firstImage" />
                 </RouterLink>
             </div>
-            <h4 class="h6 mt-2">
+            <h4 class="h5 mt-2 text-dark">
                 {{ product.name }}
             </h4>
             <div class="d-flex justify-content-between">
-                <span class="text-danger fw-bold">
+                <span class="fw-bold price">
                     {{ formatCurrency(saleProduct(product.price, product.sale)) }} đ
                 </span>
                 <span class="text-muted text-decoration-line-through fs-6">
@@ -63,6 +63,10 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+.price {
+    color: #d70018 !important;
+}
+
 .object-fit-cover {
     object-fit: scale-down;
 }

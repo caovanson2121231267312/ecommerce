@@ -10,6 +10,8 @@ class ProductInfor extends Model
 {
     use HasFactory, SoftDeletes;
 
+    public $timestamps = false;
+
     protected $fillable = [
         'name',
         'detail',

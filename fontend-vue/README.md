@@ -39,3 +39,5 @@ npm install --save-dev sass
 npm install vue-meta --save
 npm install vuex --save
 npm install vuetify --save
+npm install --save v-tooltip
+npm install -S vue-sweetalert2

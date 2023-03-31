@@ -42,9 +42,9 @@ class ProductController extends Controller
             "key" => $request->key ?? null,
         ];
         try {
-            $products = $this->product->getWithConfig($config);
-
-            return ProductResource::collection($products);
+            $products = $this->product->getProducts($config);
+            // dd($products);
+            return ProductWithRelationResource::collection($products);
         } catch (QueryException $exception) {
 
             return response()->json([

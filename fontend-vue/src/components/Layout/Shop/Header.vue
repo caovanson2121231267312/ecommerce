@@ -86,3 +86,15 @@ export default {
     },
 }
 </script>
+
+<style scoped lang="scss">
+.btn {
+    --ct-btn-padding-y: 0.47rem;
+}
+.navbar-light .navbar-nav .nav-link {
+    color: white!important;
+}
+nav {
+    background-color: #d70018!important;
+}
+</style>

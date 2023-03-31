@@ -36,8 +36,8 @@
             <!-- Leftbar User -->
             <div class="leftbar-user">
                 <a href="pages-profile.html">
-                    <img src="assets/images/users/avatar-1.jpg" alt="user-image" height="42"
-                        class="rounded-circle shadow-sm">
+                    <!-- <img src="assets/images/users/avatar-1.jpg" alt="user-image" height="42"
+                        class="rounded-circle shadow-sm"> -->
                     <span class="leftbar-user-name mt-2">Dominic Keller</span>
                 </a>
             </div>
@@ -129,7 +129,7 @@
                                 <RouterLink to="/admin/categories">Categories</RouterLink>
                             </li>
                             <li>
-                                <a href="apps-ecommerce-products.html">Products</a>
+                                <RouterLink to="/admin/products">Products</RouterLink>
                             </li>
                             <li>
                                 <a href="apps-ecommerce-products-details.html">Products Details</a>
@@ -779,8 +779,10 @@
                     <a href="javascript: void(0);" class="float-end close-btn text-white">
                         <i class="mdi mdi-close"></i>
                     </a>
-                    <img src="assets/images/svg/help-icon.svg" height="90" alt="Helper Icon Image">
-                    <h5 class="mt-3">Unlimited Access</h5>
+                    <h5 class="mt-3">
+                        <i class="fas fa-question"></i>
+                        Unlimited Access
+                    </h5>
                     <p class="mb-3">Upgrade to plan to get access to unlimited reports</p>
                     <a href="javascript: void(0);" class="btn btn-secondary btn-sm">Upgrade</a>
                 </div>

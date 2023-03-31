@@ -51,11 +51,21 @@ class Product extends Model
         return $this->belongsTo(Category::class);
     }
 
+    // public function detail()
+    // {
+    //     return $this->hasMany(Tag::class, "tag_product");
+    // }
+
     public function brand()
     {
         return $this->belongsTo(Brand::class);
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    
     public function images()
     {
         return $this->hasMany(ImagesProduct::class, "images_products");
@@ -64,6 +74,11 @@ class Product extends Model
     public function details()
     {
         return $this->hasMany(ProductInfor::class);
+    }
+
+    public function rates()
+    {
+        return $this->hasMany(Rate::class);
     }
 
     public function tags()

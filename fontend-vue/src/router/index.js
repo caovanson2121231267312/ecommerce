@@ -53,12 +53,21 @@ const router = createRouter({
         },
         {
             path: '/admin/categories',
-            name: 'admin.categories',
+            name: 'admin-categories',
             meta: {
                 layout: 'admin',
                 auth: true
             },
             component: () => import('../views/Admin/Category/Index.vue')
+        },
+        {
+            path: '/admin/products',
+            name: 'admin-products',
+            meta: {
+                layout: 'admin',
+                auth: true
+            },
+            component: () => import('../views/Admin/Product/Index.vue')
         },
         {
             path: '/:slug',

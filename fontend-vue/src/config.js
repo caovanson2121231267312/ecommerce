@@ -3,7 +3,10 @@ import { createToast } from 'mosha-vue-toastify'
 export const domain = 'http://127.0.0.1:8000/'
 
 export const formatCurrency = (value) => {
-    return parseInt(value).toLocaleString('de-DE')
+    if (value) {
+        return parseInt(value).toLocaleString('de-DE')
+    }
+    return null
 }
 
 export const saleProduct = (price, sale) => {

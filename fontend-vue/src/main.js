@@ -4,7 +4,10 @@ import router from './router'
 import store from './stores/store'
 import Vuex from 'vuex'
 import { vue3Debounce } from 'vue-debounce'
+import VTooltip from 'v-tooltip'
+import VueSweetalert2 from 'vue-sweetalert2';
 
+import 'sweetalert2/dist/sweetalert2.min.css';
 import ShopLayout from '@/components/Layout/Shop/ShopLayout.vue'
 import AdminLayout from '@/components/Layout/Admin/AdminLayout.vue'
 import NoneLayout from '@/components/Layout/Others/NoneLayout.vue'
@@ -20,6 +23,8 @@ app.use(router)
 app.use(Vuex)
 app.use(store)
 app.use(vue3Debounce)
+app.use(VTooltip)
+app.use(VueSweetalert2)
 
 app.component('shop-layout', ShopLayout)
 app.component('none-layout', NoneLayout)

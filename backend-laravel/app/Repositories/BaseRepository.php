@@ -27,10 +27,13 @@ abstract class BaseRepository implements BaseRepositoryInterface
         return $this->model->all();
     }
 
-    public function getWithConfig($config)
+    public function getWithConfig($config, array $relations = [])
     {
         return $this->model
             ->orderBy($config['order_by'], $config['mode'])
+            ->when($relations, function ($q) use ($relations) {
+                return $q->with($relations);
+            })
             ->when($config['search'], function ($q) use ($config) {
                 return $q->where($config['search'], "like", "%" . $config['key'] . "%");
             })->paginate($config['page_size'] ?? config('setting.default_page_size'));

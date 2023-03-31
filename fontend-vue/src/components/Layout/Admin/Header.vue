@@ -84,7 +84,7 @@
                             <!-- item-->
                             <a href="javascript:void(0);" class="dropdown-item notify-item">
                                 <div class="d-flex">
-                                    <img class="d-flex me-2 rounded-circle" src="assets/images/users/avatar-2.jpg"
+                                    <img class="d-flex me-2 rounded-circle" src="@/assets/images/users/avatar-1.jpg"
                                         alt="Generic placeholder image" height="32">
                                     <div class="w-100">
                                         <h5 class="m-0 font-14">Erwin Brown</h5>
@@ -96,7 +96,7 @@
                             <!-- item-->
                             <a href="javascript:void(0);" class="dropdown-item notify-item">
                                 <div class="d-flex">
-                                    <img class="d-flex me-2 rounded-circle" src="assets/images/users/avatar-5.jpg"
+                                    <img class="d-flex me-2 rounded-circle" src="@/assets/images/users/avatar-1.jpg"
                                         alt="Generic placeholder image" height="32">
                                     <div class="w-100">
                                         <h5 class="m-0 font-14">Jacob Deo</h5>
@@ -250,7 +250,7 @@
                                                         <div class="d-flex align-items-center">
                                                             <div class="flex-shrink-0">
                                                                 <div class="notify-icon">
-                                                                    <img src="assets/images/users/avatar-2.jpg"
+                                                                    <img src="@/assets/images/users/avatar-1.jpg"
                                                                         class="img-fluid rounded-circle" alt="">
                                                                 </div>
                                                             </div>
@@ -298,7 +298,7 @@
                                                         <div class="d-flex align-items-center">
                                                             <div class="flex-shrink-0">
                                                                 <div class="notify-icon">
-                                                                    <img src="assets/images/users/avatar-4.jpg"
+                                                                    <img src="@/assets/images/users/avatar-1.jpg"
                                                                         class="img-fluid rounded-circle" alt="">
                                                                 </div>
                                                             </div>
@@ -344,51 +344,6 @@
                         <i class="ri-apps-2-line font-22"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated dropdown-lg p-0">
-
-                        <div class="p-2">
-                            <div class="row g-0">
-                                <div class="col">
-                                    <a class="dropdown-icon-item" href="#">
-                                        <img src="assets/images/brands/slack.png" alt="slack">
-                                        <span>Slack</span>
-                                    </a>
-                                </div>
-                                <div class="col">
-                                    <a class="dropdown-icon-item" href="#">
-                                        <img src="assets/images/brands/github.png" alt="Github">
-                                        <span>GitHub</span>
-                                    </a>
-                                </div>
-                                <div class="col">
-                                    <a class="dropdown-icon-item" href="#">
-                                        <img src="assets/images/brands/dribbble.png" alt="dribbble">
-                                        <span>Dribbble</span>
-                                    </a>
-                                </div>
-                            </div>
-
-                            <div class="row g-0">
-                                <div class="col">
-                                    <a class="dropdown-icon-item" href="#">
-                                        <img src="assets/images/brands/bitbucket.png" alt="bitbucket">
-                                        <span>Bitbucket</span>
-                                    </a>
-                                </div>
-                                <div class="col">
-                                    <a class="dropdown-icon-item" href="#">
-                                        <img src="assets/images/brands/dropbox.png" alt="dropbox">
-                                        <span>Dropbox</span>
-                                    </a>
-                                </div>
-                                <div class="col">
-                                    <a class="dropdown-icon-item" href="#">
-                                        <img src="assets/images/brands/g-suite.png" alt="G Suite">
-                                        <span>G Suite</span>
-                                    </a>
-                                </div>
-                            </div> <!-- end row-->
-                        </div>
-
                     </div>
                 </li>
 

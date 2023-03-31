@@ -7,8 +7,9 @@
                 <div class="card-body">
                     <div class="row mb-2">
                         <div class="col-sm-5">
-                            <a href="javascript:void(0);" class="btn btn-danger mb-2"><i
-                                    class="mdi mdi-plus-circle me-2"></i> Add Category</a>
+                            <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#createModalCategory"
+                                class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle me-2"></i> Add Category</a>
+                            <Create :loadData="loadData" />
                         </div>
                         <div class="col-sm-7">
                             <div class="text-sm-end">
@@ -45,7 +46,7 @@
                         </div>
                     </div>
 
-                    <table class="table table-hover table-striped table-responsive">
+                    <table class="table table-hover table-striped">
                         <thead class="table-light">
                             <tr>
                                 <th class="sorting_disabled dt-checkboxes-cell dt-checkboxes-select-all" rowspan="1"
@@ -111,20 +112,21 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="user in categories" :key="user.id">
+                            <tr v-for="category in categories" :key="category.id">
                                 <td class="dt-checkboxes-cell dtr-control" style="outline: none;">
                                     <div class="form-check">
                                         <input type="checkbox" class="form-check-input dt-checkboxes">
                                         <label class="form-check-label">&nbsp;</label>
                                     </div>
                                 </td>
-                                <td>{{ user.id }}</td>
-                                <td class="sorting">{{ user.name }}</td>
-                                <td class="sorting">{{ user.brands }}</td>
-                                <td class="sorting">{{ user.products }}</td>
-                                <td>{{ user.created_at }}</td>
+                                <td>{{ category.id }}</td>
+                                <td class="sorting">{{ category.name }}</td>
+                                <td class="sorting">{{ category.brands }}</td>
+                                <td class="sorting">{{ category.products }}</td>
+                                <td>{{ category.created_at }}</td>
                                 <td class="table-action">
-                                    <a href="javascript:void(0);" class="action-icon text-info">
+                                    <a href="javascript:void(0);" @click="showCategory(category.id)"
+                                        class="action-icon text-info">
                                         <i class="mdi mdi-eye"></i>
                                     </a>
                                     <a href="javascript:void(0);" class="action-icon text-success">
@@ -136,13 +138,14 @@
                                 </td>
                             </tr>
                             <tr v-if="!categories.length">
-                                <td colspan="7" class="text-center">No users found</td>
+                                <td colspan="7" class="text-center">No categorys found</td>
                             </tr>
                         </tbody>
                     </table>
 
                     <Pagination :changePage="changePage" v-if="Object.keys(meta).length !== 0" :meta="meta" />
 
+                    <Show v-if="id" :id="id" />
                 </div>
             </div>
 
@@ -154,12 +157,19 @@
 import Breadcrumb from '@/components/Layout/Admin/Breadcrumb.vue';
 import Pagination from '@/components/Page/Pagination.vue';
 import { convertPage } from '../../../config';
+import Create from './Create.vue';
+import Show from './Show.vue';
+import Edit from './Edit.vue';
+
 import axios from 'axios';
 
 export default {
     components: {
         Breadcrumb,
         Pagination,
+        Create,
+        Show,
+        Edit,
     },
     data() {
         return {
@@ -172,6 +182,7 @@ export default {
                 order_by: null,
                 mode: 'asc',
             },
+            id: null,
         };
     },
     computed: {
@@ -226,6 +237,10 @@ export default {
                 .catch(error => {
                     console.log(error);
                 });
+        },
+        async showCategory(id) {
+            this.id = await id
+            await $("#showModalCategory").modal('show');
         }
     },
     mounted() {
