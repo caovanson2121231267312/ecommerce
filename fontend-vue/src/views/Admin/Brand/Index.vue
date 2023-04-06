@@ -7,8 +7,8 @@
                 <div class="card-body">
                     <div class="row mb-2">
                         <div class="col-sm-5">
-                            <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#createModalCategory"
-                                class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle me-2"></i> Add Category</a>
+                            <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#createModalbrand"
+                                class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle me-2"></i> Add Brand</a>
                             <Create :loadData="loadData" />
                         </div>
                         <div class="col-sm-7">
@@ -76,9 +76,9 @@
                                         <i class="fas fa-sort"></i>
                                     </span>
                                 </th>
-                                <th @click="softBy('brands_count')">
-                                    <span class="fs-5 fw-bold text-dark me-2">Brands</span>
-                                    <span v-if="config.order_by == 'brands_count'">
+                                <th @click="softBy('categories_count')">
+                                    <span class="fs-5 fw-bold text-dark me-2">Categories</span>
+                                    <span v-if="config.order_by == 'categories_count'">
                                         <i v-if="config.mode == 'desc'" class="fas fa-sort-down"></i>
                                         <i v-else class="fas fa-sort-up"></i>
                                     </span>
@@ -97,7 +97,7 @@
                                     </span>
                                 </th>
                                 <th @click="softBy('created_at')">
-                                    <span class="fs-5 fw-bold text-dark me-2">Created at</span>
+                                    <span class="fs-5 fw-bold text-dark me-2">Timestamp</span>
                                     <span v-if="config.order_by == 'created_at'">
                                         <i v-if="config.mode == 'desc'" class="fas fa-sort-down"></i>
                                         <i v-else class="fas fa-sort-up"></i>
@@ -112,32 +112,41 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="category in categories" :key="category.id">
+                            <tr v-for="brand in brands" :key="brand.id">
                                 <td class="dt-checkboxes-cell dtr-control" style="outline: none;">
                                     <div class="form-check">
                                         <input type="checkbox" class="form-check-input dt-checkboxes">
                                         <label class="form-check-label">&nbsp;</label>
                                     </div>
                                 </td>
-                                <td>{{ category.id }}</td>
-                                <td class="sorting">{{ category.name }}</td>
-                                <td class="sorting">{{ category.brands }}</td>
-                                <td class="sorting">{{ category.products }}</td>
-                                <td>{{ category.created_at }}</td>
+                                <td>{{ brand.id }}</td>
+                                <td class="sorting">{{ brand.name }}</td>
+                                <td class="sorting">{{ brand.categories }}</td>
+                                <td class="sorting">{{ brand.products }}</td>
+                                <td>
+                                    <div>
+                                        <span class="fw-bold">Created at: </span>
+                                        <span>{{ brand.created_at }}</span>
+                                    </div>
+                                    <div>
+                                        <span class="fw-bold">Updated at: </span>
+                                        <span>{{ brand.updated_at }}</span>
+                                    </div>
+                                </td>
                                 <td class="table-action">
-                                    <a href="javascript:void(0);" @click="showCategory(category.id)"
+                                    <a href="javascript:void(0);" @click="showbrand(brand.id)"
                                         class="action-icon text-info">
                                         <i class="mdi mdi-eye"></i>
                                     </a>
-                                    <a href="javascript:void(0);" @click="editCategory(category.id)"
+                                    <a href="javascript:void(0);" @click="editbrand(brand.id)"
                                         class="action-icon text-success">
                                         <i class="mdi mdi-square-edit-outline"></i>
                                     </a>
-                                    <Delete :id="category.id" :load-data="loadData" />
+                                    <Delete :id="brand.id" :load-data="loadData" />
                                 </td>
                             </tr>
-                            <tr v-if="!categories.length">
-                                <td colspan="7" class="text-center">No categorys found</td>
+                            <tr v-if="!brands.length">
+                                <td colspan="7" class="text-center">No brands found</td>
                             </tr>
                         </tbody>
                     </table>
@@ -175,7 +184,7 @@ export default {
     },
     data() {
         return {
-            categories: [],
+            brands: [],
             meta: {},
             config: {
                 page: 1,
@@ -216,7 +225,7 @@ export default {
             this.loadData();
         },
         loadData() {
-            let url = "http://127.0.0.1:8000/api/admin/categories?order_by=id&mode=asc&page=" + this.config.page
+            let url = "http://127.0.0.1:8000/api/admin/brands?page=" + this.config.page
             if (this.config.key && this.config.search) {
                 url += "&key=" + this.config.key + "&search=" + this.config.search;
             }
@@ -233,20 +242,20 @@ export default {
                 }
             })
                 .then(response => {
-                    this.categories = response.data.data;
+                    this.brands = response.data.data;
                     this.meta = convertPage(response.data.meta);
                 })
                 .catch(error => {
                     console.log(error);
                 });
         },
-        showCategory(id) {
+        showbrand(id) {
             this.id = id
-            $("#showModalCategory").modal('show');
+            $("#showModalbrand").modal('show');
         },
-        editCategory(id) {
+        editbrand(id) {
             this.id = id
-            $("#editModalCategory").modal('show');
+            $("#editModalbrand").modal('show');
         }
     },
     mounted() {

@@ -1,9 +1,9 @@
 <template v-if="id">
-    <div class="modal fade" id="showModalCategory" tabindex="-1" aria-labelledby="showModalCategory" aria-hidden="true">
+    <div class="modal fade" id="showModalTag" tabindex="-1" aria-labelledby="showModalTag" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header modal-colored-header bg-success">
-                    <h1 class="modal-title h3 text-light">Show category</h1>
+                    <h1 class="modal-title h3 text-light">Show Tag</h1>
                     <button type="button" class="btn-close text-light" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -17,16 +17,8 @@
                             <input v-if="data" :value="data.slug" type="text" class="form-control" disabled>
                         </div>
                         <div class="mb-3">
-                            <label class="col-form-label fw-bold text-dark">Brands:</label>
-                            <input v-if="data" :value="data.brands" type="text" class="form-control" disabled>
-                        </div>
-                        <div class="mb-3">
                             <label class="col-form-label fw-bold text-dark">Products:</label>
                             <input v-if="data" :value="data.products" type="text" class="form-control" disabled>
-                        </div>
-                        <div class="mb-3">
-                            <label class="col-form-label fw-bold text-dark">Description:</label>
-                            <textarea v-if="data" :value="data.description" class="form-control" disabled></textarea>
                         </div>
                         <div class="mb-3">
                             <label class="col-form-label fw-bold text-dark">Created at:</label>
@@ -79,13 +71,13 @@ export default {
                 return;
             }
             try {
-                const data = await api.get('api/admin/categories/' + id, {
+                const data = await api.get('api/admin/tags/' + id, {
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + this.auth.access_token
                 })
                 this.data = await data.data.data
                 // this.loadData()
-                // $("#showModalCategory").modal('hide');
+                // $("#showModalTag").modal('hide');
             } catch (e) {
                 console.log(e)
                 try {

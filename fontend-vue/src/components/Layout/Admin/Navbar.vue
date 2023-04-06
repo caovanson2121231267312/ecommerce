@@ -126,6 +126,9 @@
                     <div class="collapse" id="sidebarEcommerce">
                         <ul class="side-nav-second-level">
                             <li>
+                                <RouterLink to="/admin/brands">Brands</RouterLink>
+                            </li>
+                            <li>
                                 <RouterLink to="/admin/categories">Categories</RouterLink>
                             </li>
                             <li>
@@ -152,9 +155,35 @@
                             <li>
                                 <a href="apps-ecommerce-sellers.html">Sellers</a>
                             </li>
+                            <li>
+                                <RouterLink to="/admin/tags">Tags</RouterLink>
+                            </li>
                         </ul>
                     </div>
                 </li>
+
+                <li class="side-nav-item">
+                    <a data-bs-toggle="collapse" href="#sidebarAuthorization" aria-expanded="false"
+                        aria-controls="sidebarAuthorization" class="side-nav-link">
+                        <i class="uil-store"></i>
+                        <span> Authorization </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="sidebarAuthorization">
+                        <ul class="side-nav-second-level">
+                            <li>
+                                <RouterLink to="/admin/brands">Users</RouterLink>
+                            </li>
+                            <li>
+                                <RouterLink to="/admin/categories">Roles</RouterLink>
+                            </li>
+                            <li>
+                                <RouterLink to="/admin/permissions">Permissions</RouterLink>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
 
                 <li class="side-nav-item">
                     <a data-bs-toggle="collapse" href="#sidebarEmail" aria-expanded="false" aria-controls="sidebarEmail"

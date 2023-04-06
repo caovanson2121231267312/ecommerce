@@ -145,7 +145,7 @@ class ProductController extends Controller
 
             return response()->json([
                 'message' => __('update_success'),
-                'data' => new ProductResource($Product),
+                'data' => new ProductResource($product),
             ], 200);
         } catch (ModelNotFoundException $exception) {
 

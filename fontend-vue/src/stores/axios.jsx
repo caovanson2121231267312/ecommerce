@@ -2,9 +2,9 @@ import axios from 'axios'
 import { domain } from '../config'
 
 const api = {
-    async get(url) {
+    async get(url, headers = {}) {
         try {
-            return await axios.get(domain + url)
+            return await axios.get(domain + url, { headers: headers })
         } catch (e) {
             console.log(e)
             return e
@@ -15,7 +15,7 @@ const api = {
         try {
             return await axios.post(domain + url, data, { headers: headers })
         } catch (e) {
-            throw(e.response.data)
+            throw e.response.data
         }
     },
 

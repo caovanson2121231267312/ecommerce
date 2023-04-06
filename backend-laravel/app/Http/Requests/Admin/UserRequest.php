@@ -3,9 +3,8 @@
 namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class CategoryRequest extends ApiRequest
+class UserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,11 +24,12 @@ class CategoryRequest extends ApiRequest
     public function rules()
     {
         return [
-            'name' => [
-                'required', 'max:100', 'min:2',
-                Rule::unique('categories', 'name')->ignore($this->category)
-            ],
-            'description' => 'required|min:2',
+            "id" => $this->id,
+            "name" => $this->name,
+            "email" => $this->email,
+            "phone_number" => $this->phone_number,
+            "note" => $this->note,
+            "status" => $this->status,
         ];
     }
 }

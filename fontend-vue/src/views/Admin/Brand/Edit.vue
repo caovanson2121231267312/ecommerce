@@ -1,26 +1,21 @@
-<template>
-    <div class="modal fade" id="createModalCategory" tabindex="-1" aria-labelledby="createModalCategory" aria-hidden="true">
+<template v-if="id">
+    <div class="modal fade" id="editModalbrand" tabindex="-1" aria-labelledby="editModalbrand" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header modal-colored-header bg-success">
-                    <h3 class="modal-title h3 text-light">New category</h3>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h3 class="modal-title h3 text-light">Edit brand</h3>
+                    <button type="button" class="btn-close text-light" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form>
                         <div class="mb-3">
-                            <label class="col-form-label fw-bold">Name:</label>
-                            <input v-model="name" type="text"
-                                :class="{ 'form-control': true, 'is-invalid': errors && errors.name }">
-                            <template v-if="errors" v-for="(item, index) in errors.name" v-bind:key="index">
-                                <span class="text-danger">{{ item }}</span>
-                            </template>
+                            <label class="col-form-label fw-bold text-dark">Id:</label>
+                            <input v-if="data" :value="data.id" type="text" class="form-control" disabled>
                         </div>
                         <div class="mb-3">
-                            <label class="col-form-label fw-bold">Description:</label>
-                            <textarea v-model="description"
-                                :class="{ 'form-control': true, 'is-invalid': errors && errors.description }"></textarea>
-                            <template v-if="errors" v-for="(item, index) in errors.description" v-bind:key="index">
+                            <label class="col-form-label fw-bold text-dark">Name:</label>
+                            <input v-if="data" v-model="name" type="text" class="form-control">
+                            <template v-if="errors" v-for="(item, index) in errors.name" v-bind:key="index">
                                 <span class="text-danger">{{ item }}</span>
                             </template>
                         </div>
@@ -42,16 +37,20 @@ import { alert, notify } from "../../../config"
 export default {
     data() {
         return {
+            data: null,
             name: '',
             description: '',
             errors: null,
         }
     },
     props: {
+        id: {
+            type: Number,
+        },
         loadData: {
             type: Function,
-            required: true
-        },
+            required: true,
+        }
     },
     computed: {
         auth() {
@@ -59,27 +58,48 @@ export default {
         },
     },
     methods: {
+        async findById(id) {
+            if (!this.auth) {
+                alert('danger', 'top-center', 'Bạn cần đăng nhập để tiếp tục.');
+                this.$router.push('/login');
+                return;
+            }
+            try {
+                const data = await api.get('api/admin/brands/' + id, {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + this.auth.access_token
+                })
+                this.data = await data.data.data
+                this.name = this.data.name
+                this.description = this.data.description
+            } catch (e) {
+                console.log(e)
+                try {
+                    notify('danger', 'top-center', JSON.stringify(e));
+                } catch (ex) {
+                    alert('danger', 'top-center', 'Đã có lỗi xảy ra vui lòng thử lại.');
+                }
+            }
+        },
         async sendData() {
             if (!this.auth) {
                 alert('danger', 'top-center', 'Bạn cần đăng nhập để tiếp tục.');
                 this.$router.push('/login');
                 return;
             }
-            console.log(this.auth.access_token)
             let form = await new FormData()
             await form.append('name', this.name)
             await form.append('description', this.description)
             await form.append('parent_id', 0)
+            await form.append('_method', "PUT")
             try {
-                const data = await api.post('api/admin/categories', form, {
+                const data = await api.post('api/admin/brands/' + this.id, form, {
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + this.auth.access_token
                 })
-                await alert('success', 'top-center', 'Đã thêm 1 danh mục mới.');
+                await alert('success', 'top-center', 'Sửa thành công danh mục.');
                 this.loadData()
-                $("#createModalCategory").modal('hide');
-                this.name = '';
-                this.description = '';
+                $("#editModalbrand").modal('hide');
                 this.errors = null;
             } catch (e) {
                 if (e.errors) {
@@ -94,6 +114,15 @@ export default {
                 }
             }
         },
+    },
+    watch: {
+        id() {
+            if (this.id) {
+                this.findById(this.id);
+            } else {
+                console.log("id no avaiable")
+            }
+        }
     },
 }
 </script>

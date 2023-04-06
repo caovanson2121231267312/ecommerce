@@ -10,6 +10,9 @@ interface BaseRepositoryInterface
     // Find an record of model
     public function find(int $id);
 
+    // Find an record of model with relationships
+    public function findWithRelation(int $id, array $relations);
+
     // Find by where and order by
     public function findByWhere(array $where, $orderBy = 'id', $order = 'asc');
 

@@ -7,19 +7,19 @@ use App\Traits\DataController;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Database\QueryException;
-use App\Http\Requests\Admin\CategoryRequest;
-use App\Http\Resources\Admin\CategoryResource;
-use App\Repositories\Category\CategoryRepository;
+use App\Http\Requests\Admin\BrandRequest;
+use App\Http\Resources\Admin\BrandResource;
+use App\Repositories\Brand\BrandRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class CategoryController extends Controller
+class BrandController extends Controller
 {
     use DataController;
 
-    public function __construct(CategoryRepository $categoryRepo)
+    public function __construct(BrandRepository $brandRepo)
     {
         $this->middleware('auth:api');
-        $this->category = $categoryRepo;
+        $this->brand = $brandRepo;
     }
 
     public function index(Request $request)
@@ -27,40 +27,38 @@ class CategoryController extends Controller
         $this->setData($request);
 
         try {
-            $categories = $this->category->getCategories($this->data);
+            $brands = $this->brand->getBrands($this->data);
 
-            return CategoryResource::collection($categories);
+            return BrandResource::collection($brands);
         } catch (QueryException $exception) {
 
             return response()->json([
                 "mess" => $exception->getMessage(),
-            ], 500);
+            ], 400);
         }
     }
 
-    public function store(CategoryRequest $request)
+    public function store(BrandRequest $request)
     {
         $data = [
             "name" => $request->name,
-            "parent_id" => $request->parent_id,
-            "description" => $request->description,
         ];
 
-        $category = $this->category->create($data);
+        $brand = $this->brand->create($data);
 
         return response()->json([
             'message' => "create success",
-            'data' => new CategoryResource($category),
+            'data' => new BrandResource($brand),
         ], 200);
     }
 
     public function show($id)
     {
         try {
-            $data = $this->category->findWithRelation($id, ["brands", "products"]);
+            $data = $this->brand->findWithRelation($id, ["products", "categories"]);
 
             return response()->json([
-                'data' => new CategoryResource($data),
+                'data' => new BrandResource($data),
             ], 200);
         } catch (ModelNotFoundException $exception) {
 
@@ -71,20 +69,18 @@ class CategoryController extends Controller
     }
 
 
-    public function update(CategoryRequest $request, $id)
+    public function update(BrandRequest $request, $id)
     {
         try {
             $data = [
                 "name" => $request->name,
-                "parent_id" => $request->parent_id,
-                "description" => $request->description,
             ];
 
-            $category = $this->category->update($id, $data);
+            $brand = $this->brand->update($id, $data);
 
             return response()->json([
                 'message' => __('update_success'),
-                'data' => new CategoryResource($category),
+                'data' => new BrandResource($brand),
             ], 200);
         } catch (ModelNotFoundException $exception) {
 
@@ -99,7 +95,7 @@ class CategoryController extends Controller
         try {
             DB::beginTransaction();
 
-            $this->category->delete($id);
+            $this->brand->delete($id);
 
             DB::commit();
         } catch (\Throwable $th) {

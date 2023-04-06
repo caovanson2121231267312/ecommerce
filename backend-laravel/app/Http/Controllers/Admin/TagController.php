@@ -10,10 +10,11 @@ use Illuminate\Database\QueryException;
 use App\Http\Requests\Admin\TagRequest;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\DB;
+use App\Traits\DataController;
 
 class TagController extends Controller
 {
-    public $tag;
+    use DataController;
 
     public function __construct(TagRepository $tagRepo)
     {
@@ -23,17 +24,10 @@ class TagController extends Controller
 
     public function index(Request $request)
     {
-        $data = [
-            "page" => $request->page,
-            "page_size" => $request->page_size,
-            "order_by" => $request->order_by ?? "id",
-            "mode" => $request->mode ?? "ASC",
-            "search" => $request->search ?? null,
-            "key" => $request->key ?? null,
-        ];
+        $this->setData($request);
 
         try {
-            $tags = $this->tag->getWithConfig($data);
+            $tags = $this->tag->getTags($this->data);
 
             return TagResource::collection($tags);
         } catch (QueryException $exception) {
@@ -61,7 +55,7 @@ class TagController extends Controller
     public function show($id)
     {
         try {
-            $data = $this->tag->find($id);
+            $data = $this->tag->findWithRelation($id, ["products"]);
 
             return response()->json([
                 'data' => new TagResource($data),

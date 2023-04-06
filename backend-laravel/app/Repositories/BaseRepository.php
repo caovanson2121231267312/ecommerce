@@ -54,6 +54,11 @@ abstract class BaseRepository implements BaseRepositoryInterface
         return $this->model->findOrFail($id);
     }
 
+    public function findWithRelation(int $id,array $relations)
+    {
+        return $this->model->findOrFail($id)->load($relations);
+    }
+
     public function findByWhere(array $where, $orderBy = 'id', $order = 'asc')
     {
         return $this->model->where($where)->orderBy($orderBy, $order)->get();

@@ -22,8 +22,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::group(['prefix' => '/admin', 'namespace' => 'Admin'], function () {
     Route::resource('categories', CategoryController::class)->except(['create', 'edit']);
     Route::resource('tags', TagController::class)->except(['create', 'edit']);
+    Route::resource('brands', BrandController::class)->except(['create', 'edit']);
     Route::resource('vouchers', VoucherController::class)->except(['create', 'edit']);
     Route::resource('products', ProductController::class)->except(['create', 'edit']);
+    Route::resource('permissions', PermissionController::class)->except(['create', 'edit']);
 });
 
 // Route::group(['middleware' => 'api', 'prefix' => 'auth', 'namespace' => 'Api'], function ($router) {

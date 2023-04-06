@@ -24,19 +24,19 @@
         <div>
             <div>
                 <span class="fw-bold">Category: </span>
-                <RouterLink :title="value.category.id" class="" to="#">
+                <RouterLink v-if="value.category" :title="value.category.id" class="" to="#">
                     {{ value.category.name }}
                 </RouterLink>
             </div>
             <div>
                 <span class="fw-bold">Brand: </span>
-                <RouterLink :title="value.brand.id" class="" to="#">
+                <RouterLink v-if="value.brand" :title="value.brand.id" class="" to="#">
                     {{ value.brand.name }}
                 </RouterLink>
             </div>
             <div>
                 <span class="fw-bold">User: </span>
-                <RouterLink :title="value.user.email" class="" to="#">
+                <RouterLink v-if="value.user" :title="value.user.email" class="" to="#">
                     {{ value.user.name }}
                 </RouterLink>
             </div>

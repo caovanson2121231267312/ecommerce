@@ -1,22 +1,22 @@
 <?php
 
-namespace App\Repositories\Tag;
+namespace App\Repositories\Brand;
 
-use App\Models\Tag;
+use App\Models\Brand;
 use App\Repositories\EloquentRepository;
 use App\Repositories\BaseRepository;
-use App\Repositories\Tag\TagRepositoryInterface;
+use App\Repositories\Brand\BrandRepositoryInterface;
 
-class TagRepository extends BaseRepository implements TagRepositoryInterface
+class BrandRepository extends BaseRepository implements BrandRepositoryInterface
 {
     public function getModel()
     {
-        return Tag::class;
+        return Brand::class;
     }
 
-    public function getTags($config)
+    public function getBrands($config)
     {
-        return $this->model->withCount(['products'])
+        return $this->model->withCount(['categories', 'products'])
             ->orderBy($config['order_by'], $config['mode'])
             ->when($config['search'], function ($q) use ($config) {
                 return $q->where($config['search'], "like", "%{$config['key']}%");

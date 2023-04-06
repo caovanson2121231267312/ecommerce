@@ -18,6 +18,9 @@ class TagResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'slug' => $this->slug,
+            'products' => $this->products_count ?? null,
+            'created_at' => $this->created_at ? $this->created_at->format('H:i:s d/m/Y') : null,
+            'updated_at' => $this->updated_at ? $this->updated_at->format('H:i:s d/m/Y') : null,
         ];
     }
 }

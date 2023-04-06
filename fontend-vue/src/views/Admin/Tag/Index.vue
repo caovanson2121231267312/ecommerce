@@ -7,8 +7,8 @@
                 <div class="card-body">
                     <div class="row mb-2">
                         <div class="col-sm-5">
-                            <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#createModalCategory"
-                                class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle me-2"></i> Add Category</a>
+                            <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#createModalTag"
+                                class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle me-2"></i> Add Tag</a>
                             <Create :loadData="loadData" />
                         </div>
                         <div class="col-sm-7">
@@ -76,7 +76,7 @@
                                         <i class="fas fa-sort"></i>
                                     </span>
                                 </th>
-                                <th @click="softBy('brands_count')">
+                                <!-- <th @click="softBy('brands_count')">
                                     <span class="fs-5 fw-bold text-dark me-2">Brands</span>
                                     <span v-if="config.order_by == 'brands_count'">
                                         <i v-if="config.mode == 'desc'" class="fas fa-sort-down"></i>
@@ -85,7 +85,7 @@
                                     <span v-else>
                                         <i class="fas fa-sort"></i>
                                     </span>
-                                </th>
+                                </th> -->
                                 <th @click="softBy('products_count')">
                                     <span class="fs-5 fw-bold text-dark me-2">Products</span>
                                     <span v-if="config.order_by == 'products_count'">
@@ -97,7 +97,7 @@
                                     </span>
                                 </th>
                                 <th @click="softBy('created_at')">
-                                    <span class="fs-5 fw-bold text-dark me-2">Created at</span>
+                                    <span class="fs-5 fw-bold text-dark me-2">Timestamp</span>
                                     <span v-if="config.order_by == 'created_at'">
                                         <i v-if="config.mode == 'desc'" class="fas fa-sort-down"></i>
                                         <i v-else class="fas fa-sort-up"></i>
@@ -112,32 +112,39 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="category in categories" :key="category.id">
+                            <tr v-for="Tag in tags" :key="Tag.id">
                                 <td class="dt-checkboxes-cell dtr-control" style="outline: none;">
                                     <div class="form-check">
                                         <input type="checkbox" class="form-check-input dt-checkboxes">
                                         <label class="form-check-label">&nbsp;</label>
                                     </div>
                                 </td>
-                                <td>{{ category.id }}</td>
-                                <td class="sorting">{{ category.name }}</td>
-                                <td class="sorting">{{ category.brands }}</td>
-                                <td class="sorting">{{ category.products }}</td>
-                                <td>{{ category.created_at }}</td>
+                                <td>{{ Tag.id }}</td>
+                                <td class="sorting">{{ Tag.name }}</td>
+                                <!-- <td class="sorting">{{ Tag.brands }}</td> -->
+                                <td class="sorting">{{ Tag.products }}</td>
+                                <td>
+                                    <div>
+                                        <span class="fw-bold">Created at: </span>
+                                        <span>{{ Tag.created_at }}</span>
+                                    </div>
+                                    <div>
+                                        <span class="fw-bold">Updated at: </span>
+                                        <span>{{ Tag.updated_at }}</span>
+                                    </div>
+                                </td>
                                 <td class="table-action">
-                                    <a href="javascript:void(0);" @click="showCategory(category.id)"
-                                        class="action-icon text-info">
+                                    <a href="javascript:void(0);" @click="showTag(Tag.id)" class="action-icon text-info">
                                         <i class="mdi mdi-eye"></i>
                                     </a>
-                                    <a href="javascript:void(0);" @click="editCategory(category.id)"
-                                        class="action-icon text-success">
+                                    <a href="javascript:void(0);" @click="editTag(Tag.id)" class="action-icon text-success">
                                         <i class="mdi mdi-square-edit-outline"></i>
                                     </a>
-                                    <Delete :id="category.id" :load-data="loadData" />
+                                    <Delete :id="Tag.id" :load-data="loadData" />
                                 </td>
                             </tr>
-                            <tr v-if="!categories.length">
-                                <td colspan="7" class="text-center">No categorys found</td>
+                            <tr v-if="!tags.length">
+                                <td colspan="7" class="text-center">No Tags found</td>
                             </tr>
                         </tbody>
                     </table>
@@ -175,7 +182,7 @@ export default {
     },
     data() {
         return {
-            categories: [],
+            tags: [],
             meta: {},
             config: {
                 page: 1,
@@ -216,7 +223,7 @@ export default {
             this.loadData();
         },
         loadData() {
-            let url = "http://127.0.0.1:8000/api/admin/categories?order_by=id&mode=asc&page=" + this.config.page
+            let url = "http://127.0.0.1:8000/api/admin/tags?order_by=id&mode=asc&page=" + this.config.page
             if (this.config.key && this.config.search) {
                 url += "&key=" + this.config.key + "&search=" + this.config.search;
             }
@@ -233,20 +240,20 @@ export default {
                 }
             })
                 .then(response => {
-                    this.categories = response.data.data;
+                    this.tags = response.data.data;
                     this.meta = convertPage(response.data.meta);
                 })
                 .catch(error => {
                     console.log(error);
                 });
         },
-        showCategory(id) {
+        showTag(id) {
             this.id = id
-            $("#showModalCategory").modal('show');
+            $("#showModalTag").modal('show');
         },
-        editCategory(id) {
+        editTag(id) {
             this.id = id
-            $("#editModalCategory").modal('show');
+            $("#editModalTag").modal('show');
         }
     },
     mounted() {

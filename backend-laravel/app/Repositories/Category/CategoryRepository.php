@@ -23,4 +23,9 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
             })
             ->paginate($config['page_size'] ?? config('setting.default_page_size'));
     }
+
+    public function findWithRelation(int $id, array $relations)
+    {
+        return $this->model->find($id)->loadCount($relations);
+    }
 }

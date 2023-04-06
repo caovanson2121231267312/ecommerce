@@ -1,22 +1,21 @@
 <?php
 
-namespace App\Repositories\Tag;
+namespace App\Repositories\Permission;
 
-use App\Models\Tag;
-use App\Repositories\EloquentRepository;
+use Spatie\Permission\Models\Permission;
 use App\Repositories\BaseRepository;
-use App\Repositories\Tag\TagRepositoryInterface;
+use App\Repositories\Permission\PermissionRepositoryInterface;
 
-class TagRepository extends BaseRepository implements TagRepositoryInterface
+class PermissionRepository extends BaseRepository implements PermissionRepositoryInterface
 {
     public function getModel()
     {
-        return Tag::class;
+        return Permission::class;
     }
 
-    public function getTags($config)
+    public function getPermissions($config)
     {
-        return $this->model->withCount(['products'])
+        return $this->model->withCount(['roles', 'users'])
             ->orderBy($config['order_by'], $config['mode'])
             ->when($config['search'], function ($q) use ($config) {
                 return $q->where($config['search'], "like", "%{$config['key']}%");

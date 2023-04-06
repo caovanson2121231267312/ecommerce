@@ -61,6 +61,24 @@ const router = createRouter({
             component: () => import('../views/Admin/Category/Index.vue')
         },
         {
+            path: '/admin/brands',
+            name: 'admin-brands',
+            meta: {
+                layout: 'admin',
+                auth: true
+            },
+            component: () => import('../views/Admin/Brand/Index.vue')
+        },
+        {
+            path: '/admin/tags',
+            name: 'admin-tags',
+            meta: {
+                layout: 'admin',
+                auth: true
+            },
+            component: () => import('../views/Admin/Tag/Index.vue')
+        },
+        {
             path: '/admin/products',
             name: 'admin-products',
             meta: {
@@ -68,6 +86,15 @@ const router = createRouter({
                 auth: true
             },
             component: () => import('../views/Admin/Product/Index.vue')
+        },
+        {
+            path: '/admin/permissions',
+            name: 'admin-permissions',
+            meta: {
+                layout: 'admin',
+                auth: true
+            },
+            component: () => import('../views/Admin/Permission/Index.vue')
         },
         {
             path: '/:slug',

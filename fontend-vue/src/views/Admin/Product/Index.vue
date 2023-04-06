@@ -111,9 +111,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(value, index) in products" v-bind:key="index">
-                                <Row :value="value" />
-                            </tr>
+                            <!-- <template> -->
+                                <tr v-for="(value, index) in products" v-bind:key="index">
+                                    <Row :value="value" />
+                                </tr>
+                            <!-- </template> -->
                             <tr v-if="!products.length">
                                 <td colspan="7" class="text-center">No values found</td>
                             </tr>
@@ -189,7 +191,7 @@ export default {
             this.loadData();
         },
         loadData() {
-            let url = "http://127.0.0.1:8000/api/admin/products?order_by=id&mode=asc&page=" + this.config.page
+            let url = "http://127.0.0.1:8000/api/admin/products?page=" + this.config.page
             if (this.config.key && this.config.search) {
                 url += "&key=" + this.config.key + "&search=" + this.config.search;
             }

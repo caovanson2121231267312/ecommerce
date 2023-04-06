@@ -1,9 +1,9 @@
 <template>
-    <div class="modal fade" id="createModalCategory" tabindex="-1" aria-labelledby="createModalCategory" aria-hidden="true">
+    <div class="modal fade" id="createModalTag" tabindex="-1" aria-labelledby="createModalTag" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header modal-colored-header bg-success">
-                    <h3 class="modal-title h3 text-light">New category</h3>
+                    <h3 class="modal-title h3 text-light">New Tag</h3>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -13,14 +13,6 @@
                             <input v-model="name" type="text"
                                 :class="{ 'form-control': true, 'is-invalid': errors && errors.name }">
                             <template v-if="errors" v-for="(item, index) in errors.name" v-bind:key="index">
-                                <span class="text-danger">{{ item }}</span>
-                            </template>
-                        </div>
-                        <div class="mb-3">
-                            <label class="col-form-label fw-bold">Description:</label>
-                            <textarea v-model="description"
-                                :class="{ 'form-control': true, 'is-invalid': errors && errors.description }"></textarea>
-                            <template v-if="errors" v-for="(item, index) in errors.description" v-bind:key="index">
                                 <span class="text-danger">{{ item }}</span>
                             </template>
                         </div>
@@ -71,13 +63,13 @@ export default {
             await form.append('description', this.description)
             await form.append('parent_id', 0)
             try {
-                const data = await api.post('api/admin/categories', form, {
+                const data = await api.post('api/admin/tags', form, {
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + this.auth.access_token
                 })
                 await alert('success', 'top-center', 'Đã thêm 1 danh mục mới.');
                 this.loadData()
-                $("#createModalCategory").modal('hide');
+                $("#createModalTag").modal('hide');
                 this.name = '';
                 this.description = '';
                 this.errors = null;
