@@ -7,8 +7,8 @@
                 <div class="card-body">
                     <div class="row mb-2">
                         <div class="col-sm-5">
-                            <RouterLink to="/admin/roles/create" class="btn btn-danger mb-2">
-                                <i class="mdi mdi-plus-circle me-2"></i> Add Role
+                            <RouterLink to="/admin/users/create" class="btn btn-danger mb-2">
+                                <i class="mdi mdi-plus-circle me-2"></i> Add User
                             </RouterLink>
                         </div>
                         <div class="col-sm-7">
@@ -67,7 +67,7 @@
                                     </span>
                                 </th>
                                 <th @click="softBy('name')">
-                                    <span class="fs-5 fw-bold text-dark me-2">Name</span>
+                                    <span class="fs-5 fw-bold text-dark me-2">User</span>
                                     <span v-if="config.order_by == 'name'">
                                         <i v-if="config.mode == 'desc'" class="fas fa-sort-down"></i>
                                         <i v-else class="fas fa-sort-up"></i>
@@ -77,7 +77,7 @@
                                     </span>
                                 </th>
                                 <th @click="softBy('permissions_count')">
-                                    <span class="fs-5 fw-bold text-dark me-2">Permissions</span>
+                                    <span class="fs-5 fw-bold text-dark me-2">Role</span>
                                     <span v-if="config.order_by == 'permissions_count'">
                                         <i v-if="config.mode == 'desc'" class="fas fa-sort-down"></i>
                                         <i v-else class="fas fa-sort-up"></i>
@@ -112,39 +112,65 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="role in roles" :key="role.id">
+                            <tr v-for="user in users" :key="user.id">
                                 <td class="dt-checkboxes-cell dtr-control" style="outline: none;">
                                     <div class="form-check">
                                         <input type="checkbox" class="form-check-input dt-checkboxes">
                                         <label class="form-check-label">&nbsp;</label>
                                     </div>
                                 </td>
-                                <td>{{ role.id }}</td>
-                                <td class="sorting">{{ role.name }}</td>
-                                <td class="sorting">{{ role.permissions_count }}</td>
-                                <td class="sorting">{{ role.users }}</td>
+                                <td>{{ user.id }}</td>
+                                <td class="sorting">
+                                    <div class="d-flex">
+                                        <div>
+                                            <img class="border border-2 rounded-circle me-2" width="60"
+                                                :src="domain + user.avatar" :alt="user.email" />
+                                        </div>
+                                        <div>
+                                            <div>
+                                                <span class="text-dark fw-bold">Name: </span>
+                                                <span>{{ user.name }}</span>
+                                            </div>
+                                            <div>
+                                                <span class="text-dark fw-bold">Email: </span>
+                                                <span>{{ user.email }}</span>
+                                            </div>
+                                            <div>
+                                                <span class="text-dark fw-bold">Date of Birth: </span>
+                                                <span>{{ user.dob }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="sorting">
+                                    <span class="badge rounded-pill bg-danger me-1" v-for="(item, index) in user.roles"
+                                        v-bind:key="index">
+                                        {{ item.name }}
+                                    </span>
+                                </td>
+                                <td class="sorting">{{ user.users }}</td>
                                 <td>
                                     <div>
                                         <span class="fw-bold">Created at: </span>
-                                        <span>{{ role.created_at }}</span>
+                                        <span>{{ user.created_at }}</span>
                                     </div>
                                     <div>
                                         <span class="fw-bold">Updated at: </span>
-                                        <span>{{ role.updated_at }}</span>
+                                        <span>{{ user.updated_at }}</span>
                                     </div>
                                 </td>
                                 <td class="table-action">
-                                    <a href="javascript:void(0);" @click="showrole(role.id)" class="action-icon text-info">
+                                    <a href="javascript:void(0);" @click="showuser(user.id)" class="action-icon text-info">
                                         <i class="mdi mdi-eye"></i>
                                     </a>
-                                    <RouterLink :to="'/admin/roles/edit/' + role.id" class="action-icon text-success">
+                                    <RouterLink :to="'/admin/users/edit/' + user.id" class="action-icon text-success">
                                         <i class="mdi mdi-square-edit-outline"></i>
                                     </RouterLink>
-                                    <Delete :id="role.id" :load-data="loadData" />
+                                    <Delete :id="user.id" :load-data="loadData" />
                                 </td>
                             </tr>
-                            <tr v-if="!roles.length">
-                                <td colspan="7" class="text-center">No roles found</td>
+                            <tr v-if="!users.length">
+                                <td colspan="7" class="text-center">No users found</td>
                             </tr>
                         </tbody>
                     </table>
@@ -162,7 +188,7 @@
 <script>
 import Breadcrumb from '@/components/Layout/Admin/Breadcrumb.vue';
 import Pagination from '@/components/Page/Pagination.vue';
-import { convertPage } from '../../../config';
+import { convertPage, domain } from '../../../config';
 import Create from './Create.vue';
 import Show from './Show.vue';
 import Delete from './Delete.vue';
@@ -180,7 +206,7 @@ export default {
     },
     data() {
         return {
-            roles: [],
+            users: [],
             meta: {},
             config: {
                 page: 1,
@@ -193,6 +219,9 @@ export default {
         };
     },
     computed: {
+        domain() {
+            return domain;
+        }
     },
     methods: {
         changePage(pageNumber) {
@@ -221,7 +250,7 @@ export default {
             this.loadData();
         },
         loadData() {
-            let url = "api/admin/roles?page=" + this.config.page
+            let url = "api/admin/users?page=" + this.config.page
             if (this.config.key && this.config.search) {
                 url += "&key=" + this.config.key + "&search=" + this.config.search;
             }
@@ -236,13 +265,13 @@ export default {
                 'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('auth')).access_token
             }, this)
                 .then(response => {
-                    this.roles = response.data.data;
+                    this.users = response.data.data;
                     this.meta = convertPage(response.data.meta);
                 })
         },
-        showrole(id) {
+        showuser(id) {
             this.id = id
-            $("#showModalrole").modal('show');
+            $("#showModaluser").modal('show');
         },
     },
     mounted() {

@@ -70,7 +70,7 @@ class RoleController extends Controller
     public function show($id)
     {
         try {
-            $data = $this->role->findWithRelation($id, ["permissions", "users"]);
+            $data = $this->role->findWithRelationData($id, ["permissions", "users"], ["permissions"]);
 
             return response()->json([
                 'data' => new RoleResource($data),

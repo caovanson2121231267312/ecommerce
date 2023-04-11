@@ -172,7 +172,7 @@
                     <div class="collapse" id="sidebarAuthorization">
                         <ul class="side-nav-second-level">
                             <li>
-                                <RouterLink to="/admin/brands">Users</RouterLink>
+                                <RouterLink to="/admin/users">Users</RouterLink>
                             </li>
                             <li>
                                 <RouterLink to="/admin/roles">Roles</RouterLink>
