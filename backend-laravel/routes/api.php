@@ -26,6 +26,8 @@ Route::group(['prefix' => '/admin', 'namespace' => 'Admin'], function () {
     Route::resource('vouchers', VoucherController::class)->except(['create', 'edit']);
     Route::resource('products', ProductController::class)->except(['create', 'edit']);
     Route::resource('permissions', PermissionController::class)->except(['create', 'edit']);
+    Route::resource('roles', RoleController::class);
+    Route::resource('users', UserController::class);
 });
 
 // Route::group(['middleware' => 'api', 'prefix' => 'auth', 'namespace' => 'Api'], function ($router) {

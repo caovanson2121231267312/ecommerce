@@ -2,12 +2,17 @@ import axios from 'axios'
 import { domain } from '../config'
 
 const api = {
-    async get(url, headers = {}) {
+    async get(url, headers = {}, vue) {
         try {
             return await axios.get(domain + url, { headers: headers })
         } catch (e) {
-            console.log(e)
-            return e
+            vue.$checkResponseCode(
+                e.response.status,
+                e.response.statusText,
+                e.response.data.message ?? e.message,
+                vue
+            )
+            throw e
         }
     },
 

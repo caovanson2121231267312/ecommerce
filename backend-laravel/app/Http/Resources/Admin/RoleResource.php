@@ -4,7 +4,7 @@ namespace App\Http\Resources\Admin;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class PermissionResource extends JsonResource
+class RoleResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,10 +15,11 @@ class PermissionResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id ?? null,
+            'id' => $this->id,
             'name' => $this->name,
-            'roles' => $this->roles_count,
-            'users' => $this->users_count,
+            'users' => $this->users_count ?? null,
+            'permissions_count' => $this->permissions_count ?? null,
+            'permissions' => PermissionResource::collection($this->permissions),
             'created_at' => $this->created_at ? $this->created_at->format('H:i:s d/m/Y') : null,
             'updated_at' => $this->updated_at ? $this->updated_at->format('H:i:s d/m/Y') : null,
         ];

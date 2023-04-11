@@ -1,9 +1,9 @@
 <template v-if="id">
-    <div class="modal fade" id="showModalpermission" tabindex="-1" aria-labelledby="showModalpermission" aria-hidden="true">
+    <div class="modal fade" id="showModalrole" tabindex="-1" aria-labelledby="showModalrole" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header modal-colored-header bg-success">
-                    <h1 class="modal-title h3 text-light">Show Permission</h1>
+                    <h1 class="modal-title h3 text-light">Show Role</h1>
                     <button type="button" class="btn-close text-light" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -13,10 +13,16 @@
                             <input v-if="data" :value="data.name" type="text" class="form-control" disabled>
                         </div>
                         <div class="mb-3">
-                            <label class="col-form-label fw-bold text-dark">Roles:</label>
-                            <input v-if="data" :value="data.roles" type="text" class="form-control" disabled>
+                            <label class="col-form-label fw-bold text-dark">Permissions:</label>
+                            <input v-if="data" :value="data.permissions_count" type="text" class="form-control" disabled>
+                            <div v-if="data">
+                                <span v-for="(item, index) in data.permissions" v-bind:key="index"
+                                    class="badge btn rounded-pill bg-danger me-1 mt-1">
+                                    {{ item.name }}
+                                </span>
+                            </div>
                         </div>
-                        <div class="mb-3">
+                        <div class="mb-2">
                             <label class="col-form-label fw-bold text-dark">Users:</label>
                             <input v-if="data" :value="data.users" type="text" class="form-control" disabled>
                         </div>
@@ -51,7 +57,6 @@ export default {
     props: {
         id: {
             type: Number,
-            // required: true
         },
         loadData: {
             type: Function,
@@ -71,13 +76,11 @@ export default {
                 return;
             }
             try {
-                const data = await api.get('api/admin/permissions/' + id, {
+                const data = await api.get('api/admin/roles/' + id, {
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + this.auth.access_token
                 })
                 this.data = await data.data.data
-                // this.loadData()
-                // $("#showModalpermission").modal('hide');
             } catch (e) {
                 console.log(e)
                 try {

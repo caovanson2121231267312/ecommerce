@@ -16,6 +16,16 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         return User::class;
     }
 
+    public function getUsers($config)
+    {
+        return $this->model->with(['roles'])
+            ->orderBy($config['order_by'], $config['mode'])
+            ->when($config['search'], function ($q) use ($config) {
+                return $q->where($config['search'], "like", "%{$config['key']}%");
+            })
+            ->paginate($config['page_size'] ?? config('setting.default_page_size'));
+    }
+
     public function getAllWithRoles(int $paginateNumber, $orderBy = 'id', $order = 'desc')
     {
         return $this->model->with("roles")->orderBy($orderBy, $order)->paginate($paginateNumber)->withQueryString();
@@ -26,12 +36,11 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         return $this->model->findOrFail($id)->load($relations);
     }
 
-    public function updateUser($id,$attributes,array $roleIds)
+    public function updateUser($id, $attributes, array $roleIds)
     {
         $user = $this->update($id, $attributes);
         $user->syncRoles($roleIds);
 
         return $user;
     }
-
 }

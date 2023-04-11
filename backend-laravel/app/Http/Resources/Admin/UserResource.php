@@ -14,6 +14,19 @@ class UserResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            "id" => $this->id,
+            "name" => $this->name,
+            "email" => $this->email,
+            "avatar" => $this->avatar ?? "images/users/avatar.png",
+            "phone_number" => $this->phone_number,
+            "note" => $this->note,
+            // "dob" => $this->dob ? $this->dob->format('d/m/Y') : null,
+            "dob" => $this->dob ? date('d-m-Y', strtotime($this->dob)) : null,
+            "status" => $this->status,
+            "roles" => RoleResource::collection($this->roles),
+            "created_at" => $this->created_at ? $this->created_at->format('H:i:s d/m/Y') : null,
+            "updated_at" => $this->updated_at ? $this->updated_at->format('H:i:s d/m/Y') : null,
+        ];
     }
 }

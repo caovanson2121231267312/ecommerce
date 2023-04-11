@@ -165,7 +165,7 @@
                 <li class="side-nav-item">
                     <a data-bs-toggle="collapse" href="#sidebarAuthorization" aria-expanded="false"
                         aria-controls="sidebarAuthorization" class="side-nav-link">
-                        <i class="uil-store"></i>
+                        <i class="uil-users-alt"></i>
                         <span> Authorization </span>
                         <span class="menu-arrow"></span>
                     </a>
@@ -175,7 +175,7 @@
                                 <RouterLink to="/admin/brands">Users</RouterLink>
                             </li>
                             <li>
-                                <RouterLink to="/admin/categories">Roles</RouterLink>
+                                <RouterLink to="/admin/roles">Roles</RouterLink>
                             </li>
                             <li>
                                 <RouterLink to="/admin/permissions">Permissions</RouterLink>

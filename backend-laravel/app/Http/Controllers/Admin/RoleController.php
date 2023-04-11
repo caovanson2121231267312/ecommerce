@@ -7,24 +7,23 @@ use App\Traits\DataController;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Database\QueryException;
-use App\Http\Requests\Admin\UserRequest;
-use App\Repositories\User\UserRepository;
-use App\Http\Resources\Admin\UserResource;
-use Spatie\Permission\Contracts\Permission;
+use App\Http\Requests\Admin\RoleRequest;
+use App\Http\Resources\Admin\RoleResource;
 use App\Http\Resources\Admin\PermissionResource;
 use App\Repositories\Permission\PermissionRepository;
+use App\Repositories\Role\RoleRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class UserController extends Controller
+class RoleController extends Controller
 {
     use DataController;
 
     public function __construct(
-        UserRepository $userRepo,
-        PermissionRepository $permissionRepo,
+        RoleRepository $roleRepo,
+        PermissionRepository $permissionRepo
     ) {
         $this->middleware('auth:api');
-        $this->user = $userRepo;
+        $this->role = $roleRepo;
         $this->permission = $permissionRepo;
     }
 
@@ -33,53 +32,48 @@ class UserController extends Controller
         $this->setData($request);
 
         try {
-            $users = $this->user->getUsers($this->data);
+            $Roles = $this->role->getRoles($this->data);
 
-            return UserResource::collection($users);
+            return RoleResource::collection($Roles);
         } catch (QueryException $exception) {
 
             return response()->json([
                 "mess" => $exception->getMessage(),
-            ], 500);
+            ], 400);
         }
     }
 
     public function create()
     {
-        try {
-            $permissions = $this->permission->getAll();
-
-            return PermissionResource::collection($permissions);
-        } catch (QueryException $exception) {
-
-            return response()->json([
-                "mess" => $exception->getMessage(),
-            ], 500);
-        }
+        $data = $this->permission->getAll();
+        return response()->json([
+            'data' => PermissionResource::collection($data),
+        ], 200);
     }
 
-    public function store(UserRequest $request)
+    public function store(RoleRequest $request)
     {
-        $user = $this->user->create([
-            "name" => $request->name
+        $role = $this->role->create([
+            "name" => $request->name,
         ]);
+
         if ($request->input('permissions')) {
-            $user->syncPermissions($request->input('permissions'));
+            $role->syncPermissions($request->input('permissions'));
         }
 
         return response()->json([
             'message' => "create success",
-            'data' => new UserResource($user),
+            'data' => new RoleResource($role),
         ], 200);
     }
 
     public function show($id)
     {
         try {
-            $data = $this->user->findWithRelationData($id, ["users", "permissions"], ["permissions"]);
+            $data = $this->role->findWithRelation($id, ["permissions", "users"]);
 
             return response()->json([
-                'data' => new UserResource($data),
+                'data' => new RoleResource($data),
             ], 200);
         } catch (ModelNotFoundException $exception) {
 
@@ -90,21 +84,21 @@ class UserController extends Controller
     }
 
 
-    public function update(UserRequest $request, $id)
+    public function update(RoleRequest $request, $id)
     {
         try {
             $data = [
                 "name" => $request->name,
             ];
 
-            $user = $this->user->update($id, $data);
+            $role = $this->role->update($id, $data);
             if ($request->input('permissions')) {
-                $user->syncPermissions($request->input('permissions'));
+                $role->syncPermissions($request->input('permissions'));
             }
 
             return response()->json([
                 'message' => __('update_success'),
-                'data' => new UserResource($user),
+                'data' => new RoleResource($role),
             ], 200);
         } catch (ModelNotFoundException $exception) {
 
@@ -119,7 +113,7 @@ class UserController extends Controller
         try {
             DB::beginTransaction();
 
-            $this->user->delete($id);
+            $this->role->delete($id);
 
             DB::commit();
         } catch (\Throwable $th) {

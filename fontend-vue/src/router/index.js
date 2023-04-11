@@ -97,6 +97,42 @@ const router = createRouter({
             component: () => import('../views/Admin/Permission/Index.vue')
         },
         {
+            path: '/admin/roles',
+            name: 'admin-roles',
+            meta: {
+                layout: 'admin',
+                auth: true
+            },
+            component: () => import('../views/Admin/Role/Index.vue')
+        },
+        {
+            path: '/admin/roles/create',
+            name: 'admin-roles-create',
+            meta: {
+                layout: 'admin',
+                auth: true
+            },
+            component: () => import('../views/Admin/Role/Create.vue')
+        },
+        {
+            path: '/admin/roles/edit/:id',
+            name: 'admin-roles-edit',
+            meta: {
+                layout: 'admin',
+                auth: true
+            },
+            component: () => import('../views/Admin/Role/Edit.vue')
+        },
+        {
+            path: '/admin/users',
+            name: 'admin-users',
+            meta: {
+                layout: 'admin',
+                auth: true
+            },
+            component: () => import('../views/Admin/User/Index.vue')
+        },
+        {
             path: '/:slug',
             name: 'product',
             // props: true,
