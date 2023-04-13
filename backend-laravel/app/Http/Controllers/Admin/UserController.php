@@ -12,8 +12,12 @@ use App\Repositories\User\UserRepository;
 use App\Http\Resources\Admin\UserResource;
 use Spatie\Permission\Contracts\Permission;
 use App\Http\Resources\Admin\PermissionResource;
+use App\Http\Resources\Admin\RoleResource;
 use App\Repositories\Permission\PermissionRepository;
+use App\Repositories\Role\RoleRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -22,10 +26,12 @@ class UserController extends Controller
     public function __construct(
         UserRepository $userRepo,
         PermissionRepository $permissionRepo,
+        RoleRepository $roleRepo,
     ) {
         $this->middleware('auth:api');
         $this->user = $userRepo;
         $this->permission = $permissionRepo;
+        $this->role = $roleRepo;
     }
 
     public function index(Request $request)
@@ -48,8 +54,12 @@ class UserController extends Controller
     {
         try {
             $permissions = $this->permission->getAll();
+            $roles = $this->role->getAll();
 
-            return PermissionResource::collection($permissions);
+            return response()->json([
+                "permissions" =>  PermissionResource::collection($permissions),
+                "roles" => RoleResource::collection($roles),
+            ], 200);
         } catch (QueryException $exception) {
 
             return response()->json([
@@ -60,11 +70,32 @@ class UserController extends Controller
 
     public function store(UserRequest $request)
     {
-        $user = $this->user->create([
-            "name" => $request->name
-        ]);
+        $data = [
+            "name" => $request->name,
+            "email" => $request->email,
+            "phone_number" => $request->phone_number,
+            "status" => $request->status,
+            "gender" => $request->gender,
+            "dob" => $request->name,
+            "note" => $request->name,
+        ];
+
+        if ($request->has("avatar")) {
+            $file = $request->file('avatar');
+            $fileName = $file->getClientOriginalName();
+            $destinationPath = public_path() . '/images/users/';
+            $fileName = Str::slug(pathinfo($fileName, PATHINFO_FILENAME)) . '-' . Carbon::now()->timestamp;
+            $fileExt = $file->getClientOriginalExtension();
+            $file->move($destinationPath, $fileName . "." . $fileExt);
+            $data['avatar'] = $fileName . "." . $fileExt;
+        }
+        dd($data);
+        $user = $this->user->create($data);
         if ($request->input('permissions')) {
             $user->syncPermissions($request->input('permissions'));
+        }
+        if ($request->input('roles')) {
+            $user->syncRoles($request->input('roles'));
         }
 
         return response()->json([

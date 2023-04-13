@@ -133,6 +133,24 @@ const router = createRouter({
             component: () => import('../views/Admin/User/Index.vue')
         },
         {
+            path: '/admin/users/create',
+            name: 'admin-users-create',
+            meta: {
+                layout: 'admin',
+                auth: true
+            },
+            component: () => import('../views/Admin/User/Create.vue')
+        },
+        {
+            path: '/admin/users/edit/{slug}',
+            name: 'admin-users-edit',
+            meta: {
+                layout: 'admin',
+                auth: true
+            },
+            component: () => import('../views/Admin/User/Edit.vue')
+        },
+        {
             path: '/:slug',
             name: 'product',
             // props: true,

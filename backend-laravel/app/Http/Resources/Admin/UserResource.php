@@ -18,7 +18,7 @@ class UserResource extends JsonResource
             "id" => $this->id,
             "name" => $this->name,
             "email" => $this->email,
-            "avatar" => $this->avatar ?? "images/users/avatar.png",
+            "avatar" => $this->avatar  ? 'images/users/' . $this->avatar : "images/users/avatar.png",
             "phone_number" => $this->phone_number,
             "note" => $this->note,
             // "dob" => $this->dob ? $this->dob->format('d/m/Y') : null,

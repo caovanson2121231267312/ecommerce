@@ -7,6 +7,7 @@ import Vuex from 'vuex'
 import { vue3Debounce } from 'vue-debounce'
 import VTooltip from 'v-tooltip'
 import VueSweetalert2 from 'vue-sweetalert2'
+// import Multiselect from 'vue-multiselect'
 
 import 'sweetalert2/dist/sweetalert2.min.css'
 import ShopLayout from '@/components/Layout/Shop/ShopLayout.vue'

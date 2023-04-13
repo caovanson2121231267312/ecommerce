@@ -143,10 +143,10 @@
                                     </div>
                                 </td>
                                 <td class="sorting">
-                                    <span class="badge rounded-pill bg-danger me-1" v-for="(item, index) in user.roles"
+                                    <a class="badge rounded-pill bg-danger me-1 text-light" v-for="(item, index) in user.roles"
                                         v-bind:key="index">
                                         {{ item.name }}
-                                    </span>
+                                    </a>
                                 </td>
                                 <td class="sorting">{{ user.users }}</td>
                                 <td>

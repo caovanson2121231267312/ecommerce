@@ -41,3 +41,5 @@ npm install vuex --save
 npm install vuetify --save
 npm install --save v-tooltip
 npm install -S vue-sweetalert2
+npm i vue-select2
+npm install vue-multiselect@next
