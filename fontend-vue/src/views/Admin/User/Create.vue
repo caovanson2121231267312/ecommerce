@@ -110,9 +110,26 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label fw-bold">Note</label>
-                                <textarea :class="{ 'form-control': true, 'is-invalid': errors && errors.name }"
+                                <textarea :class="{ 'form-control': true, 'is-invalid': errors && errors.note }"
                                     v-model="note"></textarea>
-                                <template v-if="errors" v-for="(item, index) in errors.name" v-bind:key="index">
+                                <template v-if="errors" v-for="(item, index) in errors.note" v-bind:key="index">
+                                    <span class="text-danger">{{ item }}</span>
+                                </template>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Password</label>
+                                <input class="form-control" v-model="password" type="password"
+                                    :class="{ 'form-control': true, 'is-invalid': errors && errors.password }">
+                                <template v-if="errors" v-for="(item, index) in errors.password" v-bind:key="index">
+                                    <span class="text-danger">{{ item }}</span>
+                                </template>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">password_confirmation</label>
+                                <input class="form-control" v-model="password_confirmation" type="password"
+                                    :class="{ 'form-control': true, 'is-invalid': errors && errors.password_confirmation }">
+                                <template v-if="errors" v-for="(item, index) in errors.password_confirmation"
+                                    v-bind:key="index">
                                     <span class="text-danger">{{ item }}</span>
                                 </template>
                             </div>
@@ -156,18 +173,18 @@ export default {
             name: null,
             email: null,
             password: null,
-            confirm_password: null,
+            password_confirmation: null,
             phone_number: null,
             avatar: null,
             gender: null,
             dob: null,
             note: null,
-            status: false,
+            status: 1,
             permissions: [],
             roles: [],
             errors: null,
             check: [],
-            role: null,
+            role: [],
         }
     },
     props: {
@@ -206,9 +223,13 @@ export default {
             await form.append('note', this.note)
             await form.append('avatar', this.avatar)
             await form.append('gender', this.gender)
-            const roles = this.role.map(arr => arr.id)
-            for (let i = 0; i < roles.length; i++) {
-                await form.append('roles[]', roles[i])
+            await form.append('password_confirmation', this.password_confirmation)
+            await form.append('password', this.password)
+            if (this.role.length > 0) {
+                const roles = this.role.map(arr => arr.id)
+                for (let i = 0; i < roles.length; i++) {
+                    await form.append('roles[]', roles[i])
+                }
             }
             for (let i = 0; i < this.check.length; i++) {
                 await form.append('permissions[]', this.check[i])
@@ -222,7 +243,7 @@ export default {
                 await alert('success', 'top-center', 'Đã thêm 1 danh mục mới.');
                 await this.$router.push('/admin/users');
             } catch (e) {
-                if (e.errors) {
+                if (e) {
                     console.log(e)
                     this.errors = e.errors
                 } else {

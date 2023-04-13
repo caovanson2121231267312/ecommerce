@@ -48,6 +48,18 @@ export const checkResponseCode = (code, title, message, vue) => {
                 }
             })
             break
+        case 422:
+            vue.$swal({
+                title: 'Auto close alert!',
+                html: 'I will close in <b></b> milliseconds.',
+                timer: 2000,
+                timerProgressBar: true
+            }).then((result) => {
+                if (result.dismiss === Swal.DismissReason.timer) {
+                    console.log('I was closed by the timer')
+                }
+            })
+            break
         default:
             console.log(code, message)
     }

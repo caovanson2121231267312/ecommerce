@@ -142,7 +142,7 @@ const router = createRouter({
             component: () => import('../views/Admin/User/Create.vue')
         },
         {
-            path: '/admin/users/edit/{slug}',
+            path: '/admin/users/edit/:id',
             name: 'admin-users-edit',
             meta: {
                 layout: 'admin',

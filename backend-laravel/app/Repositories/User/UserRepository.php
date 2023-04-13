@@ -36,6 +36,12 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         return $this->model->findOrFail($id)->load($relations);
     }
 
+    public function findWithRelationData(int $id, array $relations, array $data)
+    {
+        $data = $this->model->find($id)->load($data)->loadCount($relations);
+        return $data;
+    }
+
     public function updateUser($id, $attributes, array $roleIds)
     {
         $user = $this->update($id, $attributes);

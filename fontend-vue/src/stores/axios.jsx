@@ -16,11 +16,19 @@ const api = {
         }
     },
 
-    async post(url, data = {}, headers = {}) {
+    async post(url, data = {}, headers = {}, vue) {
         try {
             return await axios.post(domain + url, data, { headers: headers })
         } catch (e) {
+            console.log(data, headers)
+            // vue.$checkResponseCode(
+            //     e.response.status,
+            //     e.response.statusText,
+            //     e.response.data.message ?? e.message,
+            //     vue
+            // )
             throw e.response.data
+            // return e
         }
     },
 

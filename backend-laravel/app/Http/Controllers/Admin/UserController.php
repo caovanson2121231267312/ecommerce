@@ -2,22 +2,25 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Traits\DataController;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\QueryException;
 use App\Http\Requests\Admin\UserRequest;
+use App\Repositories\Role\RoleRepository;
 use App\Repositories\User\UserRepository;
+use App\Http\Resources\Admin\RoleResource;
 use App\Http\Resources\Admin\UserResource;
 use Spatie\Permission\Contracts\Permission;
+use App\Http\Requests\Admin\UserEditRequest;
+use App\Http\Resources\Admin\UserEditResource;
 use App\Http\Resources\Admin\PermissionResource;
-use App\Http\Resources\Admin\RoleResource;
 use App\Repositories\Permission\PermissionRepository;
-use App\Repositories\Role\RoleRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -74,10 +77,11 @@ class UserController extends Controller
             "name" => $request->name,
             "email" => $request->email,
             "phone_number" => $request->phone_number,
-            "status" => $request->status,
+            "status" => $request->status ? 1 : 0,
             "gender" => $request->gender,
-            "dob" => $request->name,
-            "note" => $request->name,
+            "dob" => $request->dob,
+            "note" => $request->note,
+            "password" => Hash::make($request->password),
         ];
 
         if ($request->has("avatar")) {
@@ -89,10 +93,11 @@ class UserController extends Controller
             $file->move($destinationPath, $fileName . "." . $fileExt);
             $data['avatar'] = $fileName . "." . $fileExt;
         }
-        dd($data);
+
         $user = $this->user->create($data);
+
         if ($request->input('permissions')) {
-            $user->syncPermissions($request->input('permissions'));
+            $user->givePermissionTo($request->input('permissions'));
         }
         if ($request->input('roles')) {
             $user->syncRoles($request->input('roles'));
@@ -107,10 +112,10 @@ class UserController extends Controller
     public function show($id)
     {
         try {
-            $data = $this->user->findWithRelationData($id, ["users", "permissions"], ["permissions"]);
+            $data = $this->user->findWithRelationData($id, ["roles", "permissions"], ["roles", "permissions"]);
 
             return response()->json([
-                'data' => new UserResource($data),
+                'data' => new UserEditResource($data),
             ], 200);
         } catch (ModelNotFoundException $exception) {
 
@@ -121,16 +126,45 @@ class UserController extends Controller
     }
 
 
-    public function update(UserRequest $request, $id)
+    public function update(UserEditRequest $request, $id)
     {
         try {
             $data = [
                 "name" => $request->name,
+                "email" => $request->email,
+                "phone_number" => $request->phone_number,
+                "status" => $request->status ? 1 : 0,
+                "gender" => $request->gender,
+                "dob" => $request->dob,
+                "note" => $request->note,
             ];
 
+            if ($request->input("password") && $request->input("password_confirmation")) {
+                $request->validate([
+                    'password' => 'min:6',
+                    'password_confirmation' => 'required_with:password|same:password|min:6',
+                ]);
+
+                $data["password"] = Hash::make($request->password);
+            }
+
+            if ($request->has("avatar")) {
+                $file = $request->file('avatar');
+                $fileName = $file->getClientOriginalName();
+                $destinationPath = public_path() . '/images/users/';
+                $fileName = Str::slug(pathinfo($fileName, PATHINFO_FILENAME)) . '-' . Carbon::now()->timestamp;
+                $fileExt = $file->getClientOriginalExtension();
+                $file->move($destinationPath, $fileName . "." . $fileExt);
+                $data['avatar'] = $fileName . "." . $fileExt;
+            }
+
             $user = $this->user->update($id, $data);
+
             if ($request->input('permissions')) {
                 $user->syncPermissions($request->input('permissions'));
+            }
+            if ($request->input('roles')) {
+                $user->syncRoles($request->input('roles'));
             }
 
             return response()->json([
