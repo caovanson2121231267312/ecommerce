@@ -48,31 +48,11 @@
                 <li class="side-nav-title">Navigation</li>
 
                 <li class="side-nav-item">
-                    <a data-bs-toggle="collapse" href="#sidebarDashboards" aria-expanded="false"
-                        aria-controls="sidebarDashboards" class="side-nav-link">
+                    <RouterLink to="/admin" class="side-nav-link">
                         <i class="uil-home-alt"></i>
-                        <span class="badge bg-success float-end">5</span>
+                        <span class="badge bg-success float-end">6</span>
                         <span> Dashboards </span>
-                    </a>
-                    <div class="collapse" id="sidebarDashboards">
-                        <ul class="side-nav-second-level">
-                            <li>
-                                <a href="dashboard-analytics.html">Analytics</a>
-                            </li>
-                            <li>
-                                <a href="index.html">Ecommerce</a>
-                            </li>
-                            <li>
-                                <a href="dashboard-projects.html">Projects</a>
-                            </li>
-                            <li>
-                                <a href="dashboard-crm.html">CRM</a>
-                            </li>
-                            <li>
-                                <a href="dashboard-wallet.html">E-Wallet</a>
-                            </li>
-                        </ul>
-                    </div>
+                    </RouterLink>
                 </li>
 
                 <li class="side-nav-title">Apps</li>

@@ -49,7 +49,7 @@ const router = createRouter({
                 layout: 'admin',
                 auth: true
             },
-            component: () => import('../views/AboutView.vue')
+            component: () => import('../views/Admin/Home/Home.vue')
         },
         {
             path: '/admin/categories',
@@ -86,6 +86,24 @@ const router = createRouter({
                 auth: true
             },
             component: () => import('../views/Admin/Product/Index.vue')
+        },
+        {
+            path: '/admin/products/create',
+            name: 'admin-products-create',
+            meta: {
+                layout: 'admin',
+                auth: true
+            },
+            component: () => import('../views/Admin/Product/Create.vue')
+        },
+        {
+            path: '/admin/products/edit/:id',
+            name: 'admin-products-edit',
+            meta: {
+                layout: 'admin',
+                auth: true
+            },
+            component: () => import('../views/Admin/Product/Edit.vue')
         },
         {
             path: '/admin/permissions',
@@ -149,6 +167,15 @@ const router = createRouter({
                 auth: true
             },
             component: () => import('../views/Admin/User/Edit.vue')
+        },
+        {
+            path: '/admin/users/show/:id',
+            name: 'admin-users-show',
+            meta: {
+                layout: 'admin',
+                auth: true
+            },
+            component: () => import('../views/Admin/User/Show.vue')
         },
         {
             path: '/:slug',

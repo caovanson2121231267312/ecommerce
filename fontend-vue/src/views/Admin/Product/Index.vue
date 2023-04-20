@@ -7,8 +7,9 @@
                 <div class="card-body">
                     <div class="row mb-2">
                         <div class="col-sm-5">
-                            <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#createModalCategory"
-                                class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle me-2"></i> Add Category</a>
+                            <RouterLink to="/admin/products/create" class="btn btn-danger mb-2">
+                                <i class="mdi mdi-plus-circle me-2"></i> Add Product
+                            </RouterLink>
                         </div>
                         <div class="col-sm-7">
                             <div class="text-sm-end">
@@ -28,7 +29,7 @@
                                     <select class="form-select form-select-sm ms-1 me-1" @change="onPageSize($event)">
                                         <option value="10">10</option>
                                         <option value="20">20</option>
-                                        <option value="20">50</option>
+                                        <option value="50">50</option>
                                         <option value="100">100</option>
                                         <option value="1000">1000</option>
                                     </select>
@@ -112,9 +113,9 @@
                         </thead>
                         <tbody>
                             <!-- <template> -->
-                                <tr v-for="(value, index) in products" v-bind:key="index">
-                                    <Row :value="value" />
-                                </tr>
+                            <tr v-for="(value, index) in products" v-bind:key="index">
+                                <Row :value="value" />
+                            </tr>
                             <!-- </template> -->
                             <tr v-if="!products.length">
                                 <td colspan="7" class="text-center">No values found</td>
@@ -139,6 +140,7 @@ import Image from './Image.vue';
 import Row from './Row.vue';
 import { convertPage, firstImage, formatCurrency } from '../../../config';
 import axios from 'axios';
+import api from "../../../stores/axios"
 
 export default {
     components: {
@@ -191,7 +193,7 @@ export default {
             this.loadData();
         },
         loadData() {
-            let url = "http://127.0.0.1:8000/api/admin/products?page=" + this.config.page
+            let url = "api/admin/products?page=" + this.config.page
             if (this.config.key && this.config.search) {
                 url += "&key=" + this.config.key + "&search=" + this.config.search;
             }
@@ -201,12 +203,10 @@ export default {
             if (this.config.order_by) {
                 url += "&order_by=" + this.config.order_by + "&mode=" + this.config.mode;
             }
-            axios.get(url, {
-                'headers': {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('auth')).access_token
-                }
-            })
+            api.get(url, {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('auth')).access_token
+            }, this)
                 .then(response => {
                     this.products = response.data.data;
                     this.meta = convertPage(response.data.meta);

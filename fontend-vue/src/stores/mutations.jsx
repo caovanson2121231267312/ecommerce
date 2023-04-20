@@ -18,6 +18,9 @@ const mutations = {
     getProducts(state, payload) {
         state.products = payload
     },
+    hotSale(state, payload) {
+        state.hotSale = payload
+    },
     getCategories(state, payload) {
         state.categories = payload
     },

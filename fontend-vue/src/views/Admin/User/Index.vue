@@ -96,6 +96,16 @@
                                         <i class="fas fa-sort"></i>
                                     </span>
                                 </th>
+                                <th @click="softBy('status')">
+                                    <span class="fs-5 fw-bold text-dark me-2">Status</span>
+                                    <span v-if="config.order_by == 'status'">
+                                        <i v-if="config.mode == 'desc'" class="fas fa-sort-down"></i>
+                                        <i v-else class="fas fa-sort-up"></i>
+                                    </span>
+                                    <span v-else>
+                                        <i class="fas fa-sort"></i>
+                                    </span>
+                                </th>
                                 <th @click="softBy('created_at')">
                                     <span class="fs-5 fw-bold text-dark me-2">Timestamp</span>
                                     <span v-if="config.order_by == 'created_at'">
@@ -143,12 +153,17 @@
                                     </div>
                                 </td>
                                 <td class="sorting">
-                                    <a class="badge rounded-pill bg-danger me-1 text-light" v-for="(item, index) in user.roles"
-                                        v-bind:key="index">
+                                    <a class="badge rounded-pill bg-danger me-1 text-light"
+                                        v-for="(item, index) in user.roles" v-bind:key="index">
                                         {{ item.name }}
                                     </a>
                                 </td>
                                 <td class="sorting">{{ user.users }}</td>
+                                <td class="sorting">
+                                    <span v-if="user.status == 0" class="badge rounded-pill bg-warning">InActive</span>
+                                    <span v-else-if="user.status == 1" class="badge rounded-pill bg-success">Active</span>
+                                    <span v-else class="badge rounded-pill bg-danger">Block</span>
+                                </td>
                                 <td>
                                     <div>
                                         <span class="fw-bold">Created at: </span>
@@ -160,13 +175,13 @@
                                     </div>
                                 </td>
                                 <td class="table-action">
-                                    <a href="javascript:void(0);" @click="showuser(user.id)" class="action-icon text-info">
+                                    <RouterLink :to="'/admin/users/show/' + user.id" class="action-icon text-info">
                                         <i class="mdi mdi-eye"></i>
-                                    </a>
+                                    </RouterLink>
                                     <RouterLink :to="'/admin/users/edit/' + user.id" class="action-icon text-success">
                                         <i class="mdi mdi-square-edit-outline"></i>
                                     </RouterLink>
-                                    <Delete :id="user.id" :load-data="loadData" />
+                                    <Delete :id="user.id" :status="user.status" :load-data="loadData" />
                                 </td>
                             </tr>
                             <tr v-if="!users.length">
@@ -177,7 +192,6 @@
 
                     <Pagination :changePage="changePage" v-if="Object.keys(meta).length !== 0" :meta="meta" />
 
-                    <Show :id="id" :load-data="loadData" />
                 </div>
             </div>
 
@@ -189,8 +203,6 @@
 import Breadcrumb from '@/components/Layout/Admin/Breadcrumb.vue';
 import Pagination from '@/components/Page/Pagination.vue';
 import { convertPage, domain } from '../../../config';
-import Create from './Create.vue';
-import Show from './Show.vue';
 import Delete from './Delete.vue';
 
 import axios from 'axios';
@@ -200,8 +212,6 @@ export default {
     components: {
         Breadcrumb,
         Pagination,
-        Create,
-        Show,
         Delete,
     },
     data() {

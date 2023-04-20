@@ -1,6 +1,7 @@
 <template>
     <Banner />
 
+    <HotSale />
     <Products />
 
     <section class="mt-5">
@@ -16,12 +17,14 @@
 
 <script>
 import Products from "../../components/Product/Products.vue";
+import HotSale from "../../components/Product/HotSale.vue";
 import Banner from "../../components/Banner/Main.vue";
 
 export default {
     components: {
         Products,
         Banner,
+        HotSale,
     },
     setup() {
         // const store = useStore()

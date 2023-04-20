@@ -7,7 +7,7 @@ import Vuex from 'vuex'
 import { vue3Debounce } from 'vue-debounce'
 import VTooltip from 'v-tooltip'
 import VueSweetalert2 from 'vue-sweetalert2'
-// import Multiselect from 'vue-multiselect'
+import PrimeVue from 'primevue/config'
 
 import 'sweetalert2/dist/sweetalert2.min.css'
 import ShopLayout from '@/components/Layout/Shop/ShopLayout.vue'
@@ -27,6 +27,11 @@ app.use(Vuex)
 app.use(store)
 app.use(vue3Debounce)
 app.use(VTooltip)
+app.use(PrimeVue)
+// app.component('ckeditor', require('./components/Ckeditor.vue').default)
+import CKEditor from '@ckeditor/ckeditor5-vue'
+
+app.use(CKEditor)
 
 app.component('shop-layout', ShopLayout)
 app.component('none-layout', NoneLayout)

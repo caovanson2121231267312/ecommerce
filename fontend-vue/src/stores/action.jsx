@@ -31,6 +31,10 @@ const actions = {
         const data = await api.get('api/products')
         commit('getProducts', data.data)
     },
+    async hotSale({ commit }) {
+        const data = await api.get('api/hotSale')
+        commit('hotSale', data.data)
+    },
     async getCategories({ commit }) {
         const data = await api.get('api/categories')
         commit('getCategories', data.data)

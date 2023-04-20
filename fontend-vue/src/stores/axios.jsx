@@ -4,8 +4,11 @@ import { domain } from '../config'
 const api = {
     async get(url, headers = {}, vue) {
         try {
-            return await axios.get(domain + url, { headers: headers })
+            const data = await axios.get(domain + url, { headers: headers })
+            console.log(data)
+            return data
         } catch (e) {
+            console.log(vue)
             vue.$checkResponseCode(
                 e.response.status,
                 e.response.statusText,
