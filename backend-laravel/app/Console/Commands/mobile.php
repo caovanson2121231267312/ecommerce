@@ -11,7 +11,7 @@ class mobile extends Command
      *
      * @var string
      */
-    protected $signature = 'shop:mobile';
+    protected $signature = 'shop:cate';
 
     /**
      * The console command description.

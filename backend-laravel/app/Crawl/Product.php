@@ -28,9 +28,12 @@ class Product
         "kho-san-pham-cu",
     ];
 
+    public $select = '';
+
     public function html()
     {
         foreach ($this->arr as $category) {
+            $this->select = $category;
             $crawler = (new Client())->request('GET', "https://hoanghamobile.com/" . $category . "?&p=15#page_15");
             $i = 5;
 
@@ -106,10 +109,13 @@ class Product
                                             // echo $image_url . "\n";
                                             $image_name = basename($image_url);
                                             $image_data = file_get_contents($image_url);
-                                            file_put_contents('public/images/products/' . $image_name, $image_data);
+                                            if (!file_exists('public/images/products/' . $this->select)) {
+                                                mkdir('public/images/products/' . $this->select, 0777, true);
+                                            }
+                                            file_put_contents('public/images/products/' . $this->select . "/" . $image_name, $image_data);
                                             array_push($images, [
                                                 'id' => $i,
-                                                'image' => 'images/products/' . $image_name,
+                                                'image' => 'images/products/' . $this->select . "/" . $image_name,
                                                 'title' => $productName,
                                             ]);
                                             $i++;
