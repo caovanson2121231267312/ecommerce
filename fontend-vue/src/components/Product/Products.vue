@@ -3,7 +3,7 @@
     <section class="mt-5">
         <div class="container">
             <div class="mb-3 d-flex justify-content-between">
-                <h2 class="h2 m-0">cao vawn sown</h2>
+                <h2 class="h2 m-0">{{ item.name }}</h2>
                 <div class="d-flex justify-content-around">
                     <a class="d-inline-block btn btn-light">
                         123
@@ -30,11 +30,17 @@ import Item from "./Item.vue";
 
 export default {
     mounted() {
-        this.$store.dispatch('getProducts')
+        this.$store.dispatch('getProducts', this.item)
+    },
+    props: {
+        item: {
+            type: Object,
+            required: true,
+        }
     },
     computed: {
         products() {
-            return this.$store.getters.products
+            return this.$store.getters.products[this.item.slug]
         },
     },
     components: {

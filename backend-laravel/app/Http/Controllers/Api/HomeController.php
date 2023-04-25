@@ -22,9 +22,9 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = $this->product->getProduct();
+        $products = $this->product->getProduct($request);
         return response()->json(
             $products
         );
@@ -46,10 +46,18 @@ class HomeController extends Controller
         }
     }
 
+    public function hotSale()
+    {
+        $products = $this->product->getProductWithHotSale();
+        return response()->json(
+            $products
+        );
+    }
+
     public function categories()
     {
-        $data = Category::with(['brands'])->get();
-        
+        $data = Category::with(['brands'])->take(11)->get();
+
         return response()->json($data);
     }
 

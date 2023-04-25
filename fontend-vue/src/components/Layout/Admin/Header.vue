@@ -367,7 +367,7 @@
                     </a>
                 </li>
 
-                <li class="dropdown">
+                <li class="dropdown" v-if="auth">
                     <a class="nav-link dropdown-toggle arrow-none nav-user px-2" data-bs-toggle="dropdown" href="#"
                         role="button" aria-haspopup="false" aria-expanded="false">
                         <span class="account-user-avatar">
@@ -432,6 +432,13 @@ defineProps({
 
 <script>
 export default {
+    mounted() {
+        if (!this.auth) {
+            this.$store.dispatch('logout', this.auth)
+
+            this.$router.push('/login')
+        }
+    },
     methods: {
         logout() {
             this.$store.dispatch('logout', this.auth)

@@ -26,9 +26,32 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
         return $product;
     }
 
-    public function getProduct()
+    public function getProduct($request)
     {
-        return $this->model->where("category_id", "=", 1)->get();
+        $perPage = 10;
+        $page = $request->input('page', 1);
+        $offset = ($page - 1) * $perPage;
+        $categoryId = DB::table('categories')->where('name', 'like', '%' . $request->category_id . '%')->value('id');
+
+        $data = $this->model
+            ->select('*', DB::raw('(SELECT AVG(rate) FROM rates WHERE rates.product_id = products.id) as avg_rate'))
+            ->where('sale', '>', 20)
+            ->withCount(['rates'])
+            ->where('category_id', '=', $categoryId)
+            ->orderBy('updated_at', 'desc')
+            ->offset($offset)
+            ->limit($perPage)
+            ->get();
+
+        return $data;
+    }
+
+    public function getProductWithHotSale()
+    {
+        return $this->model
+            ->select('*', DB::raw('(SELECT AVG(rate) FROM rates WHERE rates.product_id = products.id) as avg_rate'))
+            ->where("sale", ">", 20)->withCount(['rates'])
+            ->latest()->take(10)->get();
     }
 
     public function getProducts($config)

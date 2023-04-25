@@ -4,141 +4,187 @@ namespace App\Crawl;
 
 use Exception;
 use Goutte\Client;
+use App\Models\Tag;
 use App\Models\Rate;
+use App\Models\Brand;
 use App\Models\Category;
 use App\Models\ProductInfor;
 use Symfony\Component\DomCrawler\Crawler;
 
 class Product
 {
-    public $domain = "https://hoanghamobile.com/dien-thoai-di-dong?&p=9#page_9";
+    public $domain = "https://hoanghamobile.com/dien-thoai-di-dong?&p=15#page_15";
+    public $arr = [
+        "dien-thoai-di-dong",
+        "dong-ho",
+        "laptop",
+        "man-hinh",
+        "smart-tv",
+        "tablet",
+        "loa-tai-nghe",
+        "smart-home",
+        "phu-kien",
+        "do-choi-cong-nghe",
+        "kho-san-pham-cu",
+    ];
 
     public function html()
     {
-        $crawler = (new Client())->request('GET', $this->domain);
-        // dd($crawler);
-        $crawler->filter('.list-product .item')->each(
-            function (Crawler $node) {
-                $slug = $node->filter('.info a')->attr('href');
-                echo "\n";
-                echo $slug . "\n";
+        foreach ($this->arr as $category) {
+            $crawler = (new Client())->request('GET', "https://hoanghamobile.com/" . $category . "?&p=15#page_15");
+            $i = 5;
 
-                $crawler = (new Client())->request('GET', "https://hoanghamobile.com" . $slug);
-                $crawler->filter('html')->each(
-                    function (Crawler $node) {
-                        try {
-                            $name = $node->filter('.product-details .top-product h1')->text();
-                            echo $name . "\n";
-                            $price = intval(str_replace([",", "₫"], "", $node->filter('.price.current-product-price strong')->text()));
+            // dd($crawler);
+            $crawler->filter('.list-product .item')->each(
+                function (Crawler $node) {
+                    $slug = $node->filter('.info a')->attr('href');
+                    echo "\n";
+                    echo $slug . "\n";
+                    $i = 5;
+                    begin:
+
+                    try {
+                        $crawler = (new Client())->request('GET', "https://hoanghamobile.com" . $slug);
+                    } catch (Exception $e) {
+                        dump($e);
+                        dump("retry -- " . $i);
+                        if ($i) {
+                            $i--;
+                            goto begin;
+                        }
+                    }
+
+                    $crawler->filter('html')->each(
+                        function (Crawler $node) {
+                            $retry = 5;
+                            start:
                             try {
-                                $price_sale = intval(str_replace([",", "₫"], "", $node->filter('.price.current-product-price strike')->text()));
-                                $sale = round(100 - ($price / $price_sale) * 100, 2);
-                            } catch (Exception $e) {
-                                $sale = 0;
-                            }
-                            echo $sale . "\n";
-                            try {
-                                $productName = $node->filter('ol.breadcrumb li:nth-child(5) span')->text();
-
-                                $category_name = $node->filter('ol.breadcrumb li:nth-child(2) span')->text();
-                                $category = Category::firstOrCreate([
-                                    'name' => $category_name,
-                                    'parent_id' => 0,
-                                    'description' => $category_name,
-                                ]);
-
-                                $brand_name = $node->filter('ol.breadcrumb li:nth-child(3) span')->text();
-                                $brand = \App\Models\Brand::firstOrCreate([
-                                    'name' => $brand_name,
-                                ]);
-
-                                $category->brands()->syncWithoutDetaching([$brand->id]);
-
-                                $productTag = $node->filter('ol.breadcrumb li:nth-child(4) span')->text();
-                                $tag = \App\Models\Tag::firstOrCreate([
-                                    'name' => $productTag,
-                                ]);
-
-                                $images = array();
-                                $i = 0;
-                                $node->filter('.product-image .viewer a')->each(
-                                    function (Crawler $node) use (&$i, $productName, &$images) {
-                                        // $url = $node->filter('img')->text();
-                                        $image_url = $node->filter('a')->attr('href');
-                                        // echo $image_url . "\n";
-                                        $image_name = basename($image_url);
-                                        $image_data = file_get_contents($image_url);
-                                        file_put_contents('public/images/products/' . $image_name, $image_data);
-                                        array_push($images, [
-                                            'id' => $i,
-                                            'image' => 'images/products/' . $image_name,
-                                            'title' => $productName,
-                                        ]);
-                                        $i++;
-                                    }
-                                );
-                                $i = 0;
-
-                                // dump($images);
-                                $arr['images'] = json_encode($images, true);
-
-                                $data = [
-                                    "name" => $node->filter('.product-details .top-product')->text(),
-                                    "description" => $node->filter('meta[name="description"]')->attr('content'),
-                                    "price" => $price,
-                                    "category_id" => $category->id,
-                                    "sale" => $sale,
-                                    'content' => $node->filter('#productContent')->html(),
-                                    'sale' => $sale,
-                                    'status' => 1,
-                                    'quantity' => rand(10, 10000),
-                                    'time_sale' => \Carbon\Carbon::createFromFormat('d-m-Y', '09-12-2023')->format('Y-m-d H:i:s'),
-                                    'user_id' => 1,
-                                    'brand_id' => $brand->id,
-                                ];
-                                $data = array_merge($data, $arr);
-
-                                $product = \App\Models\Product::create($data);
-                                $product->tags()->attach($tag->id);
+                                $name = $node->filter('.product-details .top-product h1')->text();
+                                echo $name . "\n";
+                                $price = intval(str_replace([",", "₫"], "", $node->filter('.price.current-product-price strong')->text()));
 
                                 try {
-                                    $node->filter('.product-right .product-specs ol li')->each(
-                                        function (Crawler $node) use ($product) {
-                                            ProductInfor::create([
-                                                'name' =>  $node->filter('strong')->text(),
-                                                'detail' => $node->filter('span')->text(),
-                                                'product_id' => $product->id,
+                                    $price_sale = intval(str_replace([",", "₫"], "", $node->filter('.price.current-product-price strike')->text()));
+                                    $sale = round(100 - ($price / $price_sale) * 100, 2);
+                                } catch (Exception $e) {
+                                    $sale = 0;
+                                }
+                                echo $sale . "\n";
+                                try {
+                                    $productName = '';
+                                    try {
+                                        $productName = $node->filter('ol.breadcrumb li:nth-child(5) span')->text();
+                                    } catch (Exception $e) {
+                                        $productName = $node->filter('.product-details .top-product')->text();
+                                    }
+
+                                    $category_name = $node->filter('ol.breadcrumb li:nth-child(2) span')->text();
+                                    $category = Category::firstOrCreate([
+                                        'name' => $category_name,
+                                        'parent_id' => 0,
+                                        'description' => $category_name,
+                                    ]);
+
+                                    $brand_name = $node->filter('ol.breadcrumb li:nth-child(3) span')->text();
+                                    $brand = \App\Models\Brand::firstOrCreate([
+                                        'name' => $brand_name,
+                                    ]);
+
+                                    $category->brands()->syncWithoutDetaching([$brand->id]);
+
+                                    $productTag = $node->filter('ol.breadcrumb li:nth-child(4) span')->text();
+                                    $tag = \App\Models\Tag::firstOrCreate([
+                                        'name' => $productTag,
+                                    ]);
+
+                                    $images = array();
+                                    $i = 0;
+                                    $node->filter('.product-image .viewer a')->each(
+                                        function (Crawler $node) use (&$i, $productName, &$images) {
+                                            // $url = $node->filter('img')->text();
+                                            $image_url = $node->filter('a')->attr('href');
+                                            // echo $image_url . "\n";
+                                            $image_name = basename($image_url);
+                                            $image_data = file_get_contents($image_url);
+                                            file_put_contents('public/images/products/' . $image_name, $image_data);
+                                            array_push($images, [
+                                                'id' => $i,
+                                                'image' => 'images/products/' . $image_name,
+                                                'title' => $productName,
                                             ]);
+                                            $i++;
                                         }
                                     );
+                                    $i = 0;
+
+                                    // dump($images);
+                                    $arr['images'] = json_encode($images, true);
+
+                                    $data = [
+                                        "name" => $node->filter('.product-details .top-product')->text(),
+                                        "description" => $node->filter('meta[name="description"]')->attr('content'),
+                                        "price" => $price,
+                                        "category_id" => $category->id,
+                                        "sale" => $sale,
+                                        'content' => $node->filter('#productContent')->html(),
+                                        'sale' => $sale,
+                                        'status' => 1,
+                                        'quantity' => rand(10, 10000),
+                                        'time_sale' => \Carbon\Carbon::createFromFormat('d-m-Y', '09-12-2023')->format('Y-m-d H:i:s'),
+                                        'user_id' => 1,
+                                        'brand_id' => $brand->id,
+                                    ];
+                                    $data = array_merge($data, $arr);
+
+                                    $product = \App\Models\Product::create($data);
+                                    $product->tags()->attach($tag->id);
+
+                                    try {
+                                        $node->filter('.product-right .product-specs ol li')->each(
+                                            function (Crawler $node) use ($product) {
+                                                ProductInfor::create([
+                                                    'name' =>  $node->filter('strong')->text(),
+                                                    'detail' => $node->filter('span')->text(),
+                                                    'product_id' => $product->id,
+                                                ]);
+                                            }
+                                        );
+                                    } catch (Exception $e) {
+                                        echo $e . "\n";
+                                    }
+
+                                    $gt = rand(1, 5);
+
+                                    for ($i = 0; $i <= $gt; $i++) {
+                                        Rate::create([
+                                            'rate' => rand(1, 5),
+                                            'content' => 'DEV CaoSon',
+                                            'check' => 1,
+                                            'user_id' => 1,
+                                            'product_id' => $product->id,
+                                        ]);
+                                    }
                                 } catch (Exception $e) {
+                                    echo "Bỏ qua node này" . "\n\n";
                                     echo $e . "\n";
                                 }
+                                echo "\n";
 
-                                $gt = rand(1, 5);
-
-                                for ($i = 0; $i <= $gt; $i++) {
-                                    Rate::create([
-                                        'rate' => rand(1, 5),
-                                        'content' => 'DEV CaoSon',
-                                        'check' => 1,
-                                        'user_id' => 1,
-                                        'product_id' => $product->id,
-                                    ]);
-                                }
+                                $retry = 5;
                             } catch (Exception $e) {
                                 echo "Bỏ qua node này" . "\n\n";
                                 echo $e . "\n";
+
+                                if ($retry) {
+                                    $retry--;
+                                    goto start;
+                                }
                             }
-                            echo "\n";
-                        } catch (Exception $e) {
-                            echo "Bỏ qua node này" . "\n\n";
-                            echo $e . "\n";
                         }
-                    }
-                );
-            }
-        );
+                    );
+                }
+            );
+        }
     }
 
     function to_slug($str, $char = "-")

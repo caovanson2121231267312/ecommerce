@@ -4,7 +4,7 @@
     <div v-else>
         <ProductDetail :product="product" />
     </div>
-    <Products />
+    <!-- <Products /> -->
     <div>
         <h1 :class="slug">{{ product.category?.name }}</h1>
     </div>

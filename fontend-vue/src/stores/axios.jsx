@@ -6,6 +6,7 @@ const api = {
         try {
             const data = await axios.get(domain + url, { headers: headers })
             console.log(data)
+            console.log(url)
             return data
         } catch (e) {
             console.log(vue)

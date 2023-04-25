@@ -11,6 +11,7 @@ export const checkResponseCode = (code, title, message, vue) => {
             })
             break
         case 401:
+            console.log(vue)
             vue.$swal({
                 title: title,
                 text: message,

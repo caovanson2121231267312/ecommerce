@@ -43,6 +43,15 @@ const router = createRouter({
             component: () => import('../views/Shop/CartView.vue')
         },
         {
+            path: '/order',
+            name: 'order',
+            meta: {
+                layout: 'shop',
+                auth: false
+            },
+            component: () => import('../views/Shop/OrderView.vue')
+        },
+        {
             path: '/admin',
             name: 'admin',
             meta: {

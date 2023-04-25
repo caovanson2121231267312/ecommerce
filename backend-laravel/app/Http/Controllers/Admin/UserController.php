@@ -159,7 +159,7 @@ class UserController extends Controller
             }
 
             $user = $this->user->update($id, $data);
-
+            
             if ($request->input('permissions')) {
                 $user->syncPermissions($request->input('permissions'));
             }
@@ -184,7 +184,9 @@ class UserController extends Controller
         try {
             DB::beginTransaction();
 
-            $this->user->delete($id);
+            $user = $this->user->find($id);
+            $user->status = $user->status == 0 ? 1 : 0;
+            $user->save();
 
             DB::commit();
         } catch (\Throwable $th) {

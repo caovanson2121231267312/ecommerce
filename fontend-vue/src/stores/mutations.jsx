@@ -16,7 +16,7 @@ const mutations = {
         state.signup = payload.user
     },
     getProducts(state, payload) {
-        state.products = payload
+        state.products[payload.slug] = payload.data
     },
     hotSale(state, payload) {
         state.hotSale = payload
