@@ -39,7 +39,7 @@ export default {
         <div class="card-body">
             <div class="image">
                 <RouterLink class="w-full" aria-current="page" :to="product.slug">
-                    <img class="img-fluid h-100 w-100 object-fit-cover" :src="firstImage" />
+                    <img class="img-fluid h-100 w-100 object-fit-cover" :src="firstImage + '#'" />
                 </RouterLink>
             </div>
             <h4 class="h5 mt-2 text-dark text-product">
@@ -58,7 +58,7 @@ export default {
                     Giảm {{ product.sale }}%
                 </p>
             </div>
-            <div class="sticker sticker-left">
+            <div v-if="product.sale > 15" class="sticker sticker-left">
                 <span><img src="@/assets/images/icons/gia-soc.png" title="Sản phẩm giá sốc" /></span>
             </div>
             <!-- {{ firstImage() }} -->

@@ -25,12 +25,13 @@ const api = {
             return await axios.post(domain + url, data, { headers: headers })
         } catch (e) {
             console.log(data, headers)
-            // vue.$checkResponseCode(
-            //     e.response.status,
-            //     e.response.statusText,
-            //     e.response.data.message ?? e.message,
-            //     vue
-            // )
+            vue.$checkResponseCode(
+                e.response.status,
+                e.response.statusText,
+                e.response.data.message ?? e.message,
+                vue
+            )
+            console.log(e.response.data)
             throw e.response.data
             // return e
         }

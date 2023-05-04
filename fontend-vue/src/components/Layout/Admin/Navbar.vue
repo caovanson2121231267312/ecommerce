@@ -187,12 +187,15 @@
                 <li class="side-nav-item">
                     <a data-bs-toggle="collapse" href="#sidebarProjects" aria-expanded="false"
                         aria-controls="sidebarProjects" class="side-nav-link">
-                        <i class="uil-briefcase"></i>
-                        <span> Projects </span>
+                        <i class="uil-cog"></i>
+                        <span> Settings </span>
                         <span class="menu-arrow"></span>
                     </a>
                     <div class="collapse" id="sidebarProjects">
                         <ul class="side-nav-second-level">
+                            <li>
+                                <RouterLink to="/admin/payments">Payments</RouterLink>
+                            </li>
                             <li>
                                 <a href="apps-projects-list.html">List</a>
                             </li>

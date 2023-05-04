@@ -29,13 +29,13 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
     public function getProduct($request)
     {
         $perPage = 10;
-        $page = $request->input('page', 1);
+        $page = $request->page ?? 1;
         $offset = ($page - 1) * $perPage;
         $categoryId = DB::table('categories')->where('name', 'like', '%' . $request->category_id . '%')->value('id');
 
         $data = $this->model
             ->select('*', DB::raw('(SELECT AVG(rate) FROM rates WHERE rates.product_id = products.id) as avg_rate'))
-            ->where('sale', '>', 20)
+            // ->where('sale', '>', 20)
             ->withCount(['rates'])
             ->where('category_id', '=', $categoryId)
             ->orderBy('updated_at', 'desc')

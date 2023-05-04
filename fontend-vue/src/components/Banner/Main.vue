@@ -1,21 +1,23 @@
 <template>
-    <section>
+    <section class="mt-3">
         <div class="container">
             <div class="banner card">
-                <div class="row h-100">
-                    <div class="col-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
-                        <div class="row h-100">
-                            <div class="col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3 col-xxl-3">
-                                <Category v-if="categories" :categories="categories" />
-                            </div>
-                            <div class="col-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9 h-100">
-                                <Banner />
+                <div class="card-body">
+                    <div class="row h-100">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
+                            <div class="row h-100">
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3 col-xxl-3">
+                                    <Category v-if="categories" :categories="categories" />
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9 h-100">
+                                    <Banner />
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-3 col-sm-3">
-                        <div>
-                            123
+                        <div class="col-3 col-sm-3">
+                            <div>
+                                123
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -55,7 +57,7 @@ export default {
 
 <style scoped lang="scss">
 .banner {
-    height: 376px;
+    height: 342px;
     overflow: hidden;
 }
 </style>

@@ -8,6 +8,12 @@ trait DataController
 
     public $tag;
 
+    public $payment;
+
+    public $order;
+
+    public $orderDetail;
+
     public $user;
     
     public $role;

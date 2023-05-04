@@ -772,13 +772,52 @@ $sizes: 10, 20, 30;
     color: rgb(198, 10, 9)!important;
 }
 
+.content-page-shop h2 {
+    text-align: center;
+    color: #000;
+}
 
+.content-page-shop {
+    max-height: 630px;
+    overflow: hidden;
+    transition:  0.3s ;
+    img{
+        width: 100%!important;
+    }
+}
+  
+.show-all {
+    max-height: none;
+}
 
+.toggle-button {
+    position: absolute;
+    bottom: 10px;
+    right: 50%;
+    transform: translateX(50%);
+}
 
+.config {
+    color:#009a82;
+}
 
+.text-dark-1 {
+    color:#000;
+}
 
+.text-config {
+    vertical-align: baseline;
+}
 
-
-
-
-
+.btn-config {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    margin: 0 auto;
+    background: #fdfdfe 0% 0% no-repeat padding-box;
+    box-shadow: 0 3px 6px #00000029;
+    border-radius: 10px;
+    padding: 2px 50px;
+    font-size: 15px;
+    color: #191919;
+}

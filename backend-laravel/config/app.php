@@ -179,6 +179,7 @@ return [
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         Cviebrock\EloquentSluggable\ServiceProvider::class,
+        Srmklive\PayPal\Providers\PayPalServiceProvider::class
     ],
 
     /*
@@ -194,6 +195,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // ...
+        'PayPal' => Srmklive\PayPal\Facades\PayPal::class
     ])->toArray(),
 
 ];

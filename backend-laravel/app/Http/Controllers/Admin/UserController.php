@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Traits\DataController;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -24,7 +23,6 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class UserController extends Controller
 {
-    use DataController;
 
     public function __construct(
         UserRepository $userRepo,

@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Models\Category;
-use App\Models\Product;
-use App\Repositories\Product\ProductRepository;
 use Exception;
+use App\Models\Rate;
+use App\Models\Product;
+use App\Models\Category;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use App\Repositories\Product\ProductRepository;
 
 class HomeController extends Controller
 {
@@ -33,7 +35,10 @@ class HomeController extends Controller
     public function product($slug)
     {
         try {
-            $products = Product::findBySlugOrFail($slug)->load(['category', 'tags', 'details']);
+            $products = Product::findBySlugOrFail($slug)
+                // ->select('*', DB::raw('(SELECT AVG(rate) FROM rates WHERE rates.product_id = products.id) as avg_rate'))
+                // ->loadCount(['rates'])
+                ->load(['category', 'tags', 'details']);
 
             return response()->json(
                 $products
@@ -46,6 +51,19 @@ class HomeController extends Controller
         }
     }
 
+    public function rateOfProduct($id)
+    {
+        $rates = Rate::where('product_id', "=", $id)->with('user')->get();
+
+        $detail = Rate::select(DB::raw('count(*) as count'), DB::raw('avg(rate) as average'))
+            ->where('product_id', "=", $id)->first();
+
+        return response()->json([
+            "detail" => $detail,
+            "rates" => $rates,
+        ]);
+    }
+
     public function hotSale()
     {
         $products = $this->product->getProductWithHotSale();
@@ -56,7 +74,7 @@ class HomeController extends Controller
 
     public function categories()
     {
-        $data = Category::with(['brands'])->take(11)->get();
+        $data = Category::with(['brands'])->take(10)->get();
 
         return response()->json($data);
     }

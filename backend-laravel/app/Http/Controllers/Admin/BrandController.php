@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use App\Traits\DataController;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Database\QueryException;
@@ -14,8 +13,6 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class BrandController extends Controller
 {
-    use DataController;
-
     public function __construct(BrandRepository $brandRepo)
     {
         $this->middleware('auth:api');

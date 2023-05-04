@@ -4,7 +4,7 @@
         <span v-if="rate - Math.floor(rate) > 0.5"><i class="fas fa-star-half-alt text-warning"></i></span>
         <span v-else-if="rate - Math.floor(rate) > 0"><i class="fas fa-star-half-alt text-warning"></i></span>
         <span v-for="i in Math.floor(5 - rate)" :key="i"><i class="far fa-star text-warning"></i></span>
-        <span>
+        <span v-if="rates_count">
             ( {{ rates_count }} đánh giá )
         </span>
     </div>
@@ -19,7 +19,6 @@ export default {
         },
         rates_count: {
             type: Number,
-            required: true
         }
     }
 }

@@ -29,12 +29,14 @@ export default {
             category: [
                 { name: "Điện thoại", slug: "dien-thoai", limit: 10, page: 1 },
                 { name: "Laptop", slug: "laptop", limit: 10, page: 1 },
-                { name: "PC", slug: "pc", limit: 10, page: 1 },
+                // { name: "PC", slug: "pc", limit: 10, page: 1 },
                 { name: "Màn hình", slug: "man-hinh", limit: 10, page: 1 },
                 { name: "Tablet", slug: "tablet", limit: 10, page: 1 },
                 { name: "Đồng hồ", slug: "dong-ho", limit: 10, page: 1 },
-                { name: "Âm thanh", slug: "am-thanh", limit: 10, page: 1 },
+                // { name: "Âm thanh", slug: "am-thanh", limit: 10, page: 1 },
                 { name: "Smart Home", slug: "smart-home", limit: 10, page: 1 },
+                { name: "Smart TV", slug: "smart-tv", limit: 10, page: 1 },
+                { name: "Phụ kiện", slug: "phu-kien", limit: 10, page: 1 },
             ],
         }
     },

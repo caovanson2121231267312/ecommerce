@@ -18,6 +18,8 @@ npm run dev
 npm run build
 ```
 
-npm install vue bootstrap bootstrap-vue
-npm install -D sass-loader node-sass
-npm install --save-dev sass
+php artisan migrate
+php artisan db:seed
+php artisan shop:cate
+php artisan shop:product
+

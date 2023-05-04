@@ -14,6 +14,7 @@ export const getters = {
     newTask: (state) => state.newTask,
     isLoading: (state) => state.isLoading,
     products: (state) => state.products,
+    rates: (state) => state.rates,
     hotSale: (state) => state.hotSale,
     categories: (state) => state.categories,
     product: (state) => state.product,

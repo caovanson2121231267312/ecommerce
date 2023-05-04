@@ -26,6 +26,7 @@ class Product
         "phu-kien",
         "do-choi-cong-nghe",
         "kho-san-pham-cu",
+        "am-thanh",
     ];
 
     public $select = '';

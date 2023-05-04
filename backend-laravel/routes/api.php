@@ -26,6 +26,7 @@ Route::group(['prefix' => '/admin', 'namespace' => 'Admin'], function () {
     Route::resource('vouchers', VoucherController::class)->except(['create', 'edit']);
     Route::resource('products', ProductController::class);
     Route::resource('permissions', PermissionController::class)->except(['create', 'edit']);
+    Route::resource('payments', PaymentController::class)->except(['create', 'edit']);
     Route::resource('roles', RoleController::class);
     Route::resource('users', UserController::class);
 });
@@ -45,6 +46,7 @@ Route::controller(homeController::class)->group(function () {
     Route::get('/hotSale', 'hotSale')->name('hotSale');
     Route::get('/categories', 'categories')->name('categories');
     Route::get('/product/{slug}', 'product')->name('product');
+    Route::get('/rateOfProduct/{id}', 'rateOfProduct')->name('rateOfProduct');
     Route::post('/carts', 'cart')->name('cart');
     // Route::post('/orders', 'store');
 });
