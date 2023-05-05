@@ -30,6 +30,7 @@ class RateController extends Controller
                 'user_id' => JWTAuth::parseToken()->authenticate()->id,
                 'product_id' => $request->product_id,
             ];
+
             $this->rate->create($data);
 
             DB::commit();

@@ -821,3 +821,96 @@ $sizes: 10, 20, 30;
     font-size: 15px;
     color: #191919;
 }
+
+.is-flex {
+    display: flex!important;
+}
+
+.boxReview .boxReview-review {
+    border: 1px solid #e5e7eb;
+    border-radius: 20px;
+    height: 160px;
+    overflow: hidden;
+}
+.is-align-items-center {
+    align-items: center!important;
+}
+
+.is-justify-content-center {
+    justify-content: center!important;
+}
+
+.boxReview .boxReview-review .boxReview-score {
+    border-left: 1px solid #e5e7eb;
+    border-right: 1px solid #e5e7eb;
+    flex-direction: column;
+    width: 40%;
+}
+.title.is-4 {
+    font-size: 1.5rem;
+}
+.title {
+    color: #363636;
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 1.125;
+}
+.boxReview .boxReview-review .boxReview-score .is-active {
+    fill: #f59e0b;
+}
+.boxReview .boxReview-review .boxReview-score .icon {
+    width: 20px;
+}
+.is-justify-content-space-evenly {
+    justify-content: space-evenly!important;
+}
+.boxReview .boxReview-review .boxReview-star {
+    flex-direction: column;
+    width: 60%;
+}
+.boxReview .boxReview-review .boxReview-star progress {
+    border-radius: 5px;
+    height: 8px;
+    max-width: 70%;
+}
+.boxReview .boxReview-review .boxReview-star div span:last-child {
+    width: 70px;
+}
+.boxReview .progress {
+    background-color: #d7000e;
+    color: #d7000e;
+    width: 100%;
+}
+.subtitle {
+    color: #4a4a4a;
+    font-size: 1.25rem;
+    font-weight: 400;
+    line-height: 1.25;
+}
+.subtitle.is-6 {
+    font-size: 1rem;
+}
+.has-text-centered {
+    text-align: center!important;
+}
+.boxReview .button {
+    background-color: #d7000e;
+    border-radius: 10px;
+    height: 35px;
+    text-align: center;
+    width: 300px;
+    color: white;
+    border: #d7000e;
+}
+.has-text-weight-bold {
+    margin-right: 5px;
+}
+.boxReview .boxReview-review .boxReview-star div .is-active {
+    fill: #f59e0b;
+    margin-left: 2px;
+    width: 13px;
+}
+.is-size-7 {
+    color: #000;
+    font-weight: 500;
+}

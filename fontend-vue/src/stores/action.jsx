@@ -28,11 +28,14 @@ const actions = {
         commit('signup', data)
     },
     async getProducts({ commit }, value) {
-        const data = await api.get('api/products?category_id=' + value.name + '&page=' + value.page)
+        const data = await api.get(
+            'api/products?category_id=' + value.name + '&page=' + value.page,
+            {}
+        )
         commit('getProducts', { slug: value.slug, data: data.data })
     },
     async rateOfProduct({ commit }, value) {
-        const data = await api.get('api/rateOfProduct/' + value,{})
+        const data = await api.get('api/rateOfProduct/' + value)
         commit('getRateOfProduct', data)
     },
     async hotSale({ commit }) {

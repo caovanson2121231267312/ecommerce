@@ -53,7 +53,7 @@ class HomeController extends Controller
 
     public function rateOfProduct($id)
     {
-        $rates = Rate::where('product_id', "=", $id)->with('user')->get();
+        $rates = Rate::where('product_id', "=", $id)->with('user')->latest()->get();
 
         $detail = Rate::select(DB::raw('count(*) as count'), DB::raw('avg(rate) as average'))
             ->where('product_id', "=", $id)->first();

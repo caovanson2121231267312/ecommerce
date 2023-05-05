@@ -25,7 +25,7 @@ class RateRequest extends ApiRequest
     public function rules()
     {
         return [
-            'rate' => 'required',
+            'rate' => ['required'],
             'content' => 'required|min:2|max:1000',
             'product_id' => 'required',
         ];
