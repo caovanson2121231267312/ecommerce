@@ -3,13 +3,20 @@
 namespace App\Http\Controllers\Api;
 
 use Exception;
+use Carbon\Carbon;
 use App\Models\Rate;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Jobs\SendEmailReport;
 use Illuminate\Support\Facades\DB;
+use App\Exports\MonthlyReportExport;
 use App\Http\Controllers\Controller;
+use App\Jobs\MonthlyReportExportJob;
+use Illuminate\Support\Facades\Mail;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Repositories\Product\ProductRepository;
+use App\Mail\SendEmailReport as MailSendEmailReport;
 
 class HomeController extends Controller
 {
@@ -30,6 +37,19 @@ class HomeController extends Controller
         return response()->json(
             $products
         );
+    }
+
+    public function export()
+    {
+        // return Excel::download(new MonthlyReportExport, 'order.xlsx');
+        $export = new MonthlyReportExportJob;
+        dispatch($export);
+    }
+
+    public function email()
+    {
+        $email = (new SendEmailReport("hello"));
+        dispatch($email);
     }
 
     public function product($slug)

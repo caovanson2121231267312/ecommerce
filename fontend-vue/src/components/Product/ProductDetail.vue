@@ -11,6 +11,9 @@
                                 <SliderImages :images="product.images" :name="product.name" />
                             </div>
                             <div class="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-7 col-xxl-7">
+                                <div v-if="rates">
+                                    <Stars :rates_count="rates.detail.count" :rate="rates.detail.average" />
+                                </div>
                                 <h2 class="h3 product-price">
                                     {{ formatCurrency(saleProduct(product.price, product.sale)) }} đ
                                 </h2>
@@ -221,6 +224,7 @@ defineProps({
 import { domain, formatCurrency, saleProduct } from "../../config"
 import { createToast } from 'mosha-vue-toastify';
 import SliderImages from "./SliderImages.vue";
+import Stars from "@/components/Rate/Index.vue";
 import {
     RouterLink
 } from 'vue-router'
@@ -231,6 +235,9 @@ export default {
             showAll: false,
 
         }
+    },
+    components: {
+        Stars,
     },
     mounted() {
         // console.log(this.product)

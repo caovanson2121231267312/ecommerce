@@ -26,8 +26,6 @@ return new class extends Migration
             $table->integer('price')->default(0);
             $table->integer('sale_price')->default(0);
 
-            $table->bigInteger('payment_id')->unsigned()->index();
-            $table->foreign('payment_id')->references('id')->on('payments')->onDelete('cascade');
             $table->timestamps();
         });
     }

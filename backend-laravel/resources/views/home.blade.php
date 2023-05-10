@@ -56,7 +56,6 @@
                     <label for="language">Tiếng việt</label><br>
                     <input type="radio" id="language" name="language" value="en">
                     <label for="language">Tiếng anh</label><br>
-
                 </div>
                 <button type="submit" class="btn btn-default" href>Thanh toán</button>
             </form>

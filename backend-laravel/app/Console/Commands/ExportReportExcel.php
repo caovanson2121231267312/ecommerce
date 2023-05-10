@@ -4,14 +4,14 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
-class mobile extends Command
+class ExportReportExcel extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'shop:cate';
+    protected $signature = 'command:name';
 
     /**
      * The console command description.
@@ -27,9 +27,6 @@ class mobile extends Command
      */
     public function handle()
     {
-        echo "hello";
-        // $bot = new \App\Crawl\Mobile();
-        // $bot->html();
-        // $bot->brand();
+        return Command::SUCCESS;
     }
 }

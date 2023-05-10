@@ -39,7 +39,14 @@ Route::controller(homeController::class)->group(function () {
     Route::get('/product/{slug}', 'product')->name('product');
     Route::get('/rateOfProduct/{id}', 'rateOfProduct')->name('rateOfProduct');
     Route::post('/carts', 'cart')->name('cart');
+    Route::get('/export', 'export')->name('export');
+    Route::get('/email', 'email')->name('email');
     // Route::post('/orders', 'store');
 });
 
 Route::post('/rate', [RateController::class, 'store'])->name('rate');
+
+Route::controller(Api\PaymentController::class)->group(function () {
+    Route::get('/vnpay', 'vnpay')->name('vnpay');
+    Route::post('/create_payment', 'create_payment')->name('create_payment');
+});

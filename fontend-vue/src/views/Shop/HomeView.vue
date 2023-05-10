@@ -11,7 +11,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <img class="img-fluid" src="@/assets/images/banners/seo.jpg" alt="cao van son" />
+                    <img class="img-fluid w-100" :src="images.bannerSeo" alt="cao van son" />
                 </div>
             </div>
         </div>
@@ -22,10 +22,12 @@
 import Products from "../../components/Product/Products.vue";
 import HotSale from "../../components/Product/HotSale.vue";
 import Banner from "../../components/Banner/Main.vue";
+import images from "@/assets/images/index.js";
 
 export default {
     data() {
         return {
+            images: images,
             category: [
                 { name: "Điện thoại", slug: "dien-thoai", limit: 10, page: 1 },
                 { name: "Laptop", slug: "laptop", limit: 10, page: 1 },
@@ -45,15 +47,6 @@ export default {
         Banner,
         HotSale,
     },
-    setup() {
-        // const store = useStore()
-    },
-    methods: {
-
-    },
-    computed: {
-
-    }
 }
 </script>
 
