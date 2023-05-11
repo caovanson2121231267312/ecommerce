@@ -914,3 +914,9 @@ $sizes: 10, 20, 30;
     color: #000;
     font-weight: 500;
 }
+.translate-middle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

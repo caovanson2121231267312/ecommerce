@@ -115,6 +115,15 @@ const router = createRouter({
             component: () => import('../views/Admin/Product/Index.vue')
         },
         {
+            path: '/admin/orders',
+            name: 'admin-orders',
+            meta: {
+                layout: 'admin',
+                auth: true
+            },
+            component: () => import('../views/Admin/Order/Index.vue')
+        },
+        {
             path: '/admin/products/create',
             name: 'admin-products-create',
             meta: {

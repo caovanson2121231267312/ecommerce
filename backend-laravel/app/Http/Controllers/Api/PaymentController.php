@@ -44,6 +44,7 @@ class PaymentController extends Controller
                 "sale_price" => $request->amount,
                 "ip_address" => $vnp_IpAddr,
                 "ref" => $vnp_TxnRef,
+                "card" => $vnp_BankCode ?? null,
             );
 
             $products = $request->products;

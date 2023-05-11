@@ -20,6 +20,7 @@ Route::group(['prefix' => '/admin', 'namespace' => 'Admin'], function () {
     Route::resource('payments', PaymentController::class)->except(['create', 'edit']);
     Route::resource('roles', RoleController::class);
     Route::resource('users', UserController::class);
+    Route::resource('orders', OrderController::class);
 });
 
 // Route::group(['middleware' => 'api', 'prefix' => 'auth', 'namespace' => 'Api'], function ($router) {
@@ -49,4 +50,13 @@ Route::post('/rate', [RateController::class, 'store'])->name('rate');
 Route::controller(Api\PaymentController::class)->group(function () {
     Route::get('/vnpay', 'vnpay')->name('vnpay');
     Route::post('/create_payment', 'create_payment')->name('create_payment');
+});
+
+Route::controller(Api\EnumController::class)->group(function () {
+    Route::get('/status_order', 'status_order')->name('status_order');
+});
+
+Route::controller(Api\OrderController::class)->group(function () {
+    Route::post('/order/{ref}', 'update')->name('order_update_status');
+    Route::get('/orders/{ref}', 'index')->name('get_orders');
 });

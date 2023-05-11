@@ -15,11 +15,11 @@ trait DataController
     public $orderDetail;
 
     public $user;
-    
+
     public $role;
-    
+
     public $permission;
-    
+
     public $category;
 
     public $product;
@@ -36,7 +36,7 @@ trait DataController
             "page" => $request->page,
             "page_size" => $request->page_size,
             "order_by" => $request->order_by ?? "id",
-            "mode" => $request->mode ?? "ASC",
+            "mode" => $request->mode ?? "DESC",
             "search" => $request->search ?? null,
             "key" => $request->key ?? null,
         ];

@@ -115,25 +115,10 @@
                                 <RouterLink to="/admin/products">Products</RouterLink>
                             </li>
                             <li>
-                                <a href="apps-ecommerce-products-details.html">Products Details</a>
-                            </li>
-                            <li>
-                                <a href="apps-ecommerce-orders.html">Orders</a>
-                            </li>
-                            <li>
-                                <a href="apps-ecommerce-orders-details.html">Order Details</a>
+                                <RouterLink to="/admin/orders">Orders</RouterLink>
                             </li>
                             <li>
                                 <a href="apps-ecommerce-customers.html">Customers</a>
-                            </li>
-                            <li>
-                                <a href="apps-ecommerce-shopping-cart.html">Shopping Cart</a>
-                            </li>
-                            <li>
-                                <a href="apps-ecommerce-checkout.html">Checkout</a>
-                            </li>
-                            <li>
-                                <a href="apps-ecommerce-sellers.html">Sellers</a>
                             </li>
                             <li>
                                 <RouterLink to="/admin/tags">Tags</RouterLink>

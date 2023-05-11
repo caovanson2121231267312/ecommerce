@@ -517,12 +517,24 @@ export default {
                             'Bạn đã thanh toán thành công với mã đơn hàng: ' + vnp_TxnRef + ', tư vấn viên sẽ liên hệ lại bạn sớm nhất để xác nhận đơn hàng.',
                             'success'
                         )
+                        let form = new FormData()
+                        form.append('status_payment', 1)
+                        const data = api.post('api/order/' + vnp_TxnRef, form, {
+                            'Content-Type': 'multipart/form-data',
+                            'Authorization': 'Bearer ' + this.auth.access_token
+                        }, this)
                     } else {
                         this.$swal(
                             'Đặt hàng!',
                             'Giao dịch thất bại, bạn vui lòng thử lại hoặc liên hệ 038912038 để tư vấn',
                             'error'
                         )
+                        let form = new FormData()
+                        form.append('status_payment', 2)
+                        const data = api.post('api/order/' + vnp_TxnRef, form, {
+                            'Content-Type': 'multipart/form-data',
+                            'Authorization': 'Bearer ' + this.auth.access_token
+                        }, this)
                     }
                     newWindow.close();
                 });
