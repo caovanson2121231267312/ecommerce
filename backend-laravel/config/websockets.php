@@ -31,7 +31,21 @@ return [
             'capacity' => null,
             'enable_client_messages' => false,
             'enable_statistics' => true,
+
+            // 'id' => env('PUSHER_APP_ID'),
+            // 'name' => env('APP_NAME'),
+            // 'key' => env('PUSHER_APP_KEY'),
+            // 'secret' => env('PUSHER_APP_SECRET'),
+            // 'enable_client_messages' => false,
+            // 'enable_statistics' => true,
         ],
+    ],
+
+    'auth' => [
+        'web' => App\Http\Middleware\EncryptCookies::class,
+        'api' => Illuminate\Session\Middleware\StartSession::class,
+        'private-websocket' => App\Http\Middleware\Authenticate::class,
+        'private-socket' => App\Http\Middleware\Authenticate::class,
     ],
 
     /*

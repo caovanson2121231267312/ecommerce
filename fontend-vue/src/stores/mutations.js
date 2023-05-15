@@ -33,6 +33,24 @@ const mutations = {
     isLoading(state, type) {
         state.isLoading = type
     },
+    technicalSupport(state, payload) {
+        state.technicalSupport = payload
+    },
+    setTechnicalId(state, payload) {
+        state.technical_id = payload
+    },
+    messages(state, payload) {
+        state.messages = payload
+    },
+    addMessage(state, payload) {
+        state.messages.map((x) => x.id == payload.id)
+        if (!state.messages.find((message) => message.id === payload.id)) {
+            state.messages.push(payload)
+        }
+    },
+    getFriends(state, payload) {
+        state.friends = payload
+    },
     addToCart(state, item) {
         if (state.cart.length > 15) {
             createToast('Đã đạt tối đa sản phẩm trong giỏ', {

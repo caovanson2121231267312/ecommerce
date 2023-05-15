@@ -236,7 +236,6 @@ export default {
             }
             try {
                 const data = await api.post('api/admin/users', form, {
-                    // 'Content-Type': 'application/json',
                     'Content-Type': 'multipart/form-data',
                     'Authorization': 'Bearer ' + this.auth.access_token
                 }, this)

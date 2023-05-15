@@ -272,7 +272,7 @@ export default {
                 const data = await api.post('api/admin/users/' + this.id, form, {
                     'Content-Type': 'multipart/form-data',
                     'Authorization': 'Bearer ' + this.auth.access_token
-                })
+                }, this)
                 await alert('success', 'top-center', 'Đã sửa danh mục thành công.');
                 await this.$router.push('/admin/users');
             } catch (e) {

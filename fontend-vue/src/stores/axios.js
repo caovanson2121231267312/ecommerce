@@ -9,7 +9,6 @@ const api = {
             console.log(url)
             return data
         } catch (e) {
-            console.log(vue)
             vue.$checkResponseCode(
                 e.response.status,
                 e.response.statusText,

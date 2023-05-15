@@ -18,7 +18,6 @@ const actions = {
                     Authorization: 'Bearer ' + auth.access_token
                 }
             )
-
             commit('logout')
         } catch (e) {
             console.log(e)
@@ -66,11 +65,25 @@ const actions = {
         commit('minusToCart', product)
     },
     async removeCart({ commit }, id) {
-        1
         commit('removeCart', id)
     },
     async clearCart({ commit }) {
         commit('clearCart')
+    },
+    async getTechnicalSupport({ commit }, payload) {
+        commit('technicalSupport', payload)
+    },
+    async setTechnicalId({ commit }, payload) {
+        commit('setTechnicalId', payload)
+    },
+    async messages({ commit }, payload) {
+        commit('messages', payload)
+    },
+    async addMessage({ commit }, payload) {
+        commit('addMessage', payload)
+    },
+    async getFriends({ commit }, payload) {
+        commit('getFriends', payload)
     }
 }
 

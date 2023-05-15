@@ -65,10 +65,10 @@
                 </li>
 
                 <li class="side-nav-item">
-                    <a href="apps-chat.html" class="side-nav-link">
+                    <RouterLink to="/admin/chat" class="side-nav-link">
                         <i class="uil-comments-alt"></i>
                         <span> Chat </span>
-                    </a>
+                    </RouterLink>
                 </li>
 
                 <li class="side-nav-item">
@@ -798,4 +798,22 @@
 import {
     RouterLink
 } from 'vue-router'
+
+
+export default {
+    mounted() {
+        // const a = window.Echo.channel('public').listen('.server.created', (e) => {
+        //     console.log('go public');
+        //     console.log(e);
+        // })
+        // console.log(a)
+
+        // to connect the privatechannel
+        // window.Echo.private('test-channel.5').listen('server.created', (e) => {
+        //     console.log('go private');
+        //     //code for displaying the serve data
+        //     console.log(e); // the data from the server
+        // })
+    }
+}
 </script>

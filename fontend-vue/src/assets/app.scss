@@ -920,3 +920,168 @@ $sizes: 10, 20, 30;
     left: 50%;
     transform: translate(-50%, -50%);
 }
+#chat2 .form-control {
+    border-color: transparent;
+}
+    
+#chat2 .form-control:focus {
+    border-color: transparent;
+    box-shadow: inset 0px 0px 0px 1px transparent;
+}
+    
+.divider:after,
+.divider:before {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #eee;
+}
+.chat {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    z-index: 999;
+}
+.ps {
+    --mdb-scrollbar-rail-x-y-transition-opacity-bg: background-color 0.2s linear,opacity 0.2s linear;
+    --mdb-scrollbar-z-index: 1035;
+    --mdb-scrollbar-rail-x-y-length: 0.9375rem;
+    --mdb-scrollbar-rail-x-y-opacity: 0.6;
+    --mdb-scrollbar-rail-x-y-hover-opacity: 0.9;
+    --mdb-scrollbar-rail-x-y-bg-color: #eee;
+    --mdb-scrollbar-rail-x-y-clicking: #999;
+    --mdb-scrollbar-rail-x-y-clicking-length: 0.6875rem;
+    --mdb-scrollbar-rail-x-transition-height-bg: background-color 0.2s linear,height 0.2s ease-in-out;
+    --mdb-scrollbar-rail-y-transition-width-bg: background-color 0.2s linear,width 0.2s ease-in-out;
+    --mdb-scrollbar-thumb-x-y-color: #aaa;
+    --mdb-scrollbar-thumb-x-y-border-radius: 0.375rem;
+    --mdb-scrollbar-thumb-x-y-length: 0.375rem;
+    --mdb-scrollbar-thumb-x-y-position-length: 0.125rem;
+    overflow: hidden!important;
+    overflow-anchor: none;
+    touch-action: auto;
+}
+.chat-body {
+    position: relative;
+    height: 400px;
+    overflow-x: auto;
+}
+.chat-body::-webkit-scrollbar {
+    width: 10px;
+}
+.chat-body::-webkit-scrollbar-thumb {
+    border-radius: 12px;
+    background: #FB2323;
+    transition: 0.5s;
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    -ms-border-radius: 12px;
+    -o-border-radius: 12px;
+}
+
+.chat-body::-webkit-scrollbar-thumb:hover {
+    border-radius: 12px;
+    background: #9c0505;
+    transition: 0.5s;
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    -ms-border-radius: 12px;
+    -o-border-radius: 12px;
+}
+.chat-body::-webkit-scrollbar-track {
+    background: #E8E8E8;
+    border-radius: 0px;
+}
+.icon-chat {
+    width: 45px;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: circleFill 1s infinite ease-in-out;
+    -webkit-animation: circleFill 1s infinite ease-in-out;
+}
+.cursor-pointer {
+    cursor: pointer;
+}
+.close-chat {
+    cursor: pointer;
+}
+.close-chat:hover {
+    color: #3b8af3;
+}
+.btn-chat {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px;
+    box-shadow: 0 0 0 0 #2196f3;
+    background-color: rgba(33, 150, 243, 0.7)!important;
+    color: white;
+    transition: all .5s;
+    -webkit-transform-origin: 50% 50%;
+    -ms-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+    -webkit-animation: zoom 1.3s infinite;
+    animation: zoom 1.3s infinite;
+}
+.cs-400{
+    width: 400px;
+}
+
+@keyframes zoom {
+    0% {
+        transform: scale(.9);
+    }
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 15px transparent;
+    }
+    100% {
+        transform: scale(.9);
+        box-shadow: 0 0 0 0 transparent;
+    }
+}
+
+@keyframes circleFill {
+    0% {
+        -webkit-transform: rotate(0) scale(1) skew( 1deg);
+    }
+    10% {
+        -webkit-transform: rotate( -25deg) scale(1) skew( 1deg);
+    }
+    20% {
+        -webkit-transform: rotate( 25deg) scale(1) skew( 1deg);
+    }
+    30% {
+        -webkit-transform: rotate( -25deg) scale(1) skew( 1deg);
+    }
+    40% {
+        -webkit-transform: rotate( 25deg) scale(1) skew( 1deg);
+    }
+    50% {
+        -webkit-transform: rotate(0) scale(1) skew( 1deg);
+    }
+    100% {
+        -webkit-transform: rotate(0) scale(1) skew( 1deg);
+    }
+}
+
+.sp-online {
+    right: 0px;
+    top: -6px;
+    border: 1px solid white!important;
+}
+.it-sp:hover span {
+    color: #f34f4f !important;;
+}
+
+.ctext-wrap-primary:after {
+    border-color: transparent;
+    border-left-color: #5e75e6!important;
+    border-top-color: #5e75e6!important;
+    right: -10px;
+    left: auto;
+    z-index: -1;
+}

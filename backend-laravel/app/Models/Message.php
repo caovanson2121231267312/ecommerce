@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Message extends Model
 {
@@ -13,9 +14,14 @@ class Message extends Model
         'content',
         'parent_id',
         'user_id',
-        'sender_id',
+        'conversation_id',
         'status'
     ];
+
+    public function getCreatedAtAttribute($date)
+    {
+        return Carbon::parse($date)->setTimezone('Asia/Ho_Chi_Minh');
+    }
 
     public function user()
     {

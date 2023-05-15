@@ -70,6 +70,15 @@ const router = createRouter({
             component: () => import('../views/Admin/Home/Home.vue')
         },
         {
+            path: '/admin/chat',
+            name: 'admin-chat',
+            meta: {
+                layout: 'admin',
+                auth: true
+            },
+            component: () => import('../views/Admin/Chat/Index.vue')
+        },
+        {
             path: '/admin/categories',
             name: 'admin-categories',
             meta: {

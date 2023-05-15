@@ -42,7 +42,7 @@ export default {
 </script>
 
 <template>
-  <div id="layout-wrapper" >
+  <div id="layout-wrapper">
 
     <Header v-if="auth" :auth="auth" />
 

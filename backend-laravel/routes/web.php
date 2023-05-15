@@ -18,8 +18,8 @@ Route::get('/', function () {
 
 Route::controller(Api\PaymentController::class)->group(function () {
     Route::get('/home', 'index')->name('home');
-    Route::get('/vnpay', 'vnpay')->name('vnpay');
-    Route::post('/create_payment', 'create_payment')->name('create_payment');
+    // Route::get('/vnpay', 'vnpay')->name('vnpay');
+    // Route::post('/create_payment', 'create_payment')->name('create_payment');
 });
 
 Route::controller(Api\PayPalController::class)->group(function () {

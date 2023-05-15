@@ -1,21 +1,25 @@
 <script>
 import Header from './Header.vue';
 import Footer from './Footer.vue';
+import ChatForm from '../../Chat/ChatForm.vue';
 
 export default {
   components: {
     Header,
     Footer,
+    ChatForm
   }
 }
 </script>
 
 <template>
-    <div>
-        <Header />
+  <div>
+    <Header />
 
-        <slot />
+    <slot />
 
-        <Footer />
-    </div>
+    <ChatForm />
+
+    <Footer />
+  </div>
 </template>

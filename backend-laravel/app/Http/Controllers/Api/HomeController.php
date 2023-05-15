@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\ChatEvents;
 use Exception;
 use Carbon\Carbon;
 use App\Models\Rate;
@@ -17,6 +18,7 @@ use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Repositories\Product\ProductRepository;
 use App\Mail\SendEmailReport as MailSendEmailReport;
+use App\Models\User;
 
 class HomeController extends Controller
 {
@@ -50,6 +52,12 @@ class HomeController extends Controller
     {
         $email = (new SendEmailReport("hello"));
         dispatch($email);
+    }
+
+    public function chat()
+    {
+        $user = User::first();
+        event(new ChatEvents("hello abc cao van sơn", $user));
     }
 
     public function product($slug)

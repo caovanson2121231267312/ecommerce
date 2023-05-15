@@ -32,6 +32,7 @@ class Order extends Model
     protected $casts = [
         'status_orders' => StatusOrder::class,
         'status_payment' => StatusPayment::class,
+        'created_at' => 'datetime:Y-m-d H:i:s',
     ];
 
     public function orderDetails()

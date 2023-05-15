@@ -8,6 +8,8 @@ import { vue3Debounce } from 'vue-debounce'
 import VTooltip from 'v-tooltip'
 import VueSweetalert2 from 'vue-sweetalert2'
 import PrimeVue from 'primevue/config'
+import Echo from 'laravel-echo'
+import Pusher from 'pusher-js'
 
 import 'sweetalert2/dist/sweetalert2.min.css'
 import ShopLayout from '@/components/Layout/Shop/ShopLayout.vue'
@@ -20,6 +22,34 @@ import '@/assets/admin/css/base.scss'
 import './assets/app.scss'
 
 const app = createApp(App)
+
+window.Pusher = Pusher
+
+if (JSON.parse(localStorage.getItem('auth'))) {
+    window.Echo = new Echo({
+        broadcaster: 'pusher',
+        key: 'local',
+        wsHost: '127.0.0.1',
+        wsPort: 6001,
+        wssPort: 6001,
+        cluster: 'mt1',
+        forceTLS: false,
+        disableStats: true,
+        encrypted: true,
+        enabledTransports: ['ws', 'wss'],
+        authEndpoint: 'http://127.0.0.1:8000/api/broadcasting/auth',
+        auth: {
+            headers: {
+                Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('auth')).access_token
+            }
+        }
+    })
+}
+app.mixin({
+    methods: {
+        $checkResponseCode: checkResponseCode
+    }
+})
 
 app.use(VueSweetalert2)
 app.use(router)
@@ -42,9 +72,3 @@ app.directive('debounce', vue3Debounce({ lock: true })).mount('#app')
 // import 'bootstrap/dist/js/bootstrap.js'
 import '@/assets/admin/js/index.js'
 import '@/assets/admin/js/app.js'
-
-app.mixin({
-    methods: {
-        $checkResponseCode: checkResponseCode
-    }
-})
