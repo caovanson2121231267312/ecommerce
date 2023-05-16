@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Broadcast;
 use App\Http\Controllers\Api\HomeController;
 use App\Http\Controllers\Api\RateController;
+use App\Http\Controllers\Admin\OrderController;
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -22,6 +23,8 @@ Route::group(['prefix' => '/admin', 'namespace' => 'Admin'], function () {
     Route::resource('roles', RoleController::class);
     Route::resource('users', UserController::class);
     Route::resource('orders', OrderController::class);
+    Route::put('orders/status/{id}', [App\Http\Controllers\Admin\OrderController::class, 'status']);
+    Route::get('home', [App\Http\Controllers\Admin\HomeController::class, 'index']);
 });
 
 // Route::group(['middleware' => 'api', 'prefix' => 'auth', 'namespace' => 'Api'], function ($router) {
@@ -43,6 +46,7 @@ Route::controller(homeController::class)->group(function () {
     Route::post('/carts', 'cart')->name('cart');
     Route::get('/export', 'export')->name('export');
     Route::get('/email', 'email')->name('email');
+    Route::get('/refresh', 'refresh')->name('refresh');
     // Route::post('/orders', 'store');
 });
 

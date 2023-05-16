@@ -19,6 +19,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Repositories\Product\ProductRepository;
 use App\Mail\SendEmailReport as MailSendEmailReport;
 use App\Models\User;
+use Illuminate\Support\Facades\Artisan;
 
 class HomeController extends Controller
 {
@@ -58,6 +59,20 @@ class HomeController extends Controller
     {
         $user = User::first();
         event(new ChatEvents("hello abc cao van sơn", $user));
+    }
+
+    public function refresh()
+    {
+        Artisan::call('route:cache');
+        Artisan::call('cache:clear');
+        Artisan::call('config:cache');
+        Artisan::call('config:clear');
+        Artisan::call('view:clear');
+
+        return response()->json([
+            "data" => __("refresh_success"),
+            "code" => 200
+        ], 200);
     }
 
     public function product($slug)

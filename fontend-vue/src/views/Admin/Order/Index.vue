@@ -201,8 +201,8 @@
                                     <RouterLink :to="'/admin/orders/edit/' + order.id" class="action-icon text-success">
                                         <i class="mdi mdi-square-edit-outline"></i>
                                     </RouterLink>
-                                    <i class="fas fa-check"></i>
-                                    <i class="fas fa-times"></i>
+                                    <Check :loadData="loadData" :id="order.id" />
+                                    <Cancel :loadData="loadData" :id="order.id" />
                                 </td>
                             </tr>
                             <tr v-if="!orders.length">
@@ -227,11 +227,15 @@ import { convertPage, domain } from '../../../config';
 
 import axios from 'axios';
 import api from '../../../stores/axios';
+import Check from './Check.vue';
+import Cancel from './Cancel.vue';
 
 export default {
     components: {
         Breadcrumb,
         Pagination,
+        Check,
+        Cancel
     },
     data() {
         return {

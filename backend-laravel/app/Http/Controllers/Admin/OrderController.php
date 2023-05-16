@@ -73,6 +73,27 @@ class OrderController extends Controller
         }
     }
 
+    public function status(Request $request, $id)
+    {
+        try {
+            $data = [
+                "status" => $request->status,
+            ];
+
+            $order = $this->order->update($id, $data);
+
+            return response()->json([
+                'message' => __('update_success'),
+                'data' => new OrderResource($order),
+            ], 200);
+        } catch (ModelNotFoundException $exception) {
+
+            return response()->json([
+                'message' => __('have error :' . $exception->getMessage()),
+            ], 500);
+        }
+    }
+
     public function destroy($id)
     {
         try {
