@@ -24,6 +24,14 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
             ->paginate($config['page_size'] ?? config('setting.default_page_size'));
     }
 
+    public function findOrders($phone, $email)
+    {
+        return $this->model->where('phone', "=", $phone)->with(['products'])
+            ->when($email, function ($q) use ($email) {
+                return $q->where('email', "=", $email);
+            })->latest()->get();
+    }
+
     public function updatePaymentByRef(string $ref, array $data)
     {
         $order = $this->model->where('ref', '=', $ref)->first();

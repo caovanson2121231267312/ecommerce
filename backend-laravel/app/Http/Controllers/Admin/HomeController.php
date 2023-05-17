@@ -5,10 +5,11 @@ namespace App\Http\Controllers\Admin;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Order;
+use App\Models\Message;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
-use App\Models\Message;
 
 class HomeController extends Controller
 {
@@ -40,7 +41,10 @@ class HomeController extends Controller
 
         $revenue = Order::sum('sale_price');
 
+        $roles = Role::withCount('users')->get();
+
         return  response()->json([
+            "roles" => $roles,
             "orderByWeek" => $orderByWeek,
             "users" => $users,
             "products" => $products,

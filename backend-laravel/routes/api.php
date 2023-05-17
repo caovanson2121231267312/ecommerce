@@ -62,6 +62,7 @@ Route::controller(Api\EnumController::class)->group(function () {
 });
 
 Route::controller(Api\OrderController::class)->group(function () {
+    Route::post('/search-order', 'search_order')->name('search_order');
     Route::post('/order/{ref}', 'update')->name('order_update_status');
     Route::get('/orders/{ref}', 'index')->name('get_orders');
 });

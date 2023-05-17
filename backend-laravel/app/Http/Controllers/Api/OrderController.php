@@ -52,4 +52,21 @@ class OrderController extends Controller
             ], 500);
         }
     }
+
+    public function search_order(Request $request)
+    {
+        try {
+            $phone = $request->phone;
+            $email = $request->email;
+
+            $orders = $this->order->findOrders($phone, $email);
+
+            return OrderResource::collection($orders);
+        } catch (QueryException $exception) {
+
+            return response()->json([
+                "mess" => $exception->getMessage(),
+            ], 500);
+        }
+    }
 }
