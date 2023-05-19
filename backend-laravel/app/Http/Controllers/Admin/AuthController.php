@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Validator;
 
-
 class AuthController extends Controller
 {
     public function __construct()

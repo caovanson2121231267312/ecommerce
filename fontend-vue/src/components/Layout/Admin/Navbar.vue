@@ -65,10 +65,10 @@
                 </li>
 
                 <li class="side-nav-item">
-                    <a href="apps-chat.html" class="side-nav-link">
+                    <RouterLink to="/admin/chat" class="side-nav-link">
                         <i class="uil-comments-alt"></i>
                         <span> Chat </span>
-                    </a>
+                    </RouterLink>
                 </li>
 
                 <li class="side-nav-item">
@@ -115,25 +115,10 @@
                                 <RouterLink to="/admin/products">Products</RouterLink>
                             </li>
                             <li>
-                                <a href="apps-ecommerce-products-details.html">Products Details</a>
-                            </li>
-                            <li>
-                                <a href="apps-ecommerce-orders.html">Orders</a>
-                            </li>
-                            <li>
-                                <a href="apps-ecommerce-orders-details.html">Order Details</a>
+                                <RouterLink to="/admin/orders">Orders</RouterLink>
                             </li>
                             <li>
                                 <a href="apps-ecommerce-customers.html">Customers</a>
-                            </li>
-                            <li>
-                                <a href="apps-ecommerce-shopping-cart.html">Shopping Cart</a>
-                            </li>
-                            <li>
-                                <a href="apps-ecommerce-checkout.html">Checkout</a>
-                            </li>
-                            <li>
-                                <a href="apps-ecommerce-sellers.html">Sellers</a>
                             </li>
                             <li>
                                 <RouterLink to="/admin/tags">Tags</RouterLink>
@@ -187,12 +172,15 @@
                 <li class="side-nav-item">
                     <a data-bs-toggle="collapse" href="#sidebarProjects" aria-expanded="false"
                         aria-controls="sidebarProjects" class="side-nav-link">
-                        <i class="uil-briefcase"></i>
-                        <span> Projects </span>
+                        <i class="uil-cog"></i>
+                        <span> Settings </span>
                         <span class="menu-arrow"></span>
                     </a>
                     <div class="collapse" id="sidebarProjects">
                         <ul class="side-nav-second-level">
+                            <li>
+                                <RouterLink to="/admin/payments">Payments</RouterLink>
+                            </li>
                             <li>
                                 <a href="apps-projects-list.html">List</a>
                             </li>
@@ -810,4 +798,22 @@
 import {
     RouterLink
 } from 'vue-router'
+
+
+export default {
+    mounted() {
+        // const a = window.Echo.channel('public').listen('.server.created', (e) => {
+        //     console.log('go public');
+        //     console.log(e);
+        // })
+        // console.log(a)
+
+        // to connect the privatechannel
+        // window.Echo.private('test-channel.5').listen('server.created', (e) => {
+        //     console.log('go private');
+        //     //code for displaying the serve data
+        //     console.log(e); // the data from the server
+        // })
+    }
+}
 </script>

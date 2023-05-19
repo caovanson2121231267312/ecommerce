@@ -43,6 +43,24 @@ const router = createRouter({
             component: () => import('../views/Shop/CartView.vue')
         },
         {
+            path: '/order',
+            name: 'order',
+            meta: {
+                layout: 'shop',
+                auth: false
+            },
+            component: () => import('../views/Shop/OrderView.vue')
+        },
+        {
+            path: '/vnpay',
+            name: 'vnpay',
+            meta: {
+                layout: 'none',
+                auth: false
+            },
+            component: () => import('../views/Shop/Vnpay.vue')
+        },
+        {
             path: '/admin',
             name: 'admin',
             meta: {
@@ -50,6 +68,15 @@ const router = createRouter({
                 auth: true
             },
             component: () => import('../views/Admin/Home/Home.vue')
+        },
+        {
+            path: '/admin/chat',
+            name: 'admin-chat',
+            meta: {
+                layout: 'admin',
+                auth: true
+            },
+            component: () => import('../views/Admin/Chat/Index.vue')
         },
         {
             path: '/admin/categories',
@@ -79,6 +106,15 @@ const router = createRouter({
             component: () => import('../views/Admin/Tag/Index.vue')
         },
         {
+            path: '/admin/payments',
+            name: 'admin-payments',
+            meta: {
+                layout: 'admin',
+                auth: true
+            },
+            component: () => import('../views/Admin/Payment/Index.vue')
+        },
+        {
             path: '/admin/products',
             name: 'admin-products',
             meta: {
@@ -86,6 +122,15 @@ const router = createRouter({
                 auth: true
             },
             component: () => import('../views/Admin/Product/Index.vue')
+        },
+        {
+            path: '/admin/orders',
+            name: 'admin-orders',
+            meta: {
+                layout: 'admin',
+                auth: true
+            },
+            component: () => import('../views/Admin/Order/Index.vue')
         },
         {
             path: '/admin/products/create',
@@ -200,6 +245,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
+    scrollToTop()
     if (to.matched.some((record) => record.meta.auth)) {
         if (localStorage.getItem('auth')) {
             next()
@@ -211,6 +257,10 @@ router.beforeEach((to, from, next) => {
         next()
     }
 })
+
+function scrollToTop() {
+    window.scrollTo(0, 0)
+}
 
 router.beforeEach((to, from, next) => {
     if (to.matched.length === 0) {

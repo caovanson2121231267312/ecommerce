@@ -86,3 +86,24 @@ export const convertPage = (originalObj) => {
     }
     return page.meta
 }
+
+export const getFormattedTime = (timestamp) => {
+    const now = moment()
+    const time = moment(timestamp, 'HH:mm:ss DD/MM/YYYY')
+    const diffMinutes = now.diff(time, 'minutes')
+    const diffHours = now.diff(time, 'hours')
+    const diffDays = now.diff(time, 'days')
+    const diffYears = now.diff(time, 'years')
+
+    if (diffMinutes < 2) {
+        return 'vừa xong'
+    } else if (diffMinutes < 60) {
+        return diffMinutes + ' phút trước'
+    } else if (diffDays < 1) {
+        return diffHours + ' giờ trước'
+    } else if (diffDays < 365) {
+        return time.format('H:mm D/M')
+    } else {
+        return diffYears + ' năm trước'
+    }
+}

@@ -11,7 +11,7 @@ class mobile extends Command
      *
      * @var string
      */
-    protected $signature = 'shop:mobile';
+    protected $signature = 'shop:cate';
 
     /**
      * The console command description.
@@ -27,8 +27,9 @@ class mobile extends Command
      */
     public function handle()
     {
-        $bot = new \App\Crawl\Mobile();
-        $bot->html();
-        $bot->brand();
+        echo "hello";
+        // $bot = new \App\Crawl\Mobile();
+        // $bot->html();
+        // $bot->brand();
     }
 }

@@ -12,20 +12,22 @@
             <div class="collapse navbar-collapse" id="navbarScroll">
                 <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
                     <li class="nav-item">
-                        <RouterLink class="nav-link active" aria-current="page" to="/">
+                        <RouterLink class="nav-link active fw-bold" aria-current="page" to="/">
                             Trang chủ
                         </RouterLink>
                     </li>
                     <li class="nav-item">
-                        <RouterLink class="nav-link" to="/admin">
-                            Aadmin
+                        <RouterLink class="nav-link fw-bold" to="/admin">
+                            Admin
                         </RouterLink>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
+                        <RouterLink class="nav-link fw-bold" to="/cart">
+                            Giỏ hàng
+                        </RouterLink>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button"
+                        <a class="nav-link  fw-bold dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             Link
                         </a>
@@ -39,7 +41,9 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Link</a>
+                        <RouterLink class="nav-link fw-bold" to="/admin">
+                            Tra cứu đơn hàng
+                        </RouterLink>
                     </li>
                 </ul>
                 <div class="d-flex">
@@ -91,10 +95,12 @@ export default {
 .btn {
     --ct-btn-padding-y: 0.47rem;
 }
+
 .navbar-light .navbar-nav .nav-link {
-    color: white!important;
+    color: white !important;
 }
+
 nav {
-    background-color: #d70018!important;
+    background-color: #d70018 !important;
 }
 </style>

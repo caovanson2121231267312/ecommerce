@@ -26,6 +26,25 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
             ->paginate($config['page_size'] ?? config('setting.default_page_size'));
     }
 
+    public function get_technical_support()
+    {
+        $data = $this->model->with('roles')->whereHas('roles', function ($query) {
+            $query->where('name', 'Technical support');
+        })->get();
+
+        return $data;
+    }
+
+    public function get_users_chat($id)
+    {
+        $data = $this->model->where("messages.id", $id)->withCount('messages')
+            ->orderByDesc('messages_count')
+            ->orderByDesc('messages.created_at')
+            ->get();
+
+        return $data;
+    }
+
     public function getAllWithRoles(int $paginateNumber, $orderBy = 'id', $order = 'desc')
     {
         return $this->model->with("roles")->orderBy($orderBy, $order)->paginate($paginateNumber)->withQueryString();

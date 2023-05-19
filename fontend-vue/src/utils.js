@@ -11,19 +11,7 @@ export const checkResponseCode = (code, title, message, vue) => {
             })
             break
         case 401:
-            vue.$swal({
-                title: title,
-                text: message,
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, login now!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    vue.$router.push('/login')
-                }
-            })
+            localStorage.removeItem('auth')
             break
         case 403:
             let timerInterval

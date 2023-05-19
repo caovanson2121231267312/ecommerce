@@ -1,7 +1,7 @@
 <template>
     <div class="h-100">
         <swiper :spaceBetween="30" :centeredSlides="true" :autoplay="{
-            delay: 2500,
+            delay: 112500,
             disableOnInteraction: false,
         }" :pagination="{
     clickable: true,
@@ -12,7 +12,11 @@
                         class="img-fluid" alt="cao van son" />
                 </RouterLink>
             </swiper-slide>
-            <swiper-slide>Slide 2</swiper-slide>
+            <swiper-slide>
+                <RouterLink class="w-100 b-block" to="/">
+                    <img src="" class="img-fluid" alt="cao van son" />
+                </RouterLink>
+            </swiper-slide>
             <swiper-slide>Slide 3</swiper-slide>
             <swiper-slide>Slide 4</swiper-slide>
             <swiper-slide>Slide 5</swiper-slide>
@@ -76,13 +80,13 @@ export default {
     background: #fff;
     display: flex;
     justify-content: center;
-    align-items: center;
+    // align-items: center;
 }
 
 .swiper-slide img {
     display: block;
     width: 100%;
-    height: 100%;
+    // height: 100%;
     object-fit: cover;
 }
 

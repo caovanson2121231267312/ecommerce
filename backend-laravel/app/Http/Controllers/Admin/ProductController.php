@@ -5,30 +5,39 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Repositories\ProductI;
+use App\Traits\DataController;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Http\Controllers\Controller;
+use App\Repositories\Tag\TagRepository;
 use Illuminate\Database\QueryException;
 use App\Http\Requests\Admin\ProductRequest;
+use App\Repositories\Brand\BrandRepository;
 use App\Http\Resources\Admin\ProductResource;
 use App\Repositories\Product\ProductRepository;
-use App\Repositories\ProductInfor\ProductInforRepository;
+use App\Repositories\Category\CategoryRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Http\Resources\Admin\ProductWithRelationResource;
+use App\Repositories\ProductInfor\ProductInforRepository;
 
 class ProductController extends Controller
 {
-    public $product;
-    public $productDetail;
+    use DataController;
 
     public function __construct(
         ProductRepository $productRepo,
         ProductInforRepository $productDetail,
+        BrandRepository $brandRepo,
+        CategoryRepository $categoryRepo,
+        TagRepository $tagRepo,
     ) {
         $this->middleware('auth:api');
         $this->product = $productRepo;
         $this->productDetail = $productDetail;
+        $this->brand = $brandRepo;
+        $this->category = $categoryRepo;
+        $this->tag = $tagRepo;
     }
 
     public function index(Request $request)
@@ -53,6 +62,19 @@ class ProductController extends Controller
         }
     }
 
+    public function create()
+    {
+        $brands = $this->brand->getAll();
+        $categories = $this->category->getAll();
+        $tags = $this->tag->getAll();
+
+        return response()->json([
+            "brands" => $brands,
+            "categories" => $categories,
+            "tags" => $tags,
+        ], 200);
+    }
+
     public function store(ProductRequest $request)
     {
         try {
@@ -64,9 +86,9 @@ class ProductController extends Controller
                 "price" => $request->price,
                 "category_id" => $request->category_id,
                 "sale" => $request->sale,
+                "note" => $request->note,
                 'content' => $request->content,
-                'sale' => $request->sale,
-                'status' => $request->status,
+                'status' => $request->status ? 1 : 0,
                 'quantity' => $request->quantity,
                 'time_sale' => \Carbon\Carbon::createFromFormat('d-m-Y', $request->time_sale)->format('Y-m-d H:i:s'),
                 'user_id' => JWTAuth::parseToken()->authenticate()->id,

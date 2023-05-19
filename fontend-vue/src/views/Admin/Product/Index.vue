@@ -161,6 +161,7 @@ export default {
                 order_by: null,
                 mode: 'asc',
             },
+            items: []
         };
     },
     computed: {

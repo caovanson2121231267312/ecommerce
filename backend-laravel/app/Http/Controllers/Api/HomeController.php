@@ -2,12 +2,24 @@
 
 namespace App\Http\Controllers\Api;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Models\Category;
-use App\Models\Product;
-use App\Repositories\Product\ProductRepository;
+use App\Events\ChatEvents;
 use Exception;
+use Carbon\Carbon;
+use App\Models\Rate;
+use App\Models\Product;
+use App\Models\Category;
+use Illuminate\Http\Request;
+use App\Jobs\SendEmailReport;
+use Illuminate\Support\Facades\DB;
+use App\Exports\MonthlyReportExport;
+use App\Http\Controllers\Controller;
+use App\Jobs\MonthlyReportExportJob;
+use Illuminate\Support\Facades\Mail;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Repositories\Product\ProductRepository;
+use App\Mail\SendEmailReport as MailSendEmailReport;
+use App\Models\User;
+use Illuminate\Support\Facades\Artisan;
 
 class HomeController extends Controller
 {
@@ -22,18 +34,54 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = $this->product->getProduct();
+        $products = $this->product->getProduct($request);
         return response()->json(
             $products
         );
     }
 
+    public function export()
+    {
+        // return Excel::download(new MonthlyReportExport, 'order.xlsx');
+        $export = new MonthlyReportExportJob;
+        dispatch($export);
+    }
+
+    public function email()
+    {
+        $email = (new SendEmailReport("hello"));
+        dispatch($email);
+    }
+
+    public function chat()
+    {
+        $user = User::first();
+        event(new ChatEvents("hello abc cao van sơn", $user));
+    }
+
+    public function refresh()
+    {
+        Artisan::call('route:cache');
+        Artisan::call('cache:clear');
+        Artisan::call('config:cache');
+        Artisan::call('config:clear');
+        Artisan::call('view:clear');
+
+        return response()->json([
+            "data" => __("refresh_success"),
+            "code" => 200
+        ], 200);
+    }
+
     public function product($slug)
     {
         try {
-            $products = Product::findBySlugOrFail($slug)->load(['category', 'tags', 'details']);
+            $products = Product::findBySlugOrFail($slug)
+                // ->select('*', DB::raw('(SELECT AVG(rate) FROM rates WHERE rates.product_id = products.id) as avg_rate'))
+                // ->loadCount(['rates'])
+                ->load(['category', 'tags', 'details']);
 
             return response()->json(
                 $products
@@ -46,10 +94,31 @@ class HomeController extends Controller
         }
     }
 
+    public function rateOfProduct($id)
+    {
+        $rates = Rate::where('product_id', "=", $id)->with('user')->latest()->get();
+
+        $detail = Rate::select(DB::raw('count(*) as count'), DB::raw('avg(rate) as average'))
+            ->where('product_id', "=", $id)->first();
+
+        return response()->json([
+            "detail" => $detail,
+            "rates" => $rates,
+        ]);
+    }
+
+    public function hotSale()
+    {
+        $products = $this->product->getProductWithHotSale();
+        return response()->json(
+            $products
+        );
+    }
+
     public function categories()
     {
-        $data = Category::with(['brands'])->get();
-        
+        $data = Category::with(['brands'])->take(10)->get();
+
         return response()->json($data);
     }
 

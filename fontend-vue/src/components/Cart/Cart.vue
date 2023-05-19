@@ -53,7 +53,7 @@
                         </h5>
                     </div>
                     <div class="w-100">
-                        <RouterLink class="w-100 border-2 rounded-1 btn-cart" :to="'/cart'">
+                        <RouterLink class="w-100 border-2 rounded-1 btn-cart" to="/order">
                             Tiến hành đặt hàng
                         </RouterLink>
                         <RouterLink class="w-100 border-2 rounded-1 btn-cart-add-more" to="/">

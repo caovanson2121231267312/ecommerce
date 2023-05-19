@@ -23,6 +23,7 @@ export default {
   mounted() {
     console.log(this.auth)
     if (!this.auth) {
+      this.$store.dispatch('logout', this.auth)
       this.$router.push('/login')
     } else {
       try {
@@ -41,7 +42,7 @@ export default {
 </script>
 
 <template>
-  <div id="layout-wrapper" v-if="ready">
+  <div id="layout-wrapper">
 
     <Header v-if="auth" :auth="auth" />
 

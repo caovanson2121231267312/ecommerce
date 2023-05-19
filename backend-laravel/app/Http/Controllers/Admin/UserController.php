@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Traits\DataController;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -24,7 +23,6 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class UserController extends Controller
 {
-    use DataController;
 
     public function __construct(
         UserRepository $userRepo,
@@ -159,7 +157,7 @@ class UserController extends Controller
             }
 
             $user = $this->user->update($id, $data);
-
+            
             if ($request->input('permissions')) {
                 $user->syncPermissions($request->input('permissions'));
             }
@@ -184,7 +182,9 @@ class UserController extends Controller
         try {
             DB::beginTransaction();
 
-            $this->user->delete($id);
+            $user = $this->user->find($id);
+            $user->status = $user->status == 0 ? 1 : 0;
+            $user->save();
 
             DB::commit();
         } catch (\Throwable $th) {

@@ -12,9 +12,13 @@ import {
     RouterLink
 } from 'vue-router'
 import { domain, formatCurrency, saleProduct } from "../../config"
+import Stars from "@/components/Rate/Index.vue";
 
 export default {
     methods: {
+    },
+    components: {
+        Stars,
     },
     computed: {
         firstImage() {
@@ -35,10 +39,10 @@ export default {
         <div class="card-body">
             <div class="image">
                 <RouterLink class="w-full" aria-current="page" :to="product.slug">
-                    <img class="img-fluid h-100 w-100 object-fit-cover" :src="firstImage" />
+                    <img class="img-fluid h-100 w-100 object-fit-cover" :src="firstImage + '#'" />
                 </RouterLink>
             </div>
-            <h4 class="h5 mt-2 text-dark">
+            <h4 class="h5 mt-2 text-dark text-product">
                 {{ product.name }}
             </h4>
             <div class="d-flex justify-content-between">
@@ -54,10 +58,13 @@ export default {
                     Giảm {{ product.sale }}%
                 </p>
             </div>
-            <div class="sticker sticker-left">
+            <div v-if="product.sale > 15" class="sticker sticker-left">
                 <span><img src="@/assets/images/icons/gia-soc.png" title="Sản phẩm giá sốc" /></span>
             </div>
             <!-- {{ firstImage() }} -->
+            <div>
+                <Stars :rates_count="product.rates_count" :rate="product.avg_rate" />
+            </div>
         </div>
     </div>
 </template>
@@ -78,5 +85,16 @@ export default {
 .card {
     --bs-card-spacer-y: 0.6rem;
     --bs-card-spacer-x: 0.6rem;
+}
+
+.text-product {
+    // white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-height: 21px;
+    height: 42px;
+    display: -webkit-box;
 }
 </style>
