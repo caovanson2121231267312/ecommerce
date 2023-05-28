@@ -26,20 +26,6 @@
                             Giỏ hàng
                         </RouterLink>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link  fw-bold dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            Link
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                    </li>
                     <li class="nav-item">
                         <RouterLink class="nav-link fw-bold" to="/search-order">
                             Tra cứu đơn hàng

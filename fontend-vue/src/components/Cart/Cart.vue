@@ -19,7 +19,7 @@
                                 </RouterLink>
                             </div>
                             <div class="col-9">
-                                <h4 class="h6 fw-bold">
+                                <h4 class="h5 text-dark fw-bold">
                                     {{ product.name }}
                                     <span class="float-end cancel-cart" @click="removeCart(product.id)">
                                         <i class="fas fa-times"></i>
@@ -33,9 +33,9 @@
                                         {{ formatCurrency(saleProduct(product.price, product.sale)) }} VNĐ
                                     </span>
                                 </p>
-                                <p class="margin-10">
+                                <p class="margin-10 w-50 d-flex">
                                     <button class="btn" @click="minus(product.id)"> - </button>
-                                    <input :value="product.count" type="text" disabled />
+                                    <input class="form-control" :value="product.count" type="text" disabled />
                                     <button class="btn" @click="plus(product.id)"> + </button>
                                 </p>
                             </div>

@@ -1,29 +1,61 @@
 <template>
     <div class="h-100">
         <swiper :spaceBetween="30" :centeredSlides="true" :autoplay="{
-            delay: 112500,
+            delay: 3500,
             disableOnInteraction: false,
         }" :pagination="{
     clickable: true,
 }" :navigation="true" :loop="true" :modules="modules" @autoplayTimeLeft="onAutoplayTimeLeft" class="mySwiper">
             <swiper-slide>
                 <RouterLink class="w-100 b-block" to="/">
-                    <img src="https://cdn2.cellphones.com.vn/690x300,webp,q100/https://dashboard.cellphones.com.vn/storage/asus%20sliding.jpg"
-                        class="img-fluid" alt="cao van son" />
+                    <img :src="images.bg1" class="img-fluid" alt="cao van son" />
                 </RouterLink>
             </swiper-slide>
             <swiper-slide>
                 <RouterLink class="w-100 b-block" to="/">
-                    <img src="" class="img-fluid" alt="cao van son" />
+                    <img :src="images.bg9" class="img-fluid" alt="cao van son" />
                 </RouterLink>
             </swiper-slide>
-            <swiper-slide>Slide 3</swiper-slide>
-            <swiper-slide>Slide 4</swiper-slide>
-            <swiper-slide>Slide 5</swiper-slide>
-            <swiper-slide>Slide 6</swiper-slide>
-            <swiper-slide>Slide 7</swiper-slide>
-            <swiper-slide>Slide 8</swiper-slide>
-            <swiper-slide>Slide 9</swiper-slide>
+            <swiper-slide>
+                <RouterLink class="w-100 b-block" to="/">
+                    <img :src="images.bg2" class="img-fluid" alt="cao van son" />
+                </RouterLink>
+            </swiper-slide>
+            <swiper-slide>
+                <RouterLink class="w-100 b-block" to="/">
+                    <img :src="images.bg3" class="img-fluid" alt="cao van son" />
+                </RouterLink>
+            </swiper-slide>
+            <swiper-slide>
+                <RouterLink class="w-100 b-block" to="/">
+                    <img :src="images.bg4" class="img-fluid" alt="cao van son" />
+                </RouterLink>
+            </swiper-slide>
+            <swiper-slide>
+                <RouterLink class="w-100 b-block" to="/">
+                    <img :src="images.bg5" class="img-fluid" alt="cao van son" />
+                </RouterLink>
+            </swiper-slide>
+            <swiper-slide>
+                <RouterLink class="w-100 b-block" to="/">
+                    <img :src="images.bg6" class="img-fluid" alt="cao van son" />
+                </RouterLink>
+            </swiper-slide>
+            <swiper-slide>
+                <RouterLink class="w-100 b-block" to="/">
+                    <img :src="images.bg7" class="img-fluid" alt="cao van son" />
+                </RouterLink>
+            </swiper-slide>
+            <swiper-slide>
+                <RouterLink class="w-100 b-block" to="/">
+                    <img :src="images.bg8" class="img-fluid" alt="cao van son" />
+                </RouterLink>
+            </swiper-slide>
+            <swiper-slide>
+                <RouterLink class="w-100 b-block" to="/">
+                    <img :src="images.bg10" class="img-fluid" alt="cao van son" />
+                </RouterLink>
+            </swiper-slide>
             <template #container-end>
                 <div class="autoplay-progress">
                     <svg viewBox="0 0 48 48" ref="progressCircle">
@@ -44,11 +76,17 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { Autoplay, Pagination, Navigation } from 'swiper';
+import images from "@/assets/images/index.js";
 
 export default {
     components: {
         Swiper,
         SwiperSlide,
+    },
+    computed: {
+        images() {
+            return images;
+        }
     },
     setup() {
         const progressCircle = ref(null);
