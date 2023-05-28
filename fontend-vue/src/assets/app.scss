@@ -1085,3 +1085,113 @@ $sizes: 10, 20, 30;
     left: auto;
     z-index: -1;
 }
+
+#tra-cuu-don-hang .box-tra-cuu {
+    background-color: #f5f5f5;
+    border-radius: 15px;
+    margin: 0 auto;
+    max-width: 800px;
+    overflow: hidden;
+    position: relative;
+}
+
+#tra-cuu-don-hang .box-tra-cuu .box-search-title {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    margin-left: auto;
+    padding: 0 20px;
+    text-align: right;
+    width: 60%;
+}
+
+#tra-cuu-don-hang .box-tra-cuu .box-search-info {
+    margin-left: auto;
+    padding: 0 20px;
+    width: 50%;
+}
+
+.is-flex {
+    display: flex!important;
+}
+
+.is-align-items-center {
+    align-items: center!important;
+}
+.is-justify-content-center {
+    justify-content: center!important;
+}
+.is-flex-direction-column {
+    flex-direction: column!important;
+}
+
+#tra-cuu-don-hang .box-tra-cuu .bg-image {
+    left: 40px;
+    position: absolute;
+    top: 20px;
+}
+
+#tra-cuu-don-hang .box-tra-cuu .bg-image img {
+    height: 200px;
+}
+
+#tra-cuu-don-hang .box-tra-cuu .bg-order-check {
+    background: linear-gradient(to bottom right,#fd2424 37%,#f5f5f5 70%);
+    height: 800px;
+    left: -571px;
+    opacity: .6;
+    position: absolute;
+    top: -300px;
+    transform: rotate(55deg);
+    width: 800px;
+    z-index: 0;
+}
+
+#tra-cuu-don-hang .box-tra-cuu .box-search-info .field {
+    margin-top: 10px;
+    position: relative;
+    width: 100%;
+}
+
+#tra-cuu-don-hang .box-tra-cuu .box-search-info .box-search-item {
+    -webkit-appearance: none;
+    border: none;
+}
+
+#tra-cuu-don-hang .box-tra-cuu .box-search-info .field input {
+    border: 1px solid #fafafa;
+    border-radius: 5px;
+    box-sizing: border-box;
+    color: #222;
+    font-size: 14px;
+    line-height: 40px;
+    padding: 0 15px;
+    width: 100%;
+}
+
+#tra-cuu-don-hang .box-tra-cuu .box-search-info .button {
+    background-color: #fd2424;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    width: 180px;
+}
+
+#tra-cuu-don-hang .box-tra-cuu .box-search-info .line-through {
+    width: 100%;
+}
+
+#tra-cuu-don-hang .smember-link {
+    background-color: #fd2424;
+    border-radius: 8px;
+    color: #fff;
+    display: block;
+    margin: 0 auto;
+    min-width: 320px;
+    padding: 8px 20px;
+    text-align: center;
+    width: 50%;
+}

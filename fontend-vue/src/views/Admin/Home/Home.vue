@@ -67,7 +67,7 @@
         </div>
     </div>
 
-    <div class="row mt-5">
+    <div class="row mt-5" v-if="loading">
         <div class="col-12 col-lg-6">
             <Bar id="chart" :data="chartData" />
         </div>
@@ -96,6 +96,7 @@ export default {
     data() {
         return {
             data: null,
+            loading: false,
             chartOptions: {
                 responsive: true,
                 default: () => {
@@ -114,24 +115,10 @@ export default {
             },
             chartData2: {
                 labels: [
-                    'Red',
-                    'Green',
-                    'Yellow',
-                    'Grey',
-                    'Blue'
                 ],
-                datasets: [{
-                    label: 'My First Dataset',
-                    data: [11, 16, 7, 3, 14],
-                    backgroundColor: [
-                        'rgb(255, 99, 132)',
-                        'rgb(75, 192, 192)',
-                        'rgb(255, 205, 86)',
-                        'rgb(201, 203, 207)',
-                        'rgb(54, 162, 235)'
-                    ]
-                }]
+                datasets: []
             },
+            users_count: [],
             options: {
                 responsive: true,
                 maintainAspectRatio: false
@@ -143,6 +130,7 @@ export default {
             return formatCurrency(data);
         },
         getAnalysis() {
+            this.loading = false
             api.get("api/admin/home", {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('auth')).access_token
@@ -150,10 +138,32 @@ export default {
                 .then(response => {
                     console.log(response)
                     this.data = response.data;
+                    let datasets = {
+                        label: 'Roles',
+                        data: [],
+                        backgroundColor: [
+                            'rgb(255, 99, 132)',
+                            'rgb(75, 192, 192)',
+                            'rgb(255, 205, 86)',
+                            'rgb(201, 203, 207)',
+                        ]
+                    }
+
+                    this.data.roles.forEach(element => {
+                        this.chartData2.labels.push(element.name)
+                        datasets.data.push(element.users_count)
+                    });
+
+                    this.chartData2.datasets.push(datasets)
+
+                    this.loading = true
                 })
         },
     },
     mounted() {
+        // this.getAnalysis();
+    },
+    created() {
         this.getAnalysis();
     }
 }
@@ -161,5 +171,6 @@ export default {
 <style scoped >
 #chart {
     width: 100%;
+    height: 100%;
 }
 </style >

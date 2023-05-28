@@ -52,6 +52,15 @@ const router = createRouter({
             component: () => import('../views/Shop/OrderView.vue')
         },
         {
+            path: '/search-order',
+            name: 'search-order',
+            meta: {
+                layout: 'shop',
+                auth: false
+            },
+            component: () => import('../views/Shop/SearchOrder.vue')
+        },
+        {
             path: '/vnpay',
             name: 'vnpay',
             meta: {

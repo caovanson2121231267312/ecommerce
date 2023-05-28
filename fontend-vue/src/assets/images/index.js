@@ -11,6 +11,8 @@ import mb from '@/assets/images/payments/mb.png'
 import vietinbank from '@/assets/images/payments/vietinbank.jpg'
 import qr from '@/assets/images/payments/qr.png'
 
+import ship from '@/assets/images/ships/Shipper.png'
+
 const images = {
     bannerSeo: bannerSeo,
     paypal: paypal,
@@ -23,7 +25,9 @@ const images = {
     techcombank: techcombank,
     mb: mb,
     vietinbank: vietinbank,
-    qr: qr
+    qr: qr,
+
+    ship: ship
 }
 
 export default images

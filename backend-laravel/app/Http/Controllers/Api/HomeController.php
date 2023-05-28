@@ -77,6 +77,7 @@ class HomeController extends Controller
 
     public function product($slug)
     {
+        // dd(123);
         try {
             $products = Product::findBySlugOrFail($slug)
                 // ->select('*', DB::raw('(SELECT AVG(rate) FROM rates WHERE rates.product_id = products.id) as avg_rate'))

@@ -41,7 +41,7 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <RouterLink class="nav-link fw-bold" to="/admin">
+                        <RouterLink class="nav-link fw-bold" to="/search-order">
                             Tra cứu đơn hàng
                         </RouterLink>
                     </li>
