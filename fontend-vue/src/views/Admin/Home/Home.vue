@@ -8,11 +8,11 @@
                     <div class="float-end">
                         <i class="mdi mdi-account-multiple widget-icon"></i>
                     </div>
-                    <h5 class="text-muted fw-normal mt-0" title="Number of Customers">Customers</h5>
+                    <h5 class="text-muted fw-normal mt-0" title="Number of Customers">{{ $t('customers') }}</h5>
                     <h3 class="mt-3 mb-3">{{ data.users }}</h3>
                     <p class="mb-0 text-muted">
                         <span class="text-success me-2"><i class="mdi mdi-arrow-up-bold"></i> 5.27%</span>
-                        <span class="text-nowrap">Since last month</span>
+                        <span class="text-nowrap">{{ $t('since_last_month') }}</span>
                     </p>
                 </div>
             </div>
@@ -24,11 +24,11 @@
                     <div class="float-end">
                         <i class="mdi mdi-cart-plus widget-icon"></i>
                     </div>
-                    <h5 class="text-muted fw-normal mt-0" title="Number of Orders">Orders</h5>
+                    <h5 class="text-muted fw-normal mt-0" title="Number of Orders">{{ $t('orders') }}</h5>
                     <h3 class="mt-3 mb-3">{{ data.orders }}</h3>
                     <p class="mb-0 text-muted">
                         <span class="text-danger me-2"><i class="mdi mdi-arrow-down-bold"></i> 1.08%</span>
-                        <span class="text-nowrap">Since last month</span>
+                        <span class="text-nowrap">{{ $t('since_last_month') }}</span>
                     </p>
                 </div>
             </div>
@@ -40,11 +40,11 @@
                     <div class="float-end">
                         <i class="mdi mdi-currency-usd widget-icon"></i>
                     </div>
-                    <h5 class="text-muted fw-normal mt-0" title="Average Revenue">Revenue</h5>
+                    <h5 class="text-muted fw-normal mt-0" title="Average Revenue">{{ $t('revenue') }}</h5>
                     <h3 class="mt-3 mb-3">{{ formatCurrency(data.revenue) }} đ</h3>
                     <p class="mb-0 text-muted">
                         <span class="text-danger me-2"><i class="mdi mdi-arrow-down-bold"></i> 7.00%</span>
-                        <span class="text-nowrap">Since last month</span>
+                        <span class="text-nowrap">{{ $t('since_last_month') }}</span>
                     </p>
                 </div>
             </div>
@@ -56,11 +56,11 @@
                     <div class="float-end">
                         <i class="mdi mdi-pulse widget-icon"></i>
                     </div>
-                    <h5 class="text-muted fw-normal mt-0" title="Growth">Products</h5>
+                    <h5 class="text-muted fw-normal mt-0" title="Growth">{{ $t('products') }}</h5>
                     <h3 class="mt-3 mb-3">{{ data.products }}</h3>
                     <p class="mb-0 text-muted">
                         <span class="text-success me-2"><i class="mdi mdi-arrow-up-bold"></i> 4.87%</span>
-                        <span class="text-nowrap">Since last month</span>
+                        <span class="text-nowrap">{{ $t('since_last_month') }}</span>
                     </p>
                 </div>
             </div>

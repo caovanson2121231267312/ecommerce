@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Shop;
 
+use App\Http\Resources\Admin\UserResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ConversationResource extends JsonResource
@@ -19,6 +20,7 @@ class ConversationResource extends JsonResource
             'user_id' => $this->user_id,
             'member_id' => $this->member_id,
             'messages' => MessageResource::collection($this->messages),
+            'user' => new UserResource($this->member),
             'created_at' => $this->created_at ? $this->created_at->format('H:i:s d/m/Y') : null,
             'updated_at' => $this->updated_at ? $this->updated_at->format('H:i:s d/m/Y') : null,
         ];

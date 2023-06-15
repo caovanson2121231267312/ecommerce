@@ -56,6 +56,8 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
+    'vnp_url' => env('vnp_Url', 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html'),
+
     'asset_url' => env('ASSET_URL', null),
 
     /*
@@ -180,7 +182,8 @@ return [
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         Cviebrock\EloquentSluggable\ServiceProvider::class,
-        Srmklive\PayPal\Providers\PayPalServiceProvider::class
+        Srmklive\PayPal\Providers\PayPalServiceProvider::class,
+        Laravel\Socialite\SocialiteServiceProvider::class,
     ],
 
     /*
@@ -196,7 +199,8 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // ...
-        'PayPal' => Srmklive\PayPal\Facades\PayPal::class
+        'PayPal' => Srmklive\PayPal\Facades\PayPal::class,
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
     ])->toArray(),
 
 ];

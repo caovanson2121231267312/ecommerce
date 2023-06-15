@@ -24,6 +24,12 @@ import bg8 from '@/assets/images/banners/bg8.webp'
 import bg9 from '@/assets/images/banners/bg9.webp'
 import bg10 from '@/assets/images/banners/bg10.webp'
 
+import vi from '@/assets/images/lang/vi.webp'
+import en from '@/assets/images/lang/us.jpg'
+import ge from '@/assets/images/lang/germany.jpg'
+import ru from '@/assets/images/lang/russia.jpg'
+import ja from '@/assets/images/lang/ja.webp'
+
 const images = {
     bannerSeo: bannerSeo,
     paypal: paypal,
@@ -49,7 +55,13 @@ const images = {
     bg7: bg7,
     bg8: bg8,
     bg9: bg9,
-    bg10: bg10
+    bg10: bg10,
+
+    vi: vi,
+    ge: ge,
+    ja: ja,
+    ru: ru,
+    en: en
 }
 
 export default images

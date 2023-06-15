@@ -1,0 +1,37 @@
+{
+    "common": {
+        "select_lang": "Ngôn ngữ"
+    },
+    "login": {
+        "title": "Đăng nhập vào dibochit",
+        "buttons": {
+            "login": "Đăng nhập"
+        },
+        "input_text": {
+            "email": "Địa chỉ gmail",
+            "password": "Mật khẩu"
+        },
+        "messages": {
+            "none_account": "Tạo tài khoản mới",
+            "register": "Đăng ký"
+        }
+    },
+    "products": "Sản phẩm",
+    "search": "Tìm kiếm",
+    "dashboards": "Bảng điều kiển",
+    "chat": "Trò chuyện",
+    "ecommerce": "Thương mại điện tử",
+    "brands": "Thương hiệu",
+    "categories": "Danh mục",
+    "orders": "Đặt hàng",
+    "customers": "Khách hàng",
+    "tags": "Thẻ",
+    "users": "Người dùng",
+    "roles": "Vai trò",
+    "permissions": "Quyền truy cập",
+    "authorization": "Xác thực",
+    "revenue": "Doanh thu",
+    "since_last_month": "Kể từ tháng trước",
+    "hello_everyone": "Chào mọi người",
+    "calendar": "Đặt lịch"
+}

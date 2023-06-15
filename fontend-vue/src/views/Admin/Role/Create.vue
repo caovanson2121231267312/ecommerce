@@ -98,7 +98,7 @@ export default {
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + this.auth.access_token
                 })
-                await alert('success', 'top-center', 'Đã thêm 1 danh mục mới.');
+                await alert('success', 'top-center', 'Đã thêm 1 roles mới.');
                 await this.$router.push('/admin/roles');
             } catch (e) {
                 if (e.errors) {

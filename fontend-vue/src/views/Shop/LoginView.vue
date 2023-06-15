@@ -43,7 +43,7 @@
                             <a href="#" class="login100-social-item bg2">
                                 <i class="fab fa-twitter"></i>
                             </a>
-                            <a href="#" class="login100-social-item bg3">
+                            <a href="#" @click="loginWithGoogle" class="login100-social-item bg3">
                                 <i class="fab fa-google-plus-g"></i>
                             </a>
                         </div>
@@ -74,7 +74,7 @@ import {
     RouterLink
 } from 'vue-router'
 import api from '../../stores/axios'
-import { alert, notify } from "../../config"
+import { domain, alert, notify } from "../../config"
 
 export default {
     data() {
@@ -92,6 +92,65 @@ export default {
         }
     },
     methods: {
+        AuthProvider(provider) {
+            var self = this
+            this.$auth.authenticate(provider).then(response => {
+
+                self.SocialLogin(provider, response)
+
+            }).catch(err => {
+                console.log({ err: err })
+            })
+        },
+        SocialLogin(provider) {
+            api.post('api/auth/sociallogin/' + provider, {}, {
+                'Content-Type': 'multipart/form-data'
+            }, this)
+                .then(response => {
+
+                    console.log(response.data)
+
+                }).catch(err => {
+                    console.log({ err: err })
+                })
+        },
+        loginWithGoogle() {
+            event.preventDefault();
+            const url = domain + 'auth/google'
+            const width = 1000;
+            const height = 600;
+            const left = (window.screen.width / 2) - (width / 2);
+            const top = (window.screen.height / 2) - (height / 2);
+            const newWindow = window.open(url, '_blank', `width=${width},height=${height},left=${left},top=${top}`);
+            window.addEventListener('message', event => {
+                const url = new URL(event.data);
+                const searchParams = url.searchParams;
+
+                const hash = searchParams.get("hash");
+
+                let form = new FormData()
+                form.append('hash', hash)
+                api.post('api/auth/user-data', form, {
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': 'Bearer ' + hash
+                }, this)
+                    .then(response => {
+
+                        console.log(response.data)
+                        this.$store.dispatch('SocialLogin', response.data)
+                        this.$router.push('/');
+                        alert('success', 'top-center', 'Đăng nhập thành công.');
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 500);
+
+                    }).catch(err => {
+                        console.log({ err: err })
+                    })
+
+                newWindow.close();
+            })
+        },
         async login() {
             let UserForm = await new FormData()
             await UserForm.append('email', this.email)
@@ -102,7 +161,7 @@ export default {
                 })
                 await this.$store.dispatch('login', data)
                 await this.$router.push('/admin');
-                await alert('success', 'top-center', 'Đăng nhập thàng công.');
+                await alert('success', 'top-center', 'Đăng nhập thành công.');
             } catch (e) {
                 try {
                     notify('danger', 'top-center', JSON.stringify(e));

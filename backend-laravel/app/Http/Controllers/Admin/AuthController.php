@@ -34,7 +34,7 @@ class AuthController extends Controller
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60,
-            'user' => auth()->user()
+            'user' => auth()->user()->load(['roles'])
         ]);
     }
 
@@ -92,7 +92,17 @@ class AuthController extends Controller
      */
     public function userProfile()
     {
-        return response()->json(auth()->user());
+        return response()->json(auth()->user()->load(['roles']));
+    }
+
+    public function show(Request $request)
+    {
+        return response()->json([
+            'access_token' => $request->hash,
+            'token_type' => 'bearer',
+            'expires_in' => auth()->factory()->getTTL() * 60,
+            'user' => auth()->user()->load(['roles'])
+        ]);
     }
 
 

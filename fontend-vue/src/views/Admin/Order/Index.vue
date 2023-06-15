@@ -7,9 +7,9 @@
                 <div class="card-body">
                     <div class="row mb-2">
                         <div class="col-sm-5">
-                            <RouterLink to="/admin/orders/create" class="btn btn-danger mb-2">
+                            <!-- <RouterLink to="/admin/orders/create" class="btn btn-danger mb-2">
                                 <i class="mdi mdi-plus-circle me-2"></i> Add order
-                            </RouterLink>
+                            </RouterLink> -->
                         </div>
                         <div class="col-sm-7">
                             <div class="text-sm-end">

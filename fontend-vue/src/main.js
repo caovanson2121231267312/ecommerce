@@ -10,6 +10,12 @@ import VueSweetalert2 from 'vue-sweetalert2'
 import PrimeVue from 'primevue/config'
 import Echo from 'laravel-echo'
 import Pusher from 'pusher-js'
+import { createI18n } from 'vue-i18n'
+import vi from './lang/vi.json'
+import en from './lang/en.json'
+import ja from './lang/ja.json'
+import ru from './lang/ru.json'
+import VueSocialauth from 'vue-social-auth'
 
 import 'sweetalert2/dist/sweetalert2.min.css'
 import ShopLayout from '@/components/Layout/Shop/ShopLayout.vue'
@@ -58,10 +64,39 @@ app.use(store)
 app.use(vue3Debounce)
 app.use(VTooltip)
 app.use(PrimeVue)
-// app.component('ckeditor', require('./components/Ckeditor.vue').default)
+const messages = {
+    en: en,
+    vi: vi,
+    ja: ja,
+    ru: ru
+}
+
+const i18n = createI18n({
+    legacy: false,
+    locale: store.getters.locale, // set locale
+    messages,
+    fallbackLocale: 'en'
+})
+app.use(i18n)
+
 import CKEditor from '@ckeditor/ckeditor5-vue'
 
 app.use(CKEditor)
+
+const gauthOption = {
+    clientId: '443925280351-ltffk7h1n9o5auoc6hib30mh1s0g6hu4.apps.googleusercontent.com',
+    scope: 'profile email',
+    prompt: 'select_account'
+}
+
+// app.use(VueSocialauth, {
+//     providers: {
+//         github: {
+//             clientId: '443925280351-ltffk7h1n9o5auoc6hib30mh1s0g6hu4.apps.googleusercontent.com',
+//             redirectUri: '/auth/google/callback' // Your client app URL
+//         }
+//     }
+// })
 
 app.component('shop-layout', ShopLayout)
 app.component('none-layout', NoneLayout)

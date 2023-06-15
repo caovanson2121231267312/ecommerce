@@ -2,7 +2,7 @@
     <section>
         <div class="container">
             <div class="block-hot-sale">
-                <div class="box-title mb-4">
+                <div class="box-title mb-4 d-none d-md-block">
                     <div class="box-tab-menu">
                         <p class="box-tab-item active text-light">
                             Điện thoại,Laptop,TV</p>
@@ -10,8 +10,8 @@
                             Phụ kiện</p>
                     </div>
                     <div class="title-image">
-                        <div class="text-center"><img src="https://cdn2.cellphones.com.vn/600x,webp/media/wysiwyg/hst.png"
-                                alt="title" loading="lazy"></div>
+                        <div class="text-center"><img src="@/assets/images/banners/hst.webp" alt="title" loading="lazy">
+                        </div>
                     </div>
                     <div class="box-countdown">
                         <p class="title">Bắt đầu sau: </p>

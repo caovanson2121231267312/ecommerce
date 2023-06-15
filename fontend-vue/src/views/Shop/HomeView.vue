@@ -37,8 +37,8 @@ export default {
                 { name: "Đồng hồ", slug: "dong-ho", limit: 10, page: 1 },
                 // { name: "Âm thanh", slug: "am-thanh", limit: 10, page: 1 },
                 { name: "Smart Home", slug: "smart-home", limit: 10, page: 1 },
-                { name: "Smart TV", slug: "smart-tv", limit: 10, page: 1 },
-                { name: "Phụ kiện", slug: "phu-kien", limit: 10, page: 1 },
+                // { name: "Smart TV", slug: "smart-tv", limit: 10, page: 1 },
+                // { name: "Phụ kiện", slug: "phu-kien", limit: 10, page: 1 },
             ],
         }
     },
@@ -47,6 +47,8 @@ export default {
         Banner,
         HotSale,
     },
+    mounted() {
+    }
 }
 </script>
 

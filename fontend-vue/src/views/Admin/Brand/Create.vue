@@ -67,7 +67,7 @@ export default {
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + this.auth.access_token
                 })
-                await alert('success', 'top-center', 'Đã thêm 1 danh mục mới.');
+                await alert('success', 'top-center', 'Đã thêm 1 thương hiệu mới.');
                 this.loadData()
                 $("#createModalbrand").modal('hide');
                 this.name = '';

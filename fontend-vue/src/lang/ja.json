@@ -1,0 +1,37 @@
+{
+    "common": {
+        "select_lang": "言語を選択"
+    },
+    "login": {
+        "title": "dibochitにログインする",
+        "buttons": {
+            "login": "ログイン"
+        },
+        "input_text": {
+            "email": "Gmailアドレス",
+            "password": "パスワード"
+        },
+        "messages": {
+            "none_account": "新規アカウントを作成",
+            "register": "登録"
+        }
+    },
+    "products": "製品",
+    "search": "検索",
+    "dashboards": "ダッシュボード",
+    "chat": "チャット",
+    "ecommerce": "電子商取引",
+    "brands": "ブランド",
+    "categories": "カテゴリ",
+    "orders": "注文",
+    "customers": "顧客",
+    "tags": "タグ",
+    "users": "ユーザー",
+    "roles": "役割",
+    "permissions": "アクセス権限",
+    "authorization": "認証",
+    "revenue": "収益",
+    "since_last_month": "前月から",
+    "hello_everyone": "みなさん、こんにちは",
+    "calendar": "カレンダー"
+}

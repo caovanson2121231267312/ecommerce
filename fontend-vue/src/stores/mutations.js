@@ -1,6 +1,11 @@
 import { createToast } from 'mosha-vue-toastify'
+// import app from '../main'
 
 const mutations = {
+    SET_LANG(state, payload) {
+        state.locale = payload
+        localStorage.setItem('locale', payload)
+    },
     alert(state, payload) {
         state.alert = payload
     },

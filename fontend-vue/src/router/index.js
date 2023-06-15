@@ -232,6 +232,24 @@ const router = createRouter({
             component: () => import('../views/Admin/User/Show.vue')
         },
         {
+            path: '/auth/:provider/callback',
+            name: 'social',
+            meta: {
+                layout: 'shop',
+                auth: false
+            },
+            component: () => import('../views/HomeView.vue')
+        },
+        {
+            path: '/callback/login',
+            name: 'return_login',
+            meta: {
+                layout: 'none',
+                auth: false
+            },
+            component: () => import('../views/Shop/ReturnLogin.vue')
+        },
+        {
             path: '/:slug',
             name: 'product',
             // props: true,
@@ -256,8 +274,17 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
     scrollToTop()
     if (to.matched.some((record) => record.meta.auth)) {
-        if (localStorage.getItem('auth')) {
-            next()
+        const auth = JSON.parse(localStorage.getItem('auth'))
+        if (auth) {
+            const userRoles = auth.user.roles
+            const allowedRoles = ['admin', 'Super-Admin']
+
+            const hasAllowedRole = userRoles.some((role) => allowedRoles.includes(role.name))
+            if (hasAllowedRole) {
+                next()
+            } else {
+                next('/')
+            }
         } else {
             alert('warning', '', 'Bạn cần đăng nhập để truy cập vào trang này')
             next('/')

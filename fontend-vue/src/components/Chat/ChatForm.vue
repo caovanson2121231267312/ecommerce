@@ -187,17 +187,32 @@ export default {
     mounted() {
         this.scrollToTop();
         if (this.auth) {
-            window.Echo.private(`sendToUser.` + this.auth.user.id)
-                .listen('.server.created', async (event) => {
-                    await this.$store.dispatch('addMessage', event.message);
-                    await this.scrollToTop();
-                });
+            try {
+                window.Echo.private(`sendToUser.` + this.auth.user.id)
+                    .listen('.server.created', async (event) => {
+                        await this.$store.dispatch('addMessage', event.message);
+                        await this.scrollToTop();
+                    });
 
-            window.Echo.private(`sendToSender.` + this.auth.user.id)
-                .listen('.server.created', async (event) => {
-                    await this.$store.dispatch('addMessage', event.message);
-                    await this.scrollToTop();
-                });
+                window.Echo.private(`sendToSender.` + this.auth.user.id)
+                    .listen('.server.created', async (event) => {
+                        await this.$store.dispatch('addMessage', event.message);
+                        await this.scrollToTop();
+                    });
+            } catch ($e) {
+                console.log($e)
+                window.Echo.private(`sendToUser.` + this.auth.user.id)
+                    .listen('.server.created', async (event) => {
+                        await this.$store.dispatch('addMessage', event.message);
+                        await this.scrollToTop();
+                    });
+
+                window.Echo.private(`sendToSender.` + this.auth.user.id)
+                    .listen('.server.created', async (event) => {
+                        await this.$store.dispatch('addMessage', event.message);
+                        await this.scrollToTop();
+                    });
+            }
         }
     },
     components: { CardLogin, TechnicalSupport }

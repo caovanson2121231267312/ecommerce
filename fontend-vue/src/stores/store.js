@@ -19,7 +19,8 @@ const store = createStore({
         cart: JSON.parse(localStorage.getItem('cart')) || [],
         tasks: [],
         newTask: '',
-        isLoading: true
+        isLoading: true,
+        locale: localStorage.getItem('locale') ?? 'en'
     },
     mutations,
     actions,

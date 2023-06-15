@@ -1195,3 +1195,18 @@ $sizes: 10, 20, 30;
     text-align: center;
     width: 50%;
 }
+
+.text-ellipsis-1{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    line-height: 21px;
+    display: -webkit-box;
+    height: 20px;
+}
+
+.notification-list {
+    height: 242px;
+    overflow: auto;
+}

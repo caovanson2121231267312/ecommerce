@@ -273,7 +273,7 @@ export default {
                     'Content-Type': 'multipart/form-data',
                     'Authorization': 'Bearer ' + this.auth.access_token
                 }, this)
-                await alert('success', 'top-center', 'Đã sửa danh mục thành công.');
+                await alert('success', 'top-center', 'Đã sửa người dùng thành công.');
                 await this.$router.push('/admin/users');
             } catch (e) {
                 if (e) {

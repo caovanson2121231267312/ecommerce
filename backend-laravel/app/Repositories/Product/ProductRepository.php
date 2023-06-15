@@ -68,4 +68,16 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
             })
             ->paginate($config['page_size'] ?? config('setting.default_page_size'));
     }
+
+    public function search(string $keywords)
+    {
+        $relations =  ['category', 'tags', 'details', 'brand', 'user'];
+        return $this->model
+            ->select('*', DB::raw('(SELECT AVG(rate) FROM rates WHERE rates.product_id = products.id) as avg_rate'))
+            ->when($relations, function ($q) use ($relations) {
+                return $q->with($relations)->withCount(['rates']);
+            })
+            ->where('name', "like", "%" . $keywords . "%")->latest()
+            ->get();
+    }
 }

@@ -7,6 +7,7 @@ export const getters = {
     isInCart: (state) => (productId) => {
         return state.cart.findIndex((product) => product.id === productId) !== -1
     },
+    locale: (state) => state.locale,
     alert: (state) => state.alert,
     auth: (state) => state.auth,
     user: (state) => state.user,

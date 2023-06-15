@@ -28,6 +28,11 @@ class Message extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function sender()
+    {
+        return $this->belongsTo(User::class, 'member_id');
+    }
+
     public function reply()
     {
         return $this->belongsTo(Message::class, "parent_id", "id");

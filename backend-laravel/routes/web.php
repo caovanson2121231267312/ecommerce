@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\SocialController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -28,3 +29,6 @@ Route::controller(Api\PayPalController::class)->group(function () {
     Route::get('success-transaction',  'successTransaction')->name('successTransaction');
     Route::get('cancel-transaction',  'cancelTransaction')->name('cancelTransaction');
 });
+
+Route::get('auth/google', [SocialController::class, 'redirectToGoogle']);
+Route::get('auth/{provider}/callback', [SocialController::class, 'index'])->where('provider', '.*');

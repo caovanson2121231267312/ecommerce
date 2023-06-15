@@ -1,0 +1,37 @@
+{
+    "common": {
+        "select_lang": "Выберите язык"
+    },
+    "login": {
+        "title": "Вход в dibochit",
+        "buttons": {
+            "login": "Войти"
+        },
+        "input_text": {
+            "email": "Адрес электронной почты",
+            "password": "Пароль"
+        },
+        "messages": {
+            "none_account": "Создать новую учетную запись",
+            "register": "Зарегистрироваться"
+        }
+    },
+    "products": "Продукты",
+    "search": "Поиск",
+    "dashboards": "Панели управления",
+    "chat": "Чат",
+    "ecommerce": "Электронная коммерция",
+    "brands": "Бренды",
+    "categories": "Категории",
+    "orders": "Заказы",
+    "customers": "Клиенты",
+    "tags": "Теги",
+    "users": "Пользователи",
+    "roles": "Роли",
+    "permissions": "Права доступа",
+    "authorization": "Авторизация",
+    "revenue": "Доход",
+    "since_last_month": "С прошлого месяца",
+    "hello_everyone": "Всем привет",
+    "calendar": "Календарь"
+}

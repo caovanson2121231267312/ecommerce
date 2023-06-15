@@ -16,9 +16,9 @@ class MessageController extends Controller
     public function index($userId, $otherUserId)
     {
         $messages = Message::where(function ($query) use ($userId, $otherUserId) {
-                $query->where('sender_id', $userId)
-                    ->where('user_id', $otherUserId);
-            })
+            $query->where('sender_id', $userId)
+                ->where('user_id', $otherUserId);
+        })
             ->orWhere(function ($query) use ($userId, $otherUserId) {
                 $query->where('sender_id', $otherUserId)
                     ->where('user_id', $userId);

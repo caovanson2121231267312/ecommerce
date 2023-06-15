@@ -99,9 +99,10 @@ class PaymentController extends Controller
             }
 
             $vnp_Url = env('vnp_Url') . "?" . $query;
-
+            // dd(env("APP_NAME"));
             $vnpSecureHash =   hash_hmac('sha512', $hashdata, env('vnp_HashSecret')); //  
             $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
+
             return response()->json([
                 "url" => $vnp_Url
             ], 200);

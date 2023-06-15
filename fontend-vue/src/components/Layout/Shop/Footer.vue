@@ -6,9 +6,9 @@
                     <a href="#">Chuyên trang thương hiệu</a>
                 </div>
                 <div class="brand-banner__content">
-                    <a href="https://cellphones.com.vn/apple" class="brand-banner__item">
-                        <img src="https://cdn2.cellphones.com.vn/690x300,webp,q100/https://dashboard.cellphones.com.vn/storage/th-hieu-apple-0013.png"
-                            alt="Sis Apple" loading="lazy" class="brand-banner__img img-fluid">
+                    <a href="https://cellphones.com.vn/xiaomi" class="brand-banner__item">
+                        <img src="https://cdn2.cellphones.com.vn/690x300,webp,q100/https://dashboard.cellphones.com.vn/storage/xiaomi.png"
+                            alt="Xiaomi" loading="lazy" class="brand-banner__img img-fluid">
                     </a>
                     <a href="https://cellphones.com.vn/asus" class="brand-banner__item">
                         <img src="https://cdn2.cellphones.com.vn/690x300,webp,q100/https://dashboard.cellphones.com.vn/storage/SIS asus.png"

@@ -36,13 +36,10 @@
             <!-- Leftbar User -->
             <div class="leftbar-user">
                 <a href="pages-profile.html">
-                    <!-- <img src="assets/images/users/avatar-1.jpg" alt="user-image" height="42"
-                        class="rounded-circle shadow-sm"> -->
                     <span class="leftbar-user-name mt-2">Dominic Keller</span>
                 </a>
             </div>
 
-            <!--- Sidemenu -->
             <ul class="side-nav">
 
                 <li class="side-nav-title">Navigation</li>
@@ -51,7 +48,15 @@
                     <RouterLink to="/admin" class="side-nav-link">
                         <i class="uil-home-alt"></i>
                         <span class="badge bg-success float-end">6</span>
-                        <span> Dashboards </span>
+                        <span> {{ $t('dashboards') }} </span>
+                    </RouterLink>
+                </li>
+
+                <li class="side-nav-item">
+                    <RouterLink to="/" class="side-nav-link">
+                        <!-- <i class="uil-home-alt"></i> -->
+                        <i class="ri-community-fill"></i>
+                        <span> Website </span>
                     </RouterLink>
                 </li>
 
@@ -60,14 +65,14 @@
                 <li class="side-nav-item">
                     <a href="apps-calendar.html" class="side-nav-link">
                         <i class="uil-calender"></i>
-                        <span> Calendar </span>
+                        <span> {{ $t('calendar') }} </span>
                     </a>
                 </li>
 
                 <li class="side-nav-item">
                     <RouterLink to="/admin/chat" class="side-nav-link">
                         <i class="uil-comments-alt"></i>
-                        <span> Chat </span>
+                        <span> {{ $t('chat') }} </span>
                     </RouterLink>
                 </li>
 
@@ -75,28 +80,28 @@
                     <a data-bs-toggle="collapse" href="#sidebarEcommerce" aria-expanded="false"
                         aria-controls="sidebarEcommerce" class="side-nav-link">
                         <i class="uil-store"></i>
-                        <span> Ecommerce </span>
+                        <span> {{ $t('ecommerce') }} </span>
                         <span class="menu-arrow"></span>
                     </a>
                     <div class="collapse" id="sidebarEcommerce">
                         <ul class="side-nav-second-level">
                             <li>
-                                <RouterLink to="/admin/brands">Brands</RouterLink>
+                                <RouterLink to="/admin/brands">{{ $t('brands') }}</RouterLink>
                             </li>
                             <li>
-                                <RouterLink to="/admin/categories">Categories</RouterLink>
+                                <RouterLink to="/admin/categories">{{ $t('categories') }}</RouterLink>
                             </li>
                             <li>
-                                <RouterLink to="/admin/products">Products</RouterLink>
+                                <RouterLink to="/admin/products">{{ $t('products') }}</RouterLink>
                             </li>
                             <li>
-                                <RouterLink to="/admin/orders">Orders</RouterLink>
+                                <RouterLink to="/admin/orders">{{ $t('orders') }}</RouterLink>
                             </li>
                             <li>
-                                <a href="apps-ecommerce-customers.html">Customers</a>
+                                <a href="apps-ecommerce-customers.html">{{ $t('customers') }}</a>
                             </li>
                             <li>
-                                <RouterLink to="/admin/tags">Tags</RouterLink>
+                                <RouterLink to="/admin/tags">{{ $t('tags') }}</RouterLink>
                             </li>
                         </ul>
                     </div>
@@ -106,19 +111,19 @@
                     <a data-bs-toggle="collapse" href="#sidebarAuthorization" aria-expanded="false"
                         aria-controls="sidebarAuthorization" class="side-nav-link">
                         <i class="uil-users-alt"></i>
-                        <span> Authorization </span>
+                        <span> {{ $t('authorization') }} </span>
                         <span class="menu-arrow"></span>
                     </a>
                     <div class="collapse" id="sidebarAuthorization">
                         <ul class="side-nav-second-level">
                             <li>
-                                <RouterLink to="/admin/users">Users</RouterLink>
+                                <RouterLink to="/admin/users">{{ $t('users') }}</RouterLink>
                             </li>
                             <li>
-                                <RouterLink to="/admin/roles">Roles</RouterLink>
+                                <RouterLink to="/admin/roles">{{ $t('roles') }}</RouterLink>
                             </li>
                             <li>
-                                <RouterLink to="/admin/permissions">Permissions</RouterLink>
+                                <RouterLink to="/admin/permissions">{{ $t('permissions') }}</RouterLink>
                             </li>
                         </ul>
                     </div>
@@ -129,11 +134,10 @@
                     <a href="javascript: void(0);" class="float-end close-btn text-white">
                         <i class="mdi mdi-close"></i>
                     </a>
-                    <h5 class="mt-3">
-                        <i class="fas fa-question"></i>
+                    <h5 class="mt-3 text-light">
                         BTL - Nhom 2
                     </h5>
-                    <p class="mb-3">Hello everyone</p>
+                    <p class="mb-3">{{ $t('hello_everyone') }}</p>
                     <a href="javascript: void(0);" class="btn btn-secondary btn-sm">Admin</a>
                 </div>
                 <!-- end Help Box -->

@@ -1,5 +1,6 @@
 <template>
-    <div class="modal fade" id="createModalpermission" tabindex="-1" aria-labelledby="createModalpermission" aria-hidden="true">
+    <div class="modal fade" id="createModalpermission" tabindex="-1" aria-labelledby="createModalpermission"
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header modal-colored-header bg-success">
@@ -67,7 +68,7 @@ export default {
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + this.auth.access_token
                 })
-                await alert('success', 'top-center', 'Đã thêm 1 danh mục mới.');
+                await alert('success', 'top-center', 'Đã thêm 1 permission mới.');
                 this.loadData()
                 $("#createModalpermission").modal('hide');
                 this.name = '';

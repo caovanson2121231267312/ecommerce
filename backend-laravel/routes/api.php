@@ -5,8 +5,9 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Broadcast;
 use App\Http\Controllers\Api\HomeController;
 use App\Http\Controllers\Api\RateController;
+use App\Http\Controllers\Api\SearchController;
 use App\Http\Controllers\Admin\OrderController;
-
+use App\Http\Controllers\Admin\SocialController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -34,7 +35,10 @@ Route::group(['prefix' => '/admin', 'prefix' => 'auth'], function () {
     Route::post('/logout', [App\Http\Controllers\Admin\AuthController::class, 'logout']);
     Route::post('/refresh', [App\Http\Controllers\Admin\AuthController::class, 'refresh']);
     Route::get('/user-profile', [App\Http\Controllers\Admin\AuthController::class, 'userProfile']);
+    Route::post('/user-data', [App\Http\Controllers\Admin\AuthController::class, 'show']);
     Route::post('/change-pass', [App\Http\Controllers\Admin\AuthController::class, 'changePassWord']);
+
+    Route::post('sociallogin/{provider}', [SocialController::class, 'sociallogin']);
 });
 
 Route::controller(homeController::class)->group(function () {
@@ -74,6 +78,8 @@ Route::controller(Api\ChatController::class)->group(function () {
     Route::get('/get_technical_support', 'get_technical_support')->name('get_technical_support');
     Route::get('/get_users_chat', 'get_users_chat')->name('get_users_chat');
 });
+
+Route::get('/search', [SearchController::class, 'index'])->name('search_products');
 
 // Broadcast::routes(['middleware' => ['jwt.auth']]);
 // Broadcast::routes(['middleware' => ['auth:api']]);

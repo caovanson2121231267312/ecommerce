@@ -1,0 +1,37 @@
+{
+    "common": {
+        "select_lang": "Language"
+    },
+    "login": {
+        "title": "Đăng nhập vào dibochit",
+        "buttons": {
+            "login": "Đăng nhập"
+        },
+        "input_text": {
+            "email": "Địa chỉ gmail",
+            "password": "Mật khẩu"
+        },
+        "messages": {
+            "none_account": "Tạo tài khoản mới",
+            "register": "Đăng ký"
+        }
+    },
+    "products": "Products",
+    "search": "Search",
+    "dashboards": "Dashboards",
+    "chat": "Chat",
+    "ecommerce": "Ecommerce",
+    "brands": "Brands",
+    "categories": "Categories",
+    "orders": "Orders",
+    "customers": "Customers",
+    "tags": "Tags",
+    "users": "Users",
+    "roles": "Roles",
+    "permissions": "Permissions",
+    "authorization": "Authorization",
+    "revenue": "Revenue",
+    "since_last_month": "Since last month",
+    "hello_everyone": "Hello everyone",
+    "calendar": "Calendar"
+}

@@ -1,4 +1,4 @@
-<template>
+<template v-if="product">
     <div class="container">
 
         <div class="card">
@@ -244,8 +244,9 @@ export default {
     },
     computed: {
         firstImage() {
-            if (this.product.images.length > 0) {
-                const images = JSON.parse(this.product.images)
+            const images = JSON.parse(this.product.images)
+
+            if (images.length > 0) {
                 return domain + images[0].image;
             } else {
                 return null;

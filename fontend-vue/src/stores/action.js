@@ -2,11 +2,17 @@ import products from './products/ListProducts'
 import api from './axios'
 
 const actions = {
+    async setLang({ commit }, payload) {
+        commit('SET_LANG', payload)
+    },
     async alert({ commit }, data) {
         commit('alert', data)
     },
     async login({ commit }, data) {
         commit('login', data.data)
+    },
+    async SocialLogin({ commit }, data) {
+        commit('login', data)
     },
     async logout({ commit }, auth) {
         try {

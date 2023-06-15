@@ -44,10 +44,12 @@
                 <div class="app-search dropdown d-none d-lg-block">
                     <form>
                         <div class="input-group">
-                            <input type="search" class="form-control dropdown-toggle" placeholder="Search..."
-                                id="top-search">
+                            <input :placeholder="$t('search') + '...'" id=" top-search"
+                                class="form-control dropdown-toggle">
                             <span class="mdi mdi-magnify search-icon"></span>
-                            <button class="input-group-text btn btn-primary" type="submit">Search</button>
+                            <button class="input-group-text btn btn-primary">
+                                {{ $t("search") }}
+                            </button>
                         </div>
                     </form>
 
@@ -124,39 +126,10 @@
                 </li>
 
                 <li class="dropdown">
-                    <a class="nav-link dropdown-toggle arrow-none" data-bs-toggle="dropdown" href="#" role="button"
-                        aria-haspopup="false" aria-expanded="false">
-                        <img src="@/assets/images/lang/us.jpg" alt="user-image" class="me-0 me-sm-1" height="12">
-                        <span class="align-middle d-none d-lg-inline-block">English</span> <i
-                            class="mdi mdi-chevron-down d-none d-sm-inline-block align-middle"></i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated">
 
-                        <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item">
-                            <img src="@/assets/images/lang/germany.jpg" alt="user-image" class="me-1" height="12"> <span
-                                class="align-middle">German</span>
-                        </a>
+                    <select-box></select-box>
 
-                        <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item">
-                            <img src="@/assets/images/lang/italy.jpg" alt="user-image" class="me-1" height="12"> <span
-                                class="align-middle">Italian</span>
-                        </a>
 
-                        <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item">
-                            <img src="@/assets/images/lang/spain.jpg" alt="user-image" class="me-1" height="12"> <span
-                                class="align-middle">Spanish</span>
-                        </a>
-
-                        <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item">
-                            <img src="@/assets/images/lang/russia.jpg" alt="user-image" class="me-1" height="12"> <span
-                                class="align-middle">Russian</span>
-                        </a>
-
-                    </div>
                 </li>
 
                 <li class="dropdown notification-list">
@@ -371,7 +344,7 @@
                     <a class="nav-link dropdown-toggle arrow-none nav-user px-2" data-bs-toggle="dropdown" href="#"
                         role="button" aria-haspopup="false" aria-expanded="false">
                         <span class="account-user-avatar">
-                            <img src="@/assets/images/users/avatar-1.jpg" :alt="auth.user.email" width="34"
+                            <img :src="domain + 'images/users/' + auth.user.avatar" :alt="auth.user.email" width="34"
                                 class="rounded-circle">
                         </span>
                         <span class="d-lg-flex flex-column gap-1 d-none">
@@ -422,6 +395,9 @@
 </template>
 
 <script setup>
+import { domain } from "../../../config"
+import SelectBox from "../../Language/SelectBox.vue";
+
 defineProps({
     auth: {
         type: Object,
@@ -432,6 +408,9 @@ defineProps({
 
 <script>
 export default {
+    components: {
+        SelectBox
+    },
     mounted() {
         if (!this.auth) {
             this.$store.dispatch('logout', this.auth)

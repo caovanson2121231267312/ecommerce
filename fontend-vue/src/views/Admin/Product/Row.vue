@@ -11,7 +11,7 @@
                 <Image :images="value.images" />
             </div>
             <div class="flex-grow-1">
-                <div class="d-inline-block text-truncate text-ellipsis" :v-tooltip="value.name">
+                <div class="d-inline-block text-ellipsis-1" :v-tooltip="value.name">
                     {{ value.name }}
                 </div>
                 <div>

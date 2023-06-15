@@ -43,7 +43,7 @@ class ChatController extends Controller
                     "room_status" => 1,
                     "member_status" => 1,
                 ]);
-                $data->with(['messages']);
+                $data->with(['messages', 'sender']);
             }
         }
 

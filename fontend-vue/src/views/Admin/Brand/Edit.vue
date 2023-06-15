@@ -97,7 +97,7 @@ export default {
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + this.auth.access_token
                 })
-                await alert('success', 'top-center', 'Sửa thành công danh mục.');
+                await alert('success', 'top-center', 'Sửa thành công thương hiệu.');
                 this.loadData()
                 $("#editModalbrand").modal('hide');
                 this.errors = null;
