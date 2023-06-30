@@ -26,7 +26,8 @@ class Mobile
                     echo "Tạo thành công " . $name . "\n";
                 } catch (\Throwable $th) {
                     echo "category đã có" . "\n";
-                    // echo $th;
+                    // $this->info($th);
+                    echo $th;
                 }
             }
         );

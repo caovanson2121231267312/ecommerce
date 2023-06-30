@@ -28,8 +28,8 @@ class mobile extends Command
     public function handle()
     {
         echo "hello";
-        // $bot = new \App\Crawl\Mobile();
-        // $bot->html();
-        // $bot->brand();
+        $bot = new \App\Crawl\Mobile();
+        $bot->html();
+        $bot->brand();
     }
 }

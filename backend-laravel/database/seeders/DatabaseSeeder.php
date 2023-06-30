@@ -56,6 +56,7 @@ class DatabaseSeeder extends Seeder
         $role = Role::create(['name' => 'Super-Admin']);
         Role::create(['name' => 'Admin']);
         Role::create(['name' => 'User']);
+        Role::create(['name' => 'Technical support']);
 
         $permissions = Permission::pluck('id', 'id')->all();
 

@@ -177,7 +177,7 @@ class Product
                                 }
                                 echo "\n";
 
-                                $retry = 5;
+                                // $retry = 5;
                             } catch (Exception $e) {
                                 echo "Bỏ qua node này" . "\n\n";
                                 echo $e . "\n";
